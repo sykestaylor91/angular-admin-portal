@@ -1,0 +1,154 @@
+<h3>{{title}}</h3>
+<p>Select contributor to view</p>
+<div class="relative">
+  <div class="row relative">
+    <div class="col-sm-2">
+      <label>Search User:</label>
+    </div>
+    <div class="col-sm-4">
+      Name
+      <input [(ngModel)]="searchTerm" type="text" class="form-control" id="searchLastName" />
+    </div>
+    <div class="col-sm-4">
+      or Number
+      <input [(ngModel)]="searchUserId" type="text" class="form-control" id="searchUserId" />
+      <p *ngIf="debug">9fed44cc988e4a659dfeaf8500340fff</p>
+    </div>
+    <div class="col-sm-1">
+      <br />
+      <button mat-raised-button class="btn btn-primary" (click)="submitQuery()"><i class="fa fa-search"></i> Search
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="contributor">
+  <div class="margin-bottom-20">
+    <mat-card>
+      <h4>Contributor Details</h4>
+      <div class="margin-bottom-20">
+        {{User.fullName(contributor.firstName, contributor.lastName)}}
+        <span *ngIf="contributor.title"><br />Title: {{contributor.title}}</span>
+        <div *ngIf="contributor.roles">
+          <br />Roles:
+          <span *ngFor="let role of contributor.roles">
+            {{role | role}},
+          </span>
+        </div>
+        <span *ngIf="contributor.disclosureDeclarationUpdate"><br />Disclosures Last Updated:
+          {{contributor.disclosureDeclarationUpdate | date}}</span>
+        <span *ngIf="contributor.credentialDeclarationUpdate"><br />Credentials Last Updated:
+          {{contributor.credentialDeclarationUpdate | date}}</span>
+        <span *ngIf="contributor.citationDeclarationUpdate"><br />Citations Last Updated:
+          {{contributor.citationDeclarationUpdate | date}}</span>
+        <span *ngIf="contributor.status"><br />Status: {{contributor.status}}</span>
+      </div>
+      <button *ngIf="user && (
+                    user.roles.indexOf('super_admin') > -1 ||
+                    user.roles.indexOf('admin') > -1 ||
+                    user.roles.indexOf('provider') > -1
+                    )" (click)="editContributor(contributor)" class="btn btn-primary" mat-raised-button>
+        Edit this person's disclosures
+      </button>
+      <hr />
+      <h4>Disclosures</h4>
+      <!--Payments-->
+      <p>Payments for any aspect of work submitted for publication in any part of a provided activity</p>
+      <div class="no-declarations" *ngIf="!contributor.paymentDisclosures">
+        <p>
+          None declared
+        </p>
+      </div>
+      <div *ngIf="contributor.paymentDisclosures">
+        <app-nowce-data-list [cols]="columnsPaymentDisclosures" [dataArray]="contributor.paymentDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <!--Financial -->
+      <p>Financial relationships outside the submitted work that could be considered influential or biased towards the
+        work submitted for publication</p>
+      <div class="no-declarations" *ngIf="!contributor.financialDisclosures">
+        <p>
+          None declared
+        </p>
+      </div>
+      <div *ngIf="contributor.financialDisclosures">
+        <app-nowce-data-list [cols]="columnsFinancialDisclosures" [dataArray]="contributor.financialDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <!--Patents-->
+      <p>
+      Patents, whether planned, pending or issued that may be considered relevant to or broadly relevant to this
+        work
+      </p>
+      <div class="no-declarations" *ngIf="!contributor.patentDisclosures">
+        <p>
+          None declared
+        </p>
+      </div>
+      <div *ngIf="contributor.patentDisclosures">
+        <app-nowce-data-list [cols]="columnsPatentDisclosures" [dataArray]="contributor.patentDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <!-- Partnerships -->
+      <p>
+        Partnerships or relationships with any organization or entity that could be perceived to have a stake in
+        content produced
+      </p>
+      <div class="no-declarations" *ngIf="!contributor.partnershipDisclosures">
+        None Declared
+      </div>
+      <div *ngIf="contributor.partnershipDisclosures">
+        <app-nowce-data-list [cols]="columnsPartnershipDisclosures" [dataArray]="contributor.partnershipDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <!-- Activities -->
+      <p>
+        Activities or relationships that readers could perceive to have influenced, or give the appearance of
+        potentially influencing, submitted work
+      </p>
+      <div class="no-declarations" *ngIf="!contributor.activityDisclosures">
+        None Declared
+      </div>
+      <div *ngIf="contributor.activityDisclosures">
+        <app-nowce-data-list [cols]="columnsActivityDisclosures" [dataArray]="contributor.activityDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <!-- Contributions -->
+      <p>
+        Contributions: Is this person or any family member, a substantial contributor, grantor, donor or adviser to
+        any similar benefactor to the organization or receive benefits or grants from any fund connected with this
+        organization?
+      </p>
+      <div class="no-declarations" *ngIf="!contributor.contributionDisclosures">
+        None Declared
+      </div>
+      <div *ngIf="contributor.contributionDisclosures">
+        <app-nowce-data-list [cols]="columnsContributionDisclosures" [dataArray]="contributor.contributionDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <h4>Credentials</h4>
+      <!--Credentials-->
+      <p class="bold">
+        Fellowships and other qualifications
+      </p>
+      <div class="no-declarations" *ngIf="!contributor.credentialDisclosures">
+        <p>
+          None declared
+        </p>
+      </div>
+      <div *ngIf="contributor.credentialDisclosures">
+        <app-nowce-data-list [cols]="columnsCredentialDisclosures" [dataArray]="contributor.credentialDisclosures">
+        </app-nowce-data-list>
+      </div>
+      <hr />
+      <h4>Publications</h4>
+      <div *ngIf="!contributor.citationDisclosures">
+        <p>No publicaton disclosures</p>
+      </div>
+      <div *ngIf="contributor.citationDisclosures">
+        <ol>
+          <li *ngFor="let citation of contributor.citationDisclosures" [innerHTML]="citation.text"></li>
+        </ol>
+      </div>
+    </mat-card>
+  </div>
+</div>

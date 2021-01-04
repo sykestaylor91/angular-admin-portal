@@ -1,0 +1,57 @@
+@import "../assets/scss/core/variables";
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.header {
+  color: $c-white;
+  height: $t-toolbarHeight;
+
+  position: fixed;
+  z-index: 9;
+  padding-right: 30px;
+}
+
+.add-more-courses {
+  margin-right: 70px;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.mat-drawer-container {
+  position: inherit;
+  overflow: auto;
+}
+
+.checkbox-wrap {
+  margin-left: 10px;
+}
+
+.theme-active{
+    color: $c-secondaryColor;
+    .mat-icon{
+        color: $c-secondaryColor;
+    }
+}
+
+.theme-menu{
+    color: gray;
+    .mat-icon{
+        color: gray;
+    }
+
+    &.theme-active{
+        color: $c-secondaryColor;
+        .mat-icon{
+            color: $c-secondaryColor;
+        }
+    }
+}
+
+
+//::ng-deep mat-sidenav-container {
+//  height: 100%;
+//}

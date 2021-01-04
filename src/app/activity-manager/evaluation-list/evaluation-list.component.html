@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col">
+    <h3>Post-activity evaluations</h3>
+    <button mat-raised-button class="btn btn-primary pull-right" (click)="createNewEvaluation()">Create new evaluation</button>
+  </div>
+</div>
+<div *ngIf="evaluations && evaluations.length > 0">
+  <app-nowce-data-list
+    [cols]="columns"
+    [dataArray]="filteredEvaluations"
+    [contextMenu]="contextMenu"
+    (editClicked)="editClicked($event)"
+    (deleteClicked)="onDeleteClick($event)"
+    (previewClicked)="onPreviewClick($event)"
+    (customButtonClicked)="showAssociatedExams($event)"
+    customButtonLabel="Show parents"
+  ></app-nowce-data-list>
+</div>
+<div *ngIf="!evaluations || evaluations.length === 0" >
+  There are no items to display
+</div>

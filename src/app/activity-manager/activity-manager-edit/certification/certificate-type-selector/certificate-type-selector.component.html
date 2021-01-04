@@ -1,0 +1,22 @@
+<div class="{{cssClass}}"
+     [hidden]="isHidden"
+     [class.disabled]="isDisabled">
+  <div class="form-group margin-left-10"
+       [class.required]="isRequired"
+       [class.has-error]="hasError">
+    <div><label class="control-label" [class.disabled]="isDisabled">{{label}}</label></div>
+
+    <mat-radio-group [disabled]="isDisabled"
+                     [(ngModel)]="modelValue"
+                     [class.disabled]="isDisabled"
+                     (ngModelChange)="onUpdateValue($event)">
+      <mat-radio-button [value]="true">
+        Yes
+      </mat-radio-button>
+      <mat-radio-button [value]="false" class="margin-left-10">
+        No
+      </mat-radio-button>
+    </mat-radio-group>
+
+  </div>
+</div>

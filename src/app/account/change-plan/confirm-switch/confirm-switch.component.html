@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-sm-4">
+    Change Date
+  </div>
+  <div class="col-sm-4">
+    20-Jun-01
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    Current Plan
+  </div>
+  <div class="col-sm-4">
+    {{currentPlan}}
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    New Plan
+  </div>
+  <div class="col-sm-4">
+    {{changePlanService.selectedPlan.name}}
+  </div>
+</div>
+<div class="row">
+  <div>
+    <table class="table table-padded">
+      <tr>
+        <td width="30%">
+          First payment new plan
+        </td>
+        <td>
+          <span *ngIf="changeData">{{changeData.brlogic.adjustmentData.amount}}</span>
+        </td>
+        <td>
+          DATA
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Residual value from current plan
+        </td>
+        <td>
+          DATA
+        </td>
+        <td>
+          DATA
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <div class="form-group pull-right">
+      <br/>
+      <button mat-raised-button (click)="changePlan()" class="btn btn-primary">Confirm change</button>
+      <button mat-raised-button (click)="repickClickHandler()" class="btn btn-primary">Choose another plan</button>
+      <button mat-raised-button (click)="cancelClickHandler()" class="btn btn-primary">Cancel</button>
+    </div>
+  </div>
+</div>

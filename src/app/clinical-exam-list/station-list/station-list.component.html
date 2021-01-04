@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-6">
+    <h3>Station list</h3>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button
+            class="btn btn-primary pull-right"
+            (click)="createStationClickHandler()">
+      Create station
+    </button>
+  </div>
+</div>
+    <app-nowce-data-list
+      [cols]="columns"
+      [dataArray]="stations"
+      [contextMenu]="contextMenuItems"
+      (editClicked)="editClickHandler($event)"
+      (deleteClicked)="deleteClickHandler($event)"
+      (useAsTemplateClicked)="useAsBlueprintClickHandler($event)"
+      (previewClicked)="showExaminerView($event)"
+    ></app-nowce-data-list>

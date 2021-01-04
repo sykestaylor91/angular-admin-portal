@@ -1,0 +1,12 @@
+<app-dialog-header [title]="title" (closeDialog)="closeDialog()">
+</app-dialog-header>
+<div>
+    <app-nowce-data-list
+      [cols]="columns"
+      [dataArray]="filteredList"
+      [contextMenu]="contextMenu"
+      (customButtonClicked)="editCourseClickHandler($event)"
+      customButtonLabel="Edit"
+    ></app-nowce-data-list>
+    <br>
+</div>

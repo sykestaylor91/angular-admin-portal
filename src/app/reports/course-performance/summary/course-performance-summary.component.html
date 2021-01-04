@@ -1,0 +1,105 @@
+<div *ngIf="coursePerformanceService.selectedExam">
+  <h3>{{title}}</h3>
+  <div class="relative margin-bottom-20">
+    <div class="row relative">
+      <div class="col-sm-2">
+        <label>Activity Title</label>
+      </div>
+      <div class="col-sm-8">
+        {{courseTitle | stripTags}}
+      </div>
+    </div>
+    <div class="row relative">
+      <div class="col-sm-2">
+        <label>Activity Sub Title</label>
+      </div>
+      <div class="col-sm-8">
+        {{courseSubTitle | stripTags}}
+      </div>
+    </div>
+    <div class="row relative">
+      <div class="col-sm-2">
+        <label>Editor(s)</label>
+      </div>
+      <div class="col-sm-8">
+        <span *ngFor="let editor of courseEditors">{{User.fullName(editor?.firstName, editor?.lastName)}}, </span>
+      </div>
+    </div>
+  </div>
+  <div>
+
+    <div class="row margin-bottom-20" *ngIf="showCharts">
+      <div class="col-sm-4 text-center">
+        <p-chart #chart type="doughnut" [data]="usersFinishedChartData" [options]="chartOptions"></p-chart>
+        <h5>{{usersCompletedAverage | number: '1.0-2'}}&#37;</h5>
+        <h3>Finished</h3>
+      </div>
+      <div class="col-sm-4 text-center">
+        <p-chart #chart type="doughnut" [data]="passRateChartData" [options]="chartOptions"></p-chart>
+        <h5>{{passRate | number: '1.0-2'}}&#37;</h5>
+        <h3>Passed</h3>
+      </div>
+      <div class="col-sm-4 text-center">
+        <p-chart #chart type="doughnut" [data]="averageScoreChartData" [options]="chartOptions"></p-chart>
+        <h5>{{averageFirstAttemptScore | number: '1.0-2'}}&#37;</h5>
+        <h3>Average Score</h3>
+      </div>
+    </div>
+
+  </div>
+  <div class="row relative">
+    <div class="col-sm-8">
+      <table class="table table-bordered table-side">
+        <tbody>
+        <tr>
+          <th>Date Activity File</th>
+          <td>{{courseFileDate | date: 'longDate'}}</td>
+        </tr>
+        <tr>
+          <th>Date Activity</th>
+          <td>{{courseDate | date: 'longDate'}}</td>
+        </tr>
+        <tr>
+          <th>Expiration Date</th>
+          <td>{{expirationDate | date: 'longDate'}}</td>
+        </tr>
+        <tr>
+          <th>Number of Unique Users who have Started this Activity</th>
+          <td>{{usersStarted | number : '1.0-0'}}</td>
+        </tr>
+        <tr>
+          <th>Number of Unique Users who have Completed this Activity</th>
+          <td>{{usersCompleted | number : '1.0-0'}}</td>
+        </tr>
+        <tr>
+          <th>Number of Certificates Claimed (if applicable)</th>
+          <td>{{certificatesClaimed | number : '1.0-0'}}</td>
+        </tr>
+        <tr>
+          <th>Average First Attempt Score</th>
+          <td>{{averageFirstAttemptScore | number : '1.2-2'}}&#37;</td>
+        </tr>
+        <tr>
+          <th>Average First Attempt Score for All Activities from this Provider</th>
+          <td>{{providerAverageFirstAttempt | number : '1.2-2'}}&#37;</td>
+        </tr>
+        <tr>
+          <th>Cronbach's alpha</th>
+          <td>{{(cronbach) ? cronbach : 0  | number : '1.2-2' }}</td>
+        </tr>
+        <tr>
+          <th>Standard deviation</th>
+          <td>{{(standardDeviation) ? standardDeviation : 0 | number  : '1.2-2'}}</td>
+        </tr>
+        <tr>
+          <th>Standard error of the mean</th>
+          <td>{{(standardErrorOfTheMean) ? standardErrorOfTheMean : 0 | number : '1.2-2' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-4">
+    </div>
+  </div>
+  <hr/>
+</div>

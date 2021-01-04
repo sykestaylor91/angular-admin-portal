@@ -1,0 +1,21 @@
+<button mat-raised-button *ngIf="!selectedFile" class="btn btn-primary" [disabled]="isDisabled" (click)="selectMediaClickHandler()" type="button">Select file</button>
+<div *ngIf="selectedFile && !isDisabled">
+    <mat-card>
+        <span class="section-label">{{selectedFile.title}}</span> ({{selectedFile.contentType}})
+        <hr/>
+        <div id="preview" class="preview">
+            <img [src]="selectedFile.thumbnail">
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-6">
+                <button mat-raised-button class="btn btn-primary width-100 margin-bottom-10" (click)="selectMediaClickHandler()">Change</button>
+            </div>
+            <div class="col-sm-6">
+                <button mat-raised-button class="btn btn-primary width-100 margin-bottom-10" (click)="removeSelectedImage()">Remove</button>
+            </div>
+        </div>
+        <br/>
+    </mat-card>
+</div>
+

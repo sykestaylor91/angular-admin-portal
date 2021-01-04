@@ -1,0 +1,25 @@
+<div class="row relative">
+  <div class="col-lg-12">
+    <h1>{{title}}</h1>
+  </div>
+</div>
+<div class="row relative">
+  <div class="col-lg-12">
+    <app-search-contributors (setSummary)="setSummary($event)"></app-search-contributors>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <app-summary (loadQuestionResponses)="loadQuestionResponses($event)"></app-summary>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <app-question-response></app-question-response>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <app-evaluation-report></app-evaluation-report>
+  </div>
+</div>

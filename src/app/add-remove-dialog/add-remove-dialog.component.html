@@ -1,0 +1,32 @@
+<div class="relative" [hidden]="!showSpinner">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+<button mat-icon-button class="btn btn-danger pull-right dialog-close-button-no-margin" matTooltip="Close" (click)="closeDialog(true)">
+  <mat-icon>clear</mat-icon>
+</button>
+<div class="row" [hidden]="showSpinner">
+  <div class="col-sm-12">
+    <button *ngIf="!createNew" mat-raised-button class="btn btn-primary pull-right" (click)="createNew = true">
+      Create question
+    </button>
+    <button *ngIf=" createNew" mat-icon-button class="btn btn-default pull-right back-button" matTooltip="'Back to list'" (click)="createNew = false">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+</div>
+<div class="form-group" [hidden]="showSpinner" *ngIf="!createNew">
+  <div  class="ui-global-search">
+  </div>
+  <app-nowce-data-list
+  [cols]= "columns"
+  [dataArray]= "filteredQuestions"
+  [selectedItems]= "courseQuestions"
+  [saveType]= "'object'"
+  ></app-nowce-data-list>
+  <br>
+  <button mat-raised-button (click)="closeDialog(true)" class="pull-right btn btn-primary">Close</button>
+</div>
+<app-question-form [subComponent]="true"
+                   (questionSave)="onSaveQuestion($event)"
+                   *ngIf="createNew">
+</app-question-form>

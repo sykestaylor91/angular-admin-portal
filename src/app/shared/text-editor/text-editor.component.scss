@@ -1,0 +1,203 @@
+//@import "../../../assets/scss/core/variables";
+//
+//:host {
+//  position: relative;
+//}
+//
+//:host(.full-screen) {
+//  position: absolute;
+//  z-index: 999;
+//
+//  ::ng-deep quill-editor {
+//    position: fixed;
+//    top: $t-toolbarHeight;
+//    left: 0;
+//    right: 0;
+//    bottom: 0;
+//
+//    & > div.ql-container.ql-snow {
+//      max-height: 100%;
+//    }
+//  }
+//}
+//
+//.editor-button {
+//  font-size: 15px;
+//}
+//
+//.text-editor-group {
+//  display: -webkit-box;
+//  padding-right: 14px;
+//  float: left;
+//}
+//
+//::ng-deep quill-editor > div.ql-container.ql-snow {
+//  min-height: $editor-min-height;
+//  max-height: 300px;
+//  overflow-y: auto;
+//  position: static;
+//
+//  & > div.ql-editor {
+//    min-height: $editor-min-height;
+//
+//    &.ql-blank {
+//      position: relative;
+//    }
+//  }
+//
+//  & > div.ql-tooltip.ql-editing.ql-flip {
+//    z-index: 9;
+//  }
+//
+//  &.ql-disabled {
+//    & > div.ql-editor,
+//    & > div.ql-editor.ql-blank {
+//      background-color: $c-grayLighter;
+//    }
+//  }
+//}
+//
+//::ng-deep quill-editor {
+//  iframe {
+//    pointer-events: none;
+//  }
+//
+//  .ql-toolbar.ql-snow {
+//    background: none;
+//    float: right;
+//    button {
+//      width: auto;
+//    }
+//  }
+//
+//  .ql-snow .ql-editor {
+//    a[href^="/citation/"] {
+//      color: $c-primaryColor;
+//      background-color: $c-grayLighter;
+//      margin: 1px;
+//      border-radius: 3px;
+//      display: inline-block;
+//      cursor: pointer;
+//      min-width: 17px;
+//      line-height: 100%;
+//      text-align: center;
+//      text-decoration: underline;
+//      vertical-align: super;
+//      font-size: smaller;
+//
+//      &:before {
+//        content: ' ';
+//      }
+//
+//      &:after {
+//        content: ' ';
+//      }
+//    }
+//  }
+//
+//  div.ql-container {
+//    div > span {
+//      display:none !important;
+//    }
+//  }
+//
+//  .text-area-source {
+//    width: 100%;
+//    margin: 0;
+//    background: $c-grayDarker;
+//    box-sizing: border-box;
+//    color: $c-grayLighter;
+//    font-size: 15px;
+//    outline: none;
+//    padding: 20px;
+//    line-height: 24px;
+//    font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+//    position: absolute;
+//    z-index: 1;
+//    top: 0;
+//    bottom: 0;
+//    border: none;
+//  }
+//}
+//
+//.text-area-not-full-screen {
+//  margin-top: -122px;
+//  background-color: $c-grayLighter;
+//  width: 100%;
+//  min-height: $editor-min-height;
+//  max-height: 300px;
+//  overflow-y: auto;
+//}
+//
+//.text-area-full-screen {
+//  width: 100%;
+//  height: 100%;
+//  background-color: $c-grayLighter;
+//  margin-top: 90px;
+//  position: fixed;
+//  overflow: auto;
+//  z-index: 1;
+//  left: 0;
+//  top: 0;
+//
+//  & > div > .ui-editor-content {
+//    width: 100%;
+//    height: 100%;
+//    background-color: $c-grayLighter;
+//    position: absolute;
+//  }
+//}
+//
+//.pdf-image {
+//  width: 10px;
+//  height: 14px;
+//}
+//
+//.ql-format-group {
+//  float:right;
+//}
+//
+//
+
+
+.input-icon-textarea .input-icon {
+  color: gray;
+  cursor: pointer;
+  position: relative;
+  margin-top: -20px !important;
+}
+
+.ql-toolbar.ql-snow,  {
+  border: none !important;
+  background: none;
+  text-align:right;
+  margin-top: -25px !important;
+}
+.lightgrey {
+  color: lightgrey;
+}
+.gray{
+  color: gray;
+}
+.black {
+  color: black;
+}
+.ql-format-group {
+  float:right;
+}
+
+.input-label {
+  min-height: 50px;
+  font-size: 140%;
+}
+.pdf-image {
+  width: 10px;
+  //height: 14px;
+}
+
+.ql-toolbar.ql-snow,  {
+  border: none !important;
+  background: none;
+  //text-align:right;
+  margin-top: -35px !important;
+}

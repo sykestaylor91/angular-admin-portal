@@ -1,0 +1,239 @@
+<div class="row">
+
+
+
+   <div *ngIf="invitationExpired()">Invitation has already expired</div>
+
+   <div  *ngIf="!invitationExpired()">
+
+     <h1>Register to Contribute</h1>
+
+     {{errorMsg}}
+
+     <p>
+       <!--TODO: set dynamic Primary contact and +provider -->
+       <span class="bold">{{providerPrimaryContact}}</span> has invited you to contribute to activities provided by <span
+       class="bold">{{(providerName)}}</span> as a {{role}}.<br/>
+       After you complete your registration you will enjoy access rights to <span class="bold">{{accessRights}}</span>.
+     </p>
+
+
+     <p>
+       Please verify the following details are correct, or simply over-type and save any correction
+     </p>
+     <p class="bold">
+       Access Type Granted: {{accessRights}}
+     </p>
+
+   <form [formGroup]="form" novalidate>
+    <div class="margin-bottom-20">
+      <div class="row">
+        <!-- left col-->
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+
+          <div class="form-group" [class.has-error]="!isControlValid('title')">
+            <label for="title">Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   formControlName="title"
+                   placeholder="Title">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+
+          <div class="form-group" [class.has-error]="!isControlValid('otherTitle')">
+            <label for="otherTitle">Other Title</label>
+            <input type="text"
+                   class="form-control"
+                   id="otherTitle"
+                   formControlName="otherTitle"
+                   placeholder="Enter Other Title">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('firstName')">
+            <label for="firstName">First Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="firstName"
+                   formControlName="firstName"
+                   placeholder="Enter First Name">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('familyName')">
+            <label for="familyName">Last Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="familyName"
+                   formControlName="familyName"
+                   placeholder="Enter Last Name">
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('organisation')">
+            <label for="email">Organisation</label>
+            <input type="email"
+                   class="form-control"
+                   id="organistion"
+                   formControlName="organisation"
+                   placeholder="Organisation">
+          </div>
+
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('email')">
+            <label for="email">Email address</label>
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   formControlName="email"
+                   placeholder="Email">
+          </div>
+        </div>
+      </div>
+
+        <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('password')">
+            <label for="password">Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   formControlName="password"
+                   placeholder="Password">
+          </div>
+          <div *ngIf="!isControlValid('password')" class="field-tooltip margin-bottom-20 red">Password should be at least 8 charcters long and contain upper case, lower case, digits and special (!@#$%^&amp;*) characters.</div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('confirmPassword')">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="confirmPassword"
+                   formControlName="confirmPassword"
+                   placeholder="confirm Password">
+          </div>
+          <div *ngIf="!isControlValid('confirmPassword')" class="field-tooltip margin-bottom-20 red">Confirmation should match password</div>
+        </div>
+
+      </div>
+        <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+
+          <div class="form-group" [class.has-error]="!isControlValid('address1')">
+            <label for="address1">Street Address 1</label>
+            <input type="text"
+                   class="form-control"
+                   id="address1"
+                   formControlName="address1"
+                   placeholder="Street Address 1">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+
+          <div class="form-group" [class.has-error]="!isControlValid('address2')">
+            <label for="address2">Street Address 2</label>
+            <input type="text"
+                   class="form-control"
+                   id="address2"
+                   formControlName="address2"
+                   placeholder="Street Address 2">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('city')">
+            <label for="city">Town/City</label>
+            <input type="text"
+                   class="form-control"
+                   id="city"
+                   formControlName="city"
+                   placeholder="Town/City">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('state')">
+            <label for="state">State/Region</label>
+            <input type="text"
+                   class="form-control"
+                   id="state"
+                   formControlName="state"
+                   placeholder="State/Region">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('postalCode')">
+            <label for="postalCode">Zip/Postal Code</label>
+            <input type="text"
+                   class="form-control"
+                   id="postalCode"
+                   formControlName="postalCode"
+                   placeholder="Zip/Postal Code">
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+          <div class="form-group" [class.has-error]="!isControlValid('country')">
+            <label for="country">Country</label>
+            <input type="text"
+                   class="form-control"
+                   id="country"
+                   formControlName="country"
+                   placeholder="Country">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row margin-bottom-20">
+      <button mat-raised-button class="btn btn-primary pull-right"
+              [disabled]="!isValid"
+              (click)="onSave()">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Register
+      </button>
+    </div>
+  </form>
+
+  <div class="sub-description">
+    <p>
+      <strong>
+        NowCE Position on &lsquo;Disclosure&rsquo;
+      </strong>
+    </p>
+
+    <p>
+      If you are preparing material for users seeking certification from a board accredited education
+      provider, it is generally required that all contributors make a declaration about any financial or
+      other interests they might have which are associated with the speciality that is the focus of the
+      course content.
+    </p>
+
+    <p>
+      NowCE supports the level of compliance [consistent with the AACME requirement]. If you have no
+      interests to disclose please use the next form to say this. -No course will be published unless the
+      author and other contributors disclose their related interests or confirm they have none. Failure to
+      do this might invalidate the authentication for the student and infringe upon accreditation
+      regulations. And there is a benefit for you too.
+    </p>
+
+    <p>
+      After you have completed this step we will provide you with a URL for you to pass to other
+      assignees so they can upload your disclosure details from a single location.
+    </p>
+
+    <p>
+      As an option - add your credentials and citations to enjoy the appropriate
+      recognition and the convenience of a single referral source that is always under your control.
+    </p>
+  </div>
+
+  </div>
+
+
+</div>

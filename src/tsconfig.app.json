@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "types": [],
+    "paths": {
+      "primeng/*": ["node_modules/primeng-lts/*"]
+    }
+  },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+  ],
+  "angularCompilerOptions": {
+  "enableIvy": false
+}
+}

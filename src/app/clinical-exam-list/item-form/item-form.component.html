@@ -1,0 +1,89 @@
+<h2 class="template-orange">{{formType}} item</h2>
+
+<button *ngIf="subComponent" (click)="dialogRef.close()" class="pull-right dialog-close-button" mat-icon-button>
+  <mat-icon>clear</mat-icon>
+</button>
+<form  *ngIf="formLoaded" [formGroup]="form" novalidate>
+  <div class="margin-bottom-10">
+    <button (click)="saveChanges()"class="btn button-default save-button pull-right" mat-raised-button >Save</button>
+  </div>
+  <div class="margin-bottom-10">
+    <div class="col-md-6 col-lg-6">
+      <div class="form-group">
+        <app-change-history-input-component
+          [formControlName]="'title'"
+          [formGroup]="form"
+          [inputType]="InputType.Text"
+          [label]="'Item title'"
+          [resourceElement]="'title'"
+          [selectedResource]="item"
+          [tooltip]="'Enter a name for this answer format'">
+        </app-change-history-input-component>
+      </div>
+    </div>
+  </div>
+        <div class="margin-bottom-10">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+
+              <app-change-history-input-component
+                [formControlName]="'text'"
+                [formGroup]="form"
+                [inputType]="InputType.Text"
+                [label]="'Text'"
+                [resourceElement]="'text'"
+                [selectedResource]="item"
+                [tooltip]="'The text presented in this item'">
+              </app-change-history-input-component>
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-10">
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <app-change-history-input-component
+                [formControlName]="'answerFormat'"
+                [formGroup]="form"
+                [inputType]="InputType.Custom"
+                [label]="'Answer format'"
+                [resourceElement]="'answerFormat'"
+                [selectedResource]="item"
+                [tooltip]="'The answer format used for this item'">
+                <br/>
+                <select [formControlName]="'answerFormat'"
+                        [value]="'Please select...'"
+                        class="form-control">
+                  <option *ngFor="let format of answerFormats; let i = index"
+                          [selected]="format.id===item.answerFormat"
+                          [value]="format.id">{{format.title}}</option>
+                </select>
+              </app-change-history-input-component>
+              <!--<ng-content></ng-content>-->
+            </div>
+          </div>
+        </div>
+        <div class="margin-bottom-10">
+
+          <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+              <app-change-history-input-component
+                [formControlName]="'required'"
+                [formGroup]="form"
+                [inputType]="InputType.Custom"
+                [label]="'Required'"
+                [resourceElement]="'required'"
+                [selectedResource]="item"
+                [tooltip]="'Is the examiner required to complete this item?'">
+                <br>
+                <mat-radio-group aria-label="Select an option" formControlName="required" name="required">
+                  <mat-radio-button style="padding:20px;" value="true">Yes</mat-radio-button>
+                  <mat-radio-button style="padding:20px;" value="false">No</mat-radio-button>
+                </mat-radio-group>
+              </app-change-history-input-component>
+            </div>
+          </div>
+        </div>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <button (click)="saveChanges()" class="btn btn-primary pull-right" mat-raised-button> Save</button>
+  </div>
+</form>

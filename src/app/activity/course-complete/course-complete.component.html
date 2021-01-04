@@ -1,0 +1,43 @@
+<div >
+  <mat-card class="align-center" *ngIf="!userExamSubmitted">
+    <h3 class="margin-bottom-20">{{title}}</h3>
+    <div class="margin-bottom-20">
+      <p>
+        You have completed all the questions in this activity. Please click below to either
+        retake incorrectly answered/skipped questions in this activity or proceed to give feedback and
+        submit your answers.
+      </p>
+    </div>
+    <div class="margin-bottom-20">
+      <button mat-raised-button class="btn btn-primary" *ngIf="retakeAvailable"
+              (click)="tryMissedOrIncorrectAnswers()">
+        <i class="fa fa-refresh" aria-hidden="true"></i> Retake incorrect or skipped
+      </button>
+
+      <button mat-raised-button class="btn btn-primary"
+              (click)="submitUserExam()">
+        <i class="fa fa-play" aria-hidden="true"></i> Submit answers
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- If the exam has been submitted, but the evaluation is not complete, show the evaluation -->
+  <mat-card class="col-sm-6 col-sm-offset-3 align-center" *ngIf="userExamSubmitted && !userEvaluationSubmitted && showPostEvaluation">
+    <app-post-course-evaluation
+      [selectedExam]="selectedExam"
+      [userExam]="userExam"
+      (userEvaluationSubmitted)="onPostCourseEvaluationSubmitted($event)"></app-post-course-evaluation>
+  </mat-card>
+
+  <!-- If the exam has been submitted AND evaluation is complete, show the certificate button -->
+  <mat-card class="col-sm-6 col-sm-offset-3 align-center" *ngIf="userExamSubmitted && (userEvaluationSubmitted || !showPostEvaluation) && hasCertificate">
+    <app-post-course-certificate
+      [selectedExam]="selectedExam"
+      [userExam]="userExam"
+      [userEvaluation]="userEvaluation"></app-post-course-certificate>
+  </mat-card>
+
+  <mat-card class="col-sm-6 col-sm-offset-3 align-center" *ngIf="userExamSubmitted">
+    <button mat-raised-button class="btn btn-primary" (click)="goToDashboard()">Go to Dashboard</button>
+  </mat-card>
+</div>

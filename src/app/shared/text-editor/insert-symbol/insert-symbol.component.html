@@ -1,0 +1,7 @@
+<p-dataView [value]="symbolsArray" [paginator]="true" [rows]="100" [alwaysShowPaginator]="false" >
+  <ng-template let-symbol pTemplate="item">
+    <div class="ui-g-12 ui-md-1">
+      <span title=" {{symbol[1]}} " class="insert-symbol" (click)="insert(symbol[0])" [innerHtml]="symbol[0]"></span>
+    </div>
+  </ng-template>
+</p-dataView>

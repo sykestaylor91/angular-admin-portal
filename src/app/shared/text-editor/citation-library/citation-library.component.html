@@ -1,0 +1,37 @@
+<div *ngIf="citations && citations.length > 0">
+  <div class="ui-global-search">
+    <input type="text"
+           class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+           size="50"
+           (keyup)="onFilterKeyUp()"
+           [(ngModel)]="filterTerm"
+           id="search"
+           placeholder="Search citations">
+  </div>
+  <br />
+  <!-- // TODO: replace with new table -->
+  <p-table [value]="filteredCitations" [paginator]="true" [rows]="20" [alwaysShowPaginator]="false" >
+    <ng-template let-citation pTemplate="body" let-i="index+1" let-even="index % 2 == 0">
+      <div class="form-group" [ngClass]="{ 'citation-group-even' : even }">
+        <div class="box">
+          <div class="citation-group">
+            <div class="citation-group-number">
+              {{i}}.
+            </div>
+            <div class="citation-group-text" [innerHTML]="citation.text"></div>
+            <div class="citation-group-action">
+                <button mat-raised-button class="btn btn-primary" (click)="insertCitation(citation)" type="button">
+                  Add to activity
+                </button>
+            </div>
+            <div class='clearfix'></div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<div *ngIf="!citations || citations.length === 0">
+  {{ noCitationText }}
+</div>

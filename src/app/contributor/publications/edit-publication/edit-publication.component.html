@@ -1,0 +1,15 @@
+<div class="row form-group">
+  <div class="col-sm-12">
+    <div class="form-group">
+        <app-text-editor [(ngModel)]="publicationText" type="text" name="text"> </app-text-editor>
+    </div>
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-sm-12">
+    <div class="form-group pull-right">
+      <button mat-raised-button class="btn btn-secondary" (click)="dismissModal()">Cancel</button>
+      <button mat-raised-button class="btn button-default save-button" (click)="saveClickHandler()">Save</button>
+    </div>
+  </div>
+</div>

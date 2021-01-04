@@ -1,0 +1,14 @@
+<div *ngIf="responseDetails.length > 0" class="margin-bottom-20">
+  <mat-card>
+    <h3>{{title}}</h3>
+    <div class="ui-datatable-tablewrapper ">
+      <app-nowce-data-list [cols]="columnsResponses" [dataArray]="responseDetails">
+      </app-nowce-data-list>
+        <br />
+        <div class="text-center">
+            <button mat-raised-button class="btn btn-primary" (click)="viewCourseMetricClickHandler()"><i class="fa fa-search"></i> View activity metrics</button>
+            <button mat-raised-button class="btn btn-primary" (click)="printReportCsv()"><i class="fa fa-print"></i> Print Report CSV</button>
+        </div>
+    </div>
+  </mat-card>
+</div>

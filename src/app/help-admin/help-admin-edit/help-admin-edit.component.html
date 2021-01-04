@@ -1,0 +1,54 @@
+<mat-card class="width-100 margin-bottom-20">
+<form [formGroup]="helpFormGroup" novalidate (ngSubmit)="finaliseClickHandler()">
+  <div class="row relative">
+    <div class="col-sm-6">
+      <div class="form-group required" [class.has-error]="helpTitle.hasError('required') && formSubmitted">
+        <label class="control-label">Document Description</label>
+        <input type="text"
+               class="form-control"
+               id="helpTitle"
+               formControlName="helpTitle"
+               placeholder="Document Title">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group required" [class.has-error]="helpPage.hasError('required') && formSubmitted">
+        <label class="control-label">Page Url</label>
+        <input type="text"
+               class="form-control"
+               id="helpPage"
+               formControlName="helpPage"
+               placeholder="Page">
+      </div>
+    </div>
+  </div>
+  <div class="row relative">
+    <div class="col-sm-6">
+      <div class="form-group">
+        (If there are multiple sections to a page, and the url does not change to reflect this, then you can specify a
+        particular section. To do this, copy the title of the section and paste it into the box below.)
+        <br/>
+        <label class="control-label">Specify Section</label>
+        <input type="text"
+               class="form-control"
+               id="specifiedPage"
+               formControlName="specifiedPage"
+               placeholder="Component Title">
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <section>
+        <app-text-editor name="helpContent" formControlName="helpContent"></app-text-editor>
+      </section>
+      <div class="form-group pull-right">
+        <br/>
+        <button type="button" class="btn btn-primary mat-raised-button" (click)="cancelClickHandler()">Cancel</button>
+        <button type="submit" class="btn btn-primary mat-raised-button">{{finaliseText}}</button>
+      </div>
+    </div>
+  </div>
+</form>
+</mat-card>

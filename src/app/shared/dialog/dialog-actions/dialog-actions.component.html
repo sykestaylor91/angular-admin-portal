@@ -1,0 +1,15 @@
+<app-dialog-header [title]="data.title"
+                   [showLoading]="data.showLoading"
+                   (closeDialog)="onCloseDialog()">
+</app-dialog-header>
+<div *ngIf="displayContent" [innerHTML]="trustHtml ? (data.content | safeHtml) : data.content">
+</div>
+<ng-content></ng-content>
+<br/>
+<div class="actions-wrapper">
+  <div *ngFor="let action of data.actions">
+    <button mat-raised-button class="btn btn-primary action-button pull-right" (click)="onDialogResult(action)">
+      {{action}}
+    </button>
+  </div>
+</div>

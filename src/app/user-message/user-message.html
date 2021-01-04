@@ -1,0 +1,51 @@
+<h1>{{title}}</h1>
+
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <div class="form-group">
+      <label>Message Type</label>
+      <br/>
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-default btn-confirm-yes"
+          [disabled]="disableConflictButtons"
+          [(ngModel)]="messageType"
+          (click)="setMessageType('team')"
+          btnRadio="team">
+          Team Message
+        </button>
+        <button
+          type="button"
+          class="btn btn-default btn-confirm-yes"
+          [disabled]="disableConflictButtons"
+          [(ngModel)]="messageType"
+          (click)="setMessageType('readers')"
+          btnRadio="readers">
+          Reader Message
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <app-text-editor [(ngModel)]="messageContentTEMPORARY" name="message"></app-text-editor>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <button mat-raised-button class="btn btn-primary pull-right" (click)="saveNewMessage()"><i
+      class="fa fa-save"></i> Save Message
+    </button>
+  </div>
+
+</div>
+<h3>Message History</h3>
+<div *ngFor="let message of providerMessages">
+  <span class="bold" *ngIf="message.type === 'readers'">Reader Message</span>
+  <span class="bold" *ngIf="message.type === 'team'">Team Message</span>
+  <br/>{{message.dateCreated | date: 'medium'}} <br/>
+  <span [innerHTML]="message.content"></span>
+  <hr/>
+</div>

@@ -1,0 +1,159 @@
+@import "../core/variables";
+
+
+
+/**____ End of buttons ___**/
+/**  Styling for PrimeNG tables **/
+.ui-datatable th.ui-state-default {
+  background: #fff;
+  //color: $c-secondaryColor !important;
+  font-weight: bold !important;
+  padding:20px !important;
+}
+
+div.ui-datatable-tablewrapper table,  .ui-paginator {
+  //border: none;
+}
+div.ui-table-wrapper {
+  margin-top: -20px !important;
+}
+table th  {
+  color: gray !important;
+  font-weight: bold !important;
+  //padding:20px !important;
+}
+
+.ui-datatable {
+  // box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.ui-datatable tr,  .ui-widget-content, .ui-paginator {
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+body .ui-dataview .ui-dataview-content {
+  padding: 0;
+  //border-top: 1px solid #c8c8c8 !important;
+  //border-left: 1px solid #c8c8c8 !important;
+  //border-right: 1px solid #c8c8c8 !important;
+  background: none;
+  color: inherit;
+
+}
+.ui-table .ui-table-thead>tr>th, .ui-table .ui-table-tfoot>tr>td, .ui-table .ui-table-data>tr>td {
+
+  padding: .5em .5em !important;
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td, .ui-datatable tfoot th {
+  padding: 6px;
+  text-align: left;
+  border: none !important;
+}
+.ui-datatable-odd {
+  background-color: $c-white !important;
+}
+.ui-state-active {
+  color: $c-white;
+}
+.ui-paginator.ui-paginator-page {
+  color: $c-white;
+  .ui-state-active {
+    color: $c-grayLight;
+  }
+}
+
+.ui-paginator {
+  background: transparent;
+  a, span {
+    color: $c-grayLight;
+  }
+  a.ui-state-disabled span {
+    color: $c-grayLight;
+  }
+  a.ui-state-hover, a.ui-state-hover span {
+    color: $c-primaryColor;
+  }
+}
+
+.ui-paginator span.ui-paginator-pages a.ui-paginator-page {
+  background: transparent;
+  border: none;
+  color: $c-primaryColor;
+}
+
+.dark-theme .ui-paginator span.ui-paginator-pages a.ui-paginator-page {
+  background: transparent;
+  border: none;
+  color: $c-primaryColor;
+}
+
+.ui-paginator span.ui-paginator-pages a.ui-paginator-page.ui-state-active {
+  background: $c-grayLighter;
+}
+.dark-theme .ui-paginator span.ui-paginator-pages a.ui-paginator-page.ui-state-active {
+  background: $c-grayLight;
+  color: black;
+  font-weight: bold;
+}
+
+.ui-paginator span.ui-paginator-pages a.ui-paginator-page:hover {
+  background: $c-grayLight;
+  color: $c-white;
+}
+
+.ui-state-active {
+  font-weight: bold;
+  color: $c-primaryColor;
+}
+
+.ui-orderlist-caption {
+  background: #76777B;
+  color: $c-white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.ui-orderlist-list {
+  border: solid 1px $c-grayLight;
+}
+
+.ui-orderlist-item {
+  border-bottom: solid 1px $c-grayLighter !important;
+}
+
+.ui-orderlist-item:nth-child(even) {
+  background: #e6e6e6;
+}
+
+.ui-orderlist-item:nth-child(odd) {
+  background: $c-white;
+}
+
+.ui-state-highlight {
+  background: rgb(168, 219, 240) !important;
+}
+th.ui-state-highlight {
+    background: #f6f6f6 !important;
+}
+.dark-theme th.ui-state-highlight {
+  background: #303030 !important;
+}
+body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+  background-color: #f6f6f6;
+  color: #cccccc;
+}
+
+.dark-theme .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+  background-color: #303030 !important;
+  color: #cccccc;
+}
+.dark-theme .ui-table .ui-table-tbody > tr {
+  background-color: transparent !important;
+}
+body .ui-widget {
+  font-family: inherit;
+}
+///**____ End of PrimeNG tables ___**/

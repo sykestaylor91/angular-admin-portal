@@ -1,0 +1,109 @@
+<div class="relative">
+  <form [formGroup]="paymentFormGroup">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group required input-group-lg"
+             [class.has-error]="grantProvided.hasError('required') && formSubmitted">
+          <div><label class="control-label">Grant</label></div>
+          <mat-radio-group disableRipple class="example-radio-group" formControlName="grantProvided">
+            <mat-radio-button [value]="'true'">
+              Yes
+            </mat-radio-button>
+            <br/>
+            <mat-radio-button [value]="'false'">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group required"
+             [class.has-error]="personalFee.hasError('required') && formSubmitted">
+          <div><label class="control-label">Fee</label></div>
+          <mat-radio-group disableRipple class="example-radio-group" formControlName="personalFee">
+            <mat-radio-button [value]="'true'">
+              Yes
+            </mat-radio-button>
+            <br/>
+            <mat-radio-button [value]="'false'">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group required"
+             [class.has-error]="paidEmployee.hasError('required') && formSubmitted">
+          <div><label class="control-label">Employee</label></div>
+          <mat-radio-group disableRipple class="example-radio-group" formControlName="paidEmployee">
+            <mat-radio-button [value]="'true'">
+              Yes
+            </mat-radio-button>
+            <br/>
+            <mat-radio-button [value]="'false'">
+              No
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group required col-12"
+           [class.has-error]="institution.hasError('required') && formSubmitted">
+        <label class="control-label"
+               for="paymentInstitution">Name of organization</label>
+        <input type="text"
+               class="form-control"
+               id="paymentInstitution"
+               formControlName="institution"
+               placeholder="Name of Organization">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-12">
+        <label for="paymentComment">Comment</label>
+        <input type="text"
+               class="form-control"
+               id="paymentComment"
+               formControlName="comment"
+               placeholder="Comment">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group required col-12">
+        <label class="control-label">Year disclosed</label>
+        <input type="date"
+               class="form-control"
+               id="yearDisclosed"
+               formControlName="yearDisclosed"
+               placeholder="Year disclosed">
+      </div>
+    </div>
+
+    <div class="form-group pull-right">
+
+      <button mat-raised-button type="button"
+              class="btn btn-primary"
+              *ngIf="showDelete"
+              (click)="deleteHandler()">
+        Delete
+      </button>
+
+      <button mat-raised-button type="submit"
+              class="btn btn-primary"
+              [disabled]="!paymentFormGroup.valid"
+              (click)="submitHandler()">
+        Save
+      </button>
+      <button mat-raised-button type="button"
+              class="btn btn-primary"
+              (click)="cancelHandler()">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</div>

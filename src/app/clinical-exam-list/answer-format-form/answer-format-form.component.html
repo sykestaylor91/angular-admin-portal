@@ -1,0 +1,46 @@
+<h2 class="template-orange">{{formType}} answer format</h2>
+<button (click)="dialogRef.close()" *ngIf="subComponent" class="pull-right dialog-close-button" mat-icon-button>
+  <mat-icon>clear</mat-icon>
+</button>
+<form *ngIf="formLoaded" [formGroup]="form">
+  <button (click)="saveChanges()" class="btn button-default save-button pull-right" mat-raised-button >Save</button>
+  <br><br>
+  <div class="row relative panel-body margin-bottom-10">
+    <div class="col-md-8 form-group">
+      <app-change-history-input-component
+        [formControlName]="'title'"
+        [formGroup]="form"
+        [inputType]="InputType.Text"
+        [label]="'Answer format title'"
+        [resourceElement]="'title'"
+        [selectedResource]="answerFormat"
+        [tooltip]="'Enter a name for this answer format'">
+      </app-change-history-input-component>
+    </div>
+  </div>
+  <div class="row margin-bottom-10">
+    <div class="col-md-12">
+      <h4 class="control-label template-orange">Options</h4>
+      <div *ngFor="let option of options; let i = index; trackBy:trackByFn" class="row margin-bottom-10">
+        <div class="col-md-2 col-lg-1">
+          <label>Option {{i + 1}} </label>
+        </div>
+        <div class="col-md-8">
+          <input [(ngModel)]="options[i]" [ngModelOptions]="{standalone: true}" class="form-control" type="text" value="options[i]"/>
+        </div>
+        <div class="col-md-2">
+          <button (click)="removeOption(i)" class="btn btn-danger" mat-raised-button> Remove
+          </button>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <button (click)="addOption()" class="btn btn-primary" mat-raised-button type="button">
+    <i aria-hidden="true" class="fa fa-plus"></i>
+    Add an option
+  </button>
+  <br>
+  <button (click)="saveChanges()" class="btn btn-primary pull-right" mat-raised-button> Save</button>
+</form>
+

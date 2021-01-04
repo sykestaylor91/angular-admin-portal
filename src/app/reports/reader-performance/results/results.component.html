@@ -1,0 +1,31 @@
+<div *ngIf="readerPerformanceService.userResults && readerPerformanceService.userResults.length > 0" class="ui-datatable-tablewrapper margin-bottom-20">
+  <mat-card>
+  <h3>{{title}}</h3>
+  <table class="table ui-datatable">
+    <thead>
+    <tr>
+      <th>Last Name</th>
+      <th>First Name</th>
+      <th>Title</th>
+      <th>Ref or Member Number</th>
+      <th>Select</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let userResult of readerPerformanceService.userResults">
+      <td>{{userResult.lastName}}</td>
+      <td>{{userResult.firstName}}</td>
+      <td>{{userResult.title}}</td>
+      <td>{{userResult.id}}</td>
+      <td>
+        <input type="radio" name="selectedUser" value="{{userResult.id}}"
+               (click)="selectedUserClickHandler(userResult.id)">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </mat-card>
+</div>
+<div  *ngIf="readerPerformanceService.userResults && readerPerformanceService.userResults.length === 0">
+  <p>Sorry, no users matched that search.</p>
+</div>

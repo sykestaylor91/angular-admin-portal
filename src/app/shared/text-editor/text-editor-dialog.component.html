@@ -1,0 +1,61 @@
+<app-dialog-header [title]="data.type"
+                   [showLoading]="showLoading"
+                   [showPrevious]="!viewCitationHeader"
+                   (previousClicked)="onPreviousClicked()"
+                   (closeDialog)="onCloseDialog()">
+</app-dialog-header>
+
+<div *ngIf="data.type === MediaType.Citation && viewCitationHeader">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="list-group-item align-center pointer" (click)="onViewCitationsClicked(ViewCitationType.Insert)">
+        <div class="margin-bottom-10">
+          <mat-icon>library_add</mat-icon>
+        </div>
+        <h3>Insert New Citation</h3>
+        <span class="template-orange">Insert a new citation</span>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="list-group-item align-center pointer" (click)="onViewCitationsClicked(ViewCitationType.FilterByCourse)">
+        <div class="margin-bottom-10">
+          <mat-icon>bookmark</mat-icon>
+        </div>
+        <h3>Insert From Activity</h3>
+        <span class="template-orange">Insert citation from this activity</span>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="list-group-item align-center pointer" (click)="onViewCitationsClicked(ViewCitationType.ShowAll)">
+        <div class="margin-bottom-10">
+          <mat-icon>book</mat-icon>
+        </div>
+        <h3>Insert From Library</h3>
+        <span class="template-orange">Insert citation from Library</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-shared-select-media *ngIf="data.type === MediaType.Video || data.type === MediaType.Image || data.type === MediaType.Pdf || data.type === MediaType.Audio"
+                          [mediaMode]="data.type.toString()"
+                          (mediaSelected)="onInsertMedia($event)"></app-shared-select-media>
+
+<app-text-editor-embed-video *ngIf="data.type === MediaType.EmbedVideo"
+                              (insertEmbed)="onCloseDialog($event)"></app-text-editor-embed-video>
+
+<app-text-editor-insert-symbol *ngIf="data.type === MediaType.Symbols"
+                                (insertSymbol)="onCloseDialog($event)"></app-text-editor-insert-symbol>
+
+<div *ngIf="!viewCitationHeader">
+  <app-text-editor-add-citation *ngIf="citationType === ViewCitationType.Insert"
+                                (showLoading)="onShowLoading($event)"
+                                (insertCitation)="onInsertCitation($event)"></app-text-editor-add-citation>
+
+  <app-text-editor-citation-library
+    *ngIf="citationType === ViewCitationType.ShowAll || citationType === ViewCitationType.FilterByCourse"
+    [citationIds]="data.citations"
+    [viewAllCitations]="citationType === ViewCitationType.ShowAll"
+    (doneLoading)="onShowLoading(false)"
+    (citationLibraryInsert)="onInsertCitation($event)"></app-text-editor-citation-library>
+</div>

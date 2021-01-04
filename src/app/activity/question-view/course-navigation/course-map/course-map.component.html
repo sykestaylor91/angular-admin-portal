@@ -1,0 +1,27 @@
+<div>
+  <div *ngIf="courseMapVisible" [@enterAnimation]>
+    <h5 class="template-orange margin-top-10">Activity Map</h5>
+    <div *ngIf="userExam && userExam.questions" class="map-button-container">
+      <div *ngFor="let questionId of userExam.questions; let rowIndex=index">
+        <button mat-button [class.active-question]="questionId === userExam.currentQuestion"
+                [class.has-revisit]="isInRevisitList(questionId)"
+                [class.has-response]="hasResponse(questionId)"
+                [class.serial-question]="isSerialQuestion(questionId)"
+                [class.has-note]="questionHasNote(questionId)"
+                [attr.title]="getMapItemTitleAttribute(questionId)"
+                (click)="setActiveQuestion(questionId)" class="btn btn-default content-margin-10">
+          {{rowIndex + 1}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<button *ngIf="!courseMapVisible" mat-raised-button class="btn btn-primary margin-bottom-10"
+        (click)="courseMapVisible = !courseMapVisible">
+  Show Activity Map
+</button>
+
+<button *ngIf="courseMapVisible" mat-raised-button class="btn btn-primary margin-bottom-10"
+        (click)="courseMapVisible = !courseMapVisible">
+  Hide Activity Map
+</button>

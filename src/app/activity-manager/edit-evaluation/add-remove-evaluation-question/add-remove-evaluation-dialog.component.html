@@ -1,0 +1,26 @@
+<app-dialog-header [title]="data.title" (closeDialog)="closeDialog()">
+</app-dialog-header>
+
+<div class="row" *ngIf="!createNew">
+  <div class="col-sm-12">
+    <button class="btn btn-primary pull-right mat-raised-button" (click)="createNewQuestion()"><i class="fa fa-plus"
+        aria-hidden="true"></i> Create
+      Question
+    </button>
+  </div>
+</div>
+<div>
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+</div>
+<div class="form-group" *ngIf="!createNew">
+  <app-nowce-data-list
+    [cols]="columns"
+    [selectedItems]="selectedItems"
+    [saveType]= "'object'"
+    [dataArray]="questions"
+    [saveType]= "'id'"
+  ></app-nowce-data-list>
+</div>
+
+<app-question-form [subComponent]="true" (questionSave)="onSaveQuestion($event)" [type]="'evaluation'"  *ngIf="createNew">
+</app-question-form>

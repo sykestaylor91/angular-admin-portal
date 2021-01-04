@@ -1,0 +1,20 @@
+table.accreditationTable {
+  thead {
+    th:nth-child(1) {
+      width: 60px;
+      padding-left: .5em;
+
+    }
+    th:nth-child(2) {
+      width: 94.8%;
+    }
+  }
+
+  tbody {
+    max-height: 250px;
+    td:nth-child(1) {
+      width: 60px;
+      padding-left: .5em;
+    }
+  }
+}

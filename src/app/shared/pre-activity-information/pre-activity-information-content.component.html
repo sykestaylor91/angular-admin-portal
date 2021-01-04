@@ -1,0 +1,552 @@
+<h2 class="template-orange" mat-dialog-title>{{data.content.title}}</h2>
+
+<button mat-icon-button class="pull-right dialog-close-button" (click)="closeDialog()">
+  <mat-icon>clear</mat-icon>
+</button>
+
+<mat-dialog-content>
+  <div>
+
+    <h1 class="course-title">
+      {{data.content.title}}, {{data.content.subtitle}}
+    </h1>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="activityImage">
+      <div class='fd-title'>
+      </div>
+      <div class='fd-body activity-image'>
+        <img src="{{this.activityImage}}" />
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- Activity ID (uuid) -->
+    <!-- Should not show if provider ID is present -->
+    <div class='fd' *ngIf="!data.content.providerCourseId">
+      <div class='fd-title'>
+        Activity id
+      </div>
+      <div class='fd-body'>
+        {{shorthandId}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- Universal Activty Number -->
+<!--    <div class='fd' *ngIf="data.content.universalActivityNumber">-->
+<!--      <div class='fd-title'>-->
+<!--        Universal activity number-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        {{data.content.universalActivityNumber}}-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <!-- Should only show if present -->
+    <div class='fd' *ngIf="data.content.providerCourseId">
+      <div class='fd-title'>
+        Provider activity id
+      </div>
+      <div class='fd-body'>
+        {{data.content.providerCourseId}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+<!--    <div class='fd' *ngIf="true">-->
+<!--      <div class='fd-title'>-->
+<!--        <span *ngIf="data.content.price">Fee($)</span>-->
+<!--        <span *ngIf="data.content.price && data.content.tokens">&nbsp;/&nbsp;</span>-->
+<!--        <span *ngIf="data.content.tokens">Tokens</span>-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        <span *ngIf="data.content.price && data.content.tokens">-->
+<!--        ${{data.content.price}} / {{data.content.tokens}} tokens-->
+<!--        </span>-->
+<!--        <span *ngIf="data.content.price && !data.content.tokens">-->
+<!--        ${{data.content.price}}-->
+<!--        </span>-->
+<!--        <span *ngIf="!data.content.price && data.content.tokens">-->
+<!--        {{data.content.tokens}} tokens-->
+<!--        </span>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+<!--    <div class='fd' *ngIf="!isACGME && accreditorLogo">-->
+<!--      <div class='fd-title'>-->
+<!--        Accreditor's logo-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        <img [src]="accreditorLogo" class="accreditors-logo"/>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="aapaLogo">-->
+<!--      <div class='fd-title'></div>-->
+<!--      <div class='fd-body'>-->
+<!--        <img [src]="aapaLogo" class="accreditors-logo"/>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="anccLogo">-->
+<!--      <div class='fd-title'></div>-->
+<!--      <div class='fd-body'>-->
+<!--        <img [src]="anccLogo" class="accreditors-logo"/>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="acpeLogo">-->
+<!--      <div class='fd-title'></div>-->
+<!--      <div class='fd-body'>-->
+<!--        <img [src]="acpeLogo" class="accreditors-logo"/>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- Contributors (Name and Post Nom letters only) Role -->
+    <div class='fd' *ngIf="authorDisclosures && authorDisclosures.length > 0">
+      <div class='fd-title'>
+        Contributors
+      </div>
+      <div class='fd-body'>
+        <table class="contributor-table">
+          <tr *ngFor="let authorDisclosure of authorDisclosures; let i = index">
+            <td class="contributor-role">
+              {{authorDisclosure.activityRole | role}}
+            </td>
+            <td>
+              -
+            </td>
+            <td class="contributor-name">
+              {{User.fullName(authorDisclosure.firstName, authorDisclosure.lastName)}}
+            </td>
+            <td>
+              <span *ngIf="authorDisclosure.credentials.length > 0">-</span>
+            </td>
+            <td class="contributor-post-nom">
+              <span *ngIf="authorDisclosure.credentials.length > 0">
+              <span *ngFor="let credential of authorDisclosure.credentials; let i = index">
+              {{credential.postNominalLetters}}
+              </span>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="data.content.disclosureOfCommercialSupport">-->
+<!--      <div class='fd-title'>-->
+<!--        Disclosure or Commercial support statement-->
+<!--      </div>-->
+<!--      <div class='fd-body' [innerHtml]="data.content.disclosureOfCommercialSupport | safeHtml"></div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="!isACGME && creditText">
+      <div class='fd-title'>
+        Credits
+      </div>
+      <div class='fd-body'>
+        <span [innerHtml]="creditText"></span>
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="estimatedCompletionTimeDisplay">
+      <div class='fd-title'>
+        Estimated time for completion
+      </div>
+      <div class='fd-body'>
+        {{estimatedCompletionTimeDisplay}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.targetAudience">
+      <div class='fd-title'>
+        Target audience
+      </div>
+      <div class='fd-body'>
+        {{data.content.targetAudience}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="!isACGME && learningFormatDisplay">-->
+<!--      <div class='fd-title'>-->
+<!--        Learning format-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        {{learningFormatDisplay}}-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.levelOfDifficulty">
+      <div class='fd-title'>
+        Level of difficulty
+      </div>
+      <div class='fd-body'>
+        {{data.content.levelOfDifficulty}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="data.content.plannedExpireDate">-->
+<!--      <div class='fd-title'>-->
+<!--        Expiry date:-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        {{data.content.plannedExpireDate | date:'longDate'}}-->
+<!--        <br/>-->
+<!--        <em>You may take this activity after this date but it will not be valid for CE/CME-->
+<!--        credit.</em>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.passRate">
+      <div class='fd-title'>
+        Pass rate / Scoring requirement
+      </div>
+      <div class='fd-body'>
+        {{data.content.passRate}}%
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="data.content.certificate">-->
+<!--      <div class='fd-title'>-->
+<!--        Certificate / Statement of completion-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        <div *ngIf="statementOfCompletion">-->
+<!--          <span [innerHTML]="statementOfCompletion"></span>-->
+<!--        </div>-->
+<!--        <div *ngIf="!statementOfCompletion">-->
+<!--          No-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.introduction">
+      <div class='fd-title'>
+        Introduction / Description
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.introduction | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; Don't display statements if accreditingBody is NONE &ndash;&gt;-->
+<!--    <div *ngIf="!!data.content.accreditingBody && data.content.accreditingBody !== 'NONE'">-->
+<!--      &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--      <div class='fd' *ngIf="accreditationStatement">-->
+<!--        <div class='fd-title'>-->
+<!--          {{accreditationStatementLabel}}-->
+<!--        </div>-->
+<!--        <div class='fd-body' [innerHtml]="accreditationStatement | safeHtml"></div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+
+<!--      <div class='fd' *ngIf="data?.content?.coProvider">-->
+<!--        <div class='fd-title'>-->
+<!--          Name of co-provider-->
+<!--        </div>-->
+<!--        <div class='fd-body' [innerHtml]="data.content.coProvider"></div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--      <div class='fd' *ngIf="anccLogo && providerOrgService.provider.providerNumber">-->
+<!--        <div class='fd-title'>-->
+<!--          ANCC provider number-->
+<!--        </div>-->
+<!--        <div class='fd-body'>-->
+<!--          {{providerOrgService.provider.providerNumber}}-->
+<!--        </div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+
+      <!-- *********************** -->
+<!--      <div class='fd' *ngIf="!isACGME && creditDesignationStatement">-->
+<!--        <div class='fd-title'>-->
+<!--          Designation statement-->
+<!--        </div>-->
+<!--        <div class='fd-body' [innerHtml]="creditDesignationStatement | safeHtml"></div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--      <div class='fd' *ngIf="!isACGME && designationDisplay">-->
+<!--        <div class='fd-title'>-->
+<!--          How do you designate this activity-->
+<!--        </div>-->
+<!--        <div class='fd-body'>-->
+<!--          {{designationDisplay}}-->
+<!--        </div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--      <div class='fd' *ngIf="!isACGME && data.content.mocStatement">-->
+<!--        <div class='fd-title'>-->
+<!--          MOC statement-->
+<!--        </div>-->
+<!--        <div class='fd-body'>-->
+<!--          {{data.content.mocStatement}}-->
+<!--        </div>-->
+<!--        <div class='fd-clear'></div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.needs">
+      <div class='fd-title'>
+        Learning need
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.needs | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.educationObjectives">
+      <div class='fd-title'>
+        Education objectives
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.educationObjectives | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.plannedPublicationDate">
+      <div class='fd-title'>
+        Release date
+      </div>
+      <div class='fd-body'>
+        {{data.content.plannedPublicationDate | date:'longDate'}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="!isACGME && data.content.lastCreditAwardedDate">-->
+<!--      <div class='fd-title'>-->
+<!--        Last date when credits will be awarded-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        {{data.content.lastCreditAwardedDate | date:'longDate'}}-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+    <br/>
+
+<!--    <div class='fd-section-title' *ngIf="-->
+<!--      providerName ||-->
+<!--      data.content.welcomeMessage">-->
+<!--      Publisher statement-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="providerName">-->
+<!--      <div class='fd-title'>-->
+<!--        Published by-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        <div>-->
+<!--          {{providerName}}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          {{providerFullAddress}}-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    <div class='fd' *ngIf="data.content.welcomeMessage">-->
+<!--      <div class='fd-title'>-->
+<!--        Publisher statement-->
+<!--      </div>-->
+<!--      <div class='fd-body' [innerHtml]="data.content.welcomeMessage | safeHtml"></div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+<!--  -->
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.copyright">
+      <div class='fd-title'>
+        Copyright / Privacy / Confidentiality statement
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.copyright | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.disclaimer">
+      <div class='fd-title'>
+        Disclaimer statement
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.disclaimer | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.otherInformation">
+      <div class='fd-title'>
+        Other information
+      </div>
+      <div class='fd-body' [innerHtml]="data.content.otherInformation | safeHtml"></div>
+      <div class='fd-clear'></div>
+    </div>
+
+    <!-- *********************** -->
+    <div class='fd' *ngIf="data.content.readerSupport">
+      <div class='fd-title'>
+        Reader support
+      </div>
+      <div class='fd-body'>
+        {{data.content.readerSupport}}
+      </div>
+      <div class='fd-clear'></div>
+    </div>
+
+
+    <!-- *********************** -->
+<!--    <div class='fd' *ngIf="data.content.republicationRequest">-->
+<!--      <div class='fd-title'>-->
+<!--        Republication request-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        {{data.content.republicationRequest}}-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd'>-->
+<!--      <div class='fd-title'>-->
+<!--        Refund policy-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        All sales are final.-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    <br/>-->
+
+<!--    <div class='fd-section-title' *ngIf="citations && citations.length > 0">-->
+<!--      Cited material-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; *********************** &ndash;&gt;-->
+<!--    <div class='fd' *ngIf="citations && citations.length > 0">-->
+<!--      <div class='fd-title'>-->
+<!--        Bibliography-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        <div *ngFor="let citation of citations; let i = index">-->
+<!--          <div class='fd-date-col'>-->
+<!--            <em>{{citation.lastUpdated | date:'longDate'}}</em>-->
+<!--          </div>-->
+<!--          <div class='fd-citation-col' [innerHTML]="citation.text | safeHtml"></div>-->
+<!--          <div class='fd-clear'></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class='fd-clear'></div>-->
+<!--    </div>-->
+
+<!--    <br/>-->
+
+<!--    <div class='fd-section-title'>-->
+<!--      Disclosures-->
+<!--    </div>-->
+
+    <!-- *********************** -->
+<!--    <div class='fd'>-->
+<!--      <div class='fd-title' *ngIf="!disclosures || disclosures.length === 0">-->
+<!--        Nothing to disclose.-->
+<!--      </div>-->
+<!--      <div class='fd-body'>-->
+<!--        &lt;!&ndash; DISCLOSURES BODY &ndash;&gt;-->
+<!--        <div *ngFor="let authorDisclosure of authorDisclosures">-->
+<!--          <div class="padding-left-20"-->
+<!--            *ngIf="authorDisclosure && authorDisclosure.hasDisclosures">-->
+<!--            <span class="bold">{{User.fullName(authorDisclosure.firstName, authorDisclosure.lastName)}} Disclosures:</span>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.paymentDisclosures" class="margin-bottom-10">-->
+<!--              <p>-->
+<!--                Disclosed a payment received in the form of-->
+<!--                {{disclosure.relationshipType}}-->
+<!--                from {{disclosure.institution}} for services not connected with this activity.-->
+<!--              </p>-->
+<!--            </div>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.patentDisclosures" class="margin-bottom-10">-->
+<!--              <p>-->
+<!--                Disclosed an interest in the form of-->
+<!--                <span *ngIf="disclosure.patentPending">a patent application </span>-->
+<!--                <span *ngIf="disclosure.patentIssued">an issued patent </span>-->
+<!--                <span *ngIf="disclosure.patentLicensed">a patent license </span>-->
+<!--                <span *ngIf="disclosure.patentRoyalties">royalties received </span>-->
+<!--                (patent number) {{disclosure.patentNumber}} which might be seen as being relevant or broadly relevant to this-->
+<!--                activity.-->
+<!--              </p>-->
+<!--            </div>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.financialDisclosures" class="margin-bottom-10">-->
+<!--              Disclosed a payment received in the form of-->
+<!--              {{disclosure.relationshipType}}-->
+<!--              from {{disclosure.institution}} for services not connected with this activity.-->
+<!--            </div>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.partnershipDisclosures" class="margin-bottom-10">-->
+<!--              Disclosed the following partnership information:-->
+<!--              {{disclosure.partnershipDetails}}-->
+<!--              and that might be perceived to have a stake in the content of this activity even though such-->
+<!--              an interest does not exist.-->
+<!--            </div>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.activitiesDisclosures" class="margin-bottom-10">-->
+<!--              Disclosed the following activity information:-->
+<!--              {{disclosure.activitiesDetails}}-->
+<!--              and that might be perceived to have a stake in the content of this activity even though such-->
+<!--              an interest does not exist.-->
+<!--            </div>-->
+
+<!--            <div *ngFor="let disclosure of authorDisclosure.contributorDisclosures" class="margin-bottom-10">-->
+<!--              Disclosed receiving contributions from-->
+<!--              {{disclosure.contributionDetails}} that might be perceived by readers to have-->
+<!--              influence or give the appearance of potentially influencing the content of this activity.-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; /DISCLOSURE BODY&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</mat-dialog-content>

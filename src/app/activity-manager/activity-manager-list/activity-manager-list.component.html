@@ -1,0 +1,21 @@
+<app-activity-manager-template-header
+  *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.Planner, Role.SuperAdmin, Role.Provider]}">
+</app-activity-manager-template-header>
+
+<div class="row margin-bottom-20" *ngIf="isAcceptedMessageVisible">
+  <div class="col-sm-12.value">
+    <h2>Thank you for accepting the invitation to the activity titled: {{ acceptedActivityName }} .</h2>
+  </div>
+</div>
+<h3>Activity list</h3>
+<div class="margin-bottom-10" *ngIf="exams && exams.length > 0">
+  <app-nowce-data-list [cols]="columns" [dataArray]="filteredExams" [contextMenu]="contextMenu"
+  [contextMenuHide]="contextMenuHide" [filterLists]="filterLists"
+    (editClicked)="onEditExamClick($event)" (deleteClicked)="onDeleteClick($event)"
+    (useAsTemplateClicked)="onUseAsTemplateClick($event)" (previewClicked)="onPreviewClick($event)"
+    (unPublishClicked)="onUnPublishClick($event)" (metricsClicked)="onViewMetricsClick($event)">
+  </app-nowce-data-list>
+</div>
+<div *ngIf="!exams || exams.length === 0" class="margin-bottom-10 width-100">
+  There are no items to display
+</div>

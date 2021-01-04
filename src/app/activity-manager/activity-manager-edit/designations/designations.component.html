@@ -1,0 +1,144 @@
+<div *ngIf="!allHidden">
+  <h3>
+    Pricing & designations
+  </h3>
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div class="panel-body">
+    <form [formGroup]="designationFormGroup" novalidate>
+
+        <div *ngIf="!pricingHidden" class="row">
+          <app-change-history-input-component
+            [formControlName]="'price'"
+            [resourceElement]="'price'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            class="col-md-6"
+            [inputType]="InputType.Number"
+            [label]="'Price ($ USD)'">
+          </app-change-history-input-component>
+
+          <label class="form-group col-md-1  font-3 linker" title="Link Tokens with Price">
+            <i (click)="onLinkUnlinkPriceAndTokens($event)"
+               class="fa"
+               [ngClass]="{'fa-link': isTokensTrackingPriceChanges, 'fa-unlink': !isTokensTrackingPriceChanges }"
+               aria-hidden="true"></i>
+          </label>
+
+          <app-change-history-input-component
+            [formControlName]="'tokens'"
+            [resourceElement]="'tokens'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            class="col-md-5"
+            [label]="'Tokens'">
+          </app-change-history-input-component>
+        </div>
+
+        <div class="row">
+          <app-change-history-input-component
+            *ngIf="designationFormGroup.get('designation').enabled"
+            class="col-md-6"
+            [resourceElement]="'designation'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            [inputType]="InputType.Custom"
+            [isHidden]="designationHidden"
+            [label]="'How do you designate this activity of questions?'">
+            <select class="form-control"
+                    id="designation"
+                    [formControlName]="'designation'">
+              <option value="pleaseSelect">Please Select</option>
+              <option *ngFor="let designation of DesignationOptions"
+                      [value]="designation.key">
+                {{designation.value}}
+              </option>
+            </select>
+          </app-change-history-input-component>
+
+          <app-change-history-input-component
+            [resourceElement]="'publishDisclosures'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            [showCommentChangeHistory]="false"
+            [inputType]="InputType.Custom"
+            [isHidden]="publishDisclosuresHidden"
+            class="col-md-6"
+            [label]="'Publish disclosures by author(s) and other contributors'">
+            <mat-radio-group [formControlName]="'publishDisclosures'" class="clearfix">
+              <mat-radio-button [value]="true">
+                Yes
+              </mat-radio-button>
+              <mat-radio-button [value]="false"
+                                class="margin-left-10"
+                                [disabled]="publishDisclosuresLocked">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
+          </app-change-history-input-component>
+
+            <app-change-history-input-component
+              *ngIf="designationFormGroup.get('mocStatement').enabled"
+              class="col-12"
+              [formControlName]="'mocStatement'"
+              [resourceElement]="'mocStatement'"
+              [selectedResource]="selectedExam"
+              [formGroup]="designationFormGroup"
+              [isHidden]="mocStatementHidden"
+              [placeholder]="'Enter details for MOC statement'"
+              [label]="'Other or MOC Statement'">
+            </app-change-history-input-component>
+        </div>
+        <div class="row">
+          <app-change-history-input-component
+            [formControlName]="'passRate'"
+            [resourceElement]="'passRate'"
+            [min]="0"
+            [max]="100"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            [inputType]="InputType.Number"
+            [isHidden]="passRateHidden"
+            class="col-md-6"
+            [label]="'Pass Rate: ' + (designationFormGroup.get('passRate').value || '') + ' %'"
+            [fieldName]="'Pass Rate'"
+            [units]="'%'">
+          </app-change-history-input-component>
+
+          <app-change-history-input-component
+            [formControlName]="'maxAnswerAttempts'"
+            [resourceElement]="'maxAnswerAttempts'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            [inputType]="InputType.Custom"
+            [isHidden]="maxAnswerAttemptsHidden"
+            class="col-md-6"
+            [label]="'Maximum attempts to answer question'"
+            [tooltip]="'Confirm the ‘retake attempts limit’ with your accrediting body. Optionally for non-accredited activities, such as an examination, you may select ‘unlimited’.  Otherwise, limit retake attempts to between 1 and 5 attempts'">
+            <select class="form-control"
+                    id="maxAnswerAttempts"
+                    [class.is-invalid]="designationFormGroup.get('maxAnswerAttempts').invalid"
+                    [class.is-valid]="designationFormGroup.get('maxAnswerAttempts').valid"
+            [formControlName]="'maxAnswerAttempts'">
+            <option value="pleaseSelect">Please Select</option>
+            <option *ngFor="let attempts of AttemptOptions"
+            [value]="attempts.value">
+            {{attempts.key}}
+            </option>
+            </select>
+          </app-change-history-input-component>
+        </div>
+        <div class="row">
+          <app-change-history-input-component
+            [formControlName]="'levelOfDifficulty'"
+            [resourceElement]="'levelOfDifficulty'"
+            [selectedResource]="selectedExam"
+            [formGroup]="designationFormGroup"
+            class="col-md-6"
+            [isHidden]="pricingHidden"
+            [label]="'Level of Difficulty'"
+            [tooltip]="'Insert text here or leave as is to hide section'">
+          </app-change-history-input-component>
+        </div>
+    </form>
+  </div>
+</div>

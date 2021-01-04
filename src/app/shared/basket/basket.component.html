@@ -1,0 +1,40 @@
+<div class="form-group">
+    <div class="row">
+        <div class="col-12">
+          <div class="shopping-cart"></div>
+            <p class="bold">
+                Your Cart Contains:
+            </p>
+        </div>
+    </div>
+    <hr />
+    <div class="row form-group" *ngIf="checkoutBasketService.basketContents.length === 0">
+        <div class="col-12">
+            Your Cart is Empty
+        </div>
+    </div>
+    <div *ngIf="checkoutBasketService.basketContents.length > 0">
+        <div class="row form-group" *ngFor="let item of checkoutBasketService.basketContents">
+            <div class="col-sm-6">
+                {{item.title}}
+            </div>
+            <div class="col-sm-1">
+               ${{item.price}}
+            </div>
+            <div class="col-sm-5 text-right">
+                <button mat-raised-button class="btn btn-primary" (click)="deleteClickHandler(item.id)">
+                    <i class="fa fa-times" aria-hidden="true"></i> Remove
+                </button>
+            </div>
+        </div>
+        <hr />
+        <div class="row form-group">
+            <div class="col-sm-6">
+                Total Value
+            </div>
+            <div class="col-sm-6 text-right">
+                ${{checkoutBasketService.totalPrice}}
+            </div>
+        </div>
+    </div>
+</div>

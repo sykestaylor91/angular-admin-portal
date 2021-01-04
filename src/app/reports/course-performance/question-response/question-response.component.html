@@ -1,0 +1,8 @@
+<div *ngIf="coursePerformanceService.questionStatistics && coursePerformanceService.questionStatistics.length > 0">
+<!--    <mat-card>-->
+        <h3>{{title}}</h3>
+        <app-nowce-data-list [cols]="columnsQuestions" [dataArray]="coursePerformanceService.questionStatistics">
+        </app-nowce-data-list>
+<!--    </mat-card>-->
+</div>
+<br>

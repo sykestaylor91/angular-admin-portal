@@ -1,0 +1,73 @@
+<div class="row">
+  <div class="col-6">
+    <h3>{{title}}</h3>
+  </div>
+  <div class="col-6" *ngIf="showAddCitationsButton">
+    <!--TODO: Only show if no exam id is present on route-->
+    <button mat-raised-button class="btn btn-primary pull-right" (click)="onAddNewCitationClicked()">Add New</button>
+  </div>
+</div>
+<div class="row">
+  <p class="col-12">To add a new citation to this activity: Enter and save the citation details directly at your
+    Citation library. Then from any of the citation enabled activity text editors in the activity your are editing
+    select the point in the text where you will reference the citation and click 'Add Citation'' from the text editor
+    tool bar. This will allow you to select the citation details and add them to your activity</p>
+</div>
+<!-- <div class="row margin-bottom-20" *ngIf="hasCitations"> -->
+<!-- <br/> -->
+<!-- <div class="col-4">
+    <label>Search</label><br/>
+    <input type="text"
+           class="form-control ui-inputtext ui-corner-all ui-state-default ui-widget"
+           appDebounce="300"
+           size="50"
+           [(ngModel)]="filterTerm"
+           (ngModelChange)="filterCitations()"
+           placeholder="Search citations">
+  </div>
+  <div class="col-6">
+  </div>
+  <div class="col-2" *ngIf="showOrderBy">
+    <label>Order by</label>
+    <select class="form-control ng-pristine ng-invalid ng-touched" (change)="onOrderChange($event.target.value)">
+      <option value="newToOld" selected>New to old</option>
+      <option value="oldToNew">Old to new</option>
+    </select>
+  </div>
+</div> -->
+<div *ngIf="hasCitations">
+<!--  <mat-card>-->
+
+    <!-- <app-grid-table
+    [dataList]="filteredCitations"
+    [columnMetaData]="citationsColumnMetaData"
+    [config]="config">
+    <ng-template #menuRef let-item>
+      <button mat-icon-button [matMenuTriggerFor]="menu" [disabled]="isReadOnly">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onShowDialog('edit', item)">
+          <mat-icon>create</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="onShowDialog('delete', item)" [disabled]="isDeleteDisabled(item)">
+          <mat-icon>clear</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </ng-template>
+  </app-grid-table> -->
+    <app-nowce-data-list [cols]="columns" [dataArray]="filteredCitations" [selectedItems]="selectedItems"
+      [contextMenu]="contextMenu" (editClicked)="onShowDialog('edit', $event)"
+      (deleteClicked)="onShowDialog('delete',  $event)" (customButtonClicked)='goToActivityManager()'>
+    </app-nowce-data-list>
+
+    <div *ngIf="selectedExam" class="row">
+      * Citations listed here are subject to change upon saving an exam.
+    </div>
+<!--  </mat-card>-->
+</div>
+<div *ngIf="!hasCitations">
+  No citations
+</div>

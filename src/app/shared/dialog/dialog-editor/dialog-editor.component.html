@@ -1,0 +1,9 @@
+<app-dialog-actions (dialogResult)="onDialogResult($event)" [displayContent]="false">
+  <app-text-editor class="text-editor" [(ngModel)]="data.content"
+                   [isDisabled]="data.disabled"
+                   [setFocus]="true"
+                   [showCitation]="data.showCitations"
+                   [showImage]="data.showImage"
+                   [showVideo]="data.showVideo"
+  ></app-text-editor>
+</app-dialog-actions>

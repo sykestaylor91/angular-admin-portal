@@ -1,0 +1,150 @@
+<div>
+  <h1 class="margin-bottom-20">{{title}}</h1>
+  <div class="row margin-bottom-20">
+    <div class="col-sm-12">
+      <h4>Invitations outstanding</h4>
+    </div>
+    <div class="col-sm-12">
+      <mat-card *ngIf="!activeInvitations || activeInvitations.length === 0">
+        No outstanding invitations
+      </mat-card>
+      <div *ngFor="let invitation of activeInvitations">
+        <div class="col-sm-3" *ngIf="invitation.status === 'active'">
+          <!--  invitation.expirationDate > currentDate &&  -->
+          <mat-card class="align-center">
+            <span class="bold" *ngIf="notExpired(invitation.expiryDate)">Invited <br/></span>
+            <span class="bold" *ngIf="!notExpired(invitation.expiryDate)">Expired <br/></span>
+            <div class="margin-bottom-20">
+              <mat-icon>person_outline</mat-icon>
+              <br/>
+              {{User.fullName(invitation.firstName, invitation.lastName)}}
+              <br/>{{invitation.email}}
+              <br/><span *ngIf="invitation.expiryDate < currentDate && invitation.status === 'active'" class="bold">Invitation Expired</span>
+              <br/>Sent: {{invitation.dateCreated | date}}
+              <br/>Expires on: {{invitation.expiryDate | date}}
+            </div>
+            <button mat-raised-button (click)="cancelInvitationClickHandler(invitation)" class="btn btn-primary">
+              Cancel
+            </button>
+            <button mat-raised-button class="btn btn-primary margin-right-10" (click)="resendInvitationClickHandler(invitation)">
+              Resend
+            </button>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Add to your team</h3>
+    </div>
+  </div>
+
+  <form [formGroup]="inviteFormGroup" novalidate (ngSubmit)="sendInviteClickHandler()">
+    <div class="margin-bottom-20">
+      <div class="row">
+        <!-- left col-->
+        <div class="col-sm-6">
+          <div class="form-group" [class.has-error]="firstName.hasError('required') && formSubmitted">
+            <label for="firstName">First name</label>
+            <input type="text"
+                   class="form-control"
+                   id="firstName"
+                   formControlName="firstName"
+                   placeholder="Enter First Name">
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group" [class.has-error]="lastName.hasError('required') && formSubmitted">
+            <label for="lastName">Last name</label>
+            <input type="lastName"
+                   class="form-control"
+                   id="lastName"
+                   formControlName="lastName"
+                   placeholder="Last Name">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group" [class.has-error]="email.hasError('required') && formSubmitted">
+            <label for="email">Email address</label>
+            <input type="text"
+                   class="form-control"
+                   id="email"
+                   formControlName="email"
+                   placeholder="Email">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <label>Select access level for this contributor</label>
+          <p>All contributors other than 'Helpers' and 'Media Admins' will be asked to declare their disclosures and
+            credentials</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group" [class.has-error]="permissionLevel.hasError('required') && formSubmitted">
+            <table class="table table-striped ui-datatable table-padded">
+              <tbody>
+              <tr>
+                <td class="align-center">Select</td>
+                <td>Access level</td>
+                <td>Access rights</td>
+              </tr>
+              <tr *ngFor="let permission of accessLevels">
+                <td class="align-center">
+                  <input class="align-center" formControlName="permissionLevel" type="radio" name="permissionLevel"
+                         value="{{permission.id}}">
+                </td>
+                <td>
+                  {{permission.access}}
+                </td>
+                <td>
+                  {{permission.rights}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row margin-bottom-20">
+      <div class="col-sm-12">
+        <button mat-raised-button class="btn btn-primary pull-right"
+                type="submit">
+          <span class="fa fa-paper-plane"></span> Send invitation
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <h3>Will or are you an author or editor of any activities that you publish?</h3>
+  <p class="margin-bottom-20">
+    The 'My declaration' button will take you to your disclosure and credentials form. If you intend to contribute to
+    any activity that is required to comply with certain mandates
+    of an administrative or accrediting body then you may be obliged to make certain disclosures and or publish your
+    credentials - even to state 'none'. If such conditions govern any activity
+    or test you will publish then you are advised to check the rules set by the mandating authority in order to ensure
+    compliance and validity before you publish. After you make your disclosures
+    you may return to this page to invite other contributors.
+  </p>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="pull-right">
+        <button mat-raised-button class="btn btn-primary" (click)="declarationClickHandler()">My declaration
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

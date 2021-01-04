@@ -1,0 +1,100 @@
+<div class="content-container relative">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div class="container">
+    <h1>{{title}}</h1>
+    <p>
+      Please refer to <a href="http://www.icmje.org/" target="_blank">http://www.icmje.org/</a> for further information about disclosures and compliance with conflict of interest policies as may be applicable to medical authors and other contributors to accredited education activities
+    </p>
+    <p *ngIf="sessionService.loggedInUser.disclosureDeclarationUpdate && !editOther">
+      You are required to reaffirm these disclosures are up to date by
+      {{sessionService.loggedInUser.disclosureDeclarationUpdate | date:'fullDate' }}
+    </p>
+
+    <label *ngIf="user && !editOther">Author: {{User.fullName(user.firstName, user.lastName)}}</label>
+    <label *ngIf="editOtherUser">Editing: {{User.fullName(editOtherUser.firstName, editOtherUser.lastName)}}</label>
+    <div class="alert alert-danger" *ngIf="showWarning && !editOther">
+      <p>Please complete the following: </p>
+      <ul>
+        <li *ngIf="showPaymentsWarning">Please add your payment conflicts</li>
+        <li *ngIf="showFinancialWarning">Please add your financial conflicts</li>
+        <li *ngIf="showPatentsWarning">Please add your patent conflicts</li>
+        <li *ngIf="showPartnershipsWarning">Please add your partnership conflicts</li>
+        <li *ngIf="showActivityWarning">Please add your activity conflicts</li>
+        <li *ngIf="showContributionsWarning">Please add your contributions conflicts</li>
+      </ul>
+    </div>
+    <!-- <app-nowce-data-list [cols]="columnsPaymentDisclosures" [dataArray]="payments">
+    </app-nowce-data-list> -->
+    <app-disclosure-edit
+      [title]="'Payment(s) received disclosures'"
+      [description]="'Do you receive payments for any aspect of work submitted for publication in any part of a provided activity?'"
+      [disclosureType]="DisclosureType.PAYMENTS"
+      [disclosures]="payments"
+      [conflictPropertyName]="'paymentsHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsPaymentDisclosures">
+    </app-disclosure-edit>
+
+    <app-disclosure-edit
+      [title]="'Financial relationship disclosures'"
+      [description]="'Do you receive payments for any aspect of work submitted for publication in any part of a provided activity?'"
+      [disclosureType]="DisclosureType.FINANCIAL"
+      [disclosures]="financial"
+      [conflictPropertyName]="'financialHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsFinancialDisclosures">
+    </app-disclosure-edit>
+
+    <app-disclosure-edit
+      [title]="'Patents'"
+      [description]="'Do you have any patents, whether planned, pending or issued broadly relevant to this work?'"
+      [disclosureType]="DisclosureType.PATENTS"
+      [disclosures]="patents"
+      [conflictPropertyName]="'patentsHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsPatentDisclosures">
+    </app-disclosure-edit>
+
+    <app-disclosure-edit
+      [title]="'Partnerships'"
+      [description]="'Do you have any partnerships, relationships, or do you or any family relative hold a position with any other entity or hold more than 25% equity in any organization that could be perceived to have a stake in the outcome?'"
+      [disclosureType]="DisclosureType.PARTNERSHIPS"
+      [disclosures]="partnerships"
+      [conflictPropertyName]="'partnershipsHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsPartnershipDisclosures">
+    </app-disclosure-edit>
+
+    <app-disclosure-edit
+      [title]="'Activities'"
+      [description]="'Are there any other activities or relationships that readers could perceive to have influenced, or give the appearance of potentially influencing, your submitted work? Do you or any family relatives have any interest in any company or organization that provides goods, services, investments or donations to this education provider or do you have a family relationship or a business relationship with any other interested person?'"
+      [disclosureType]="DisclosureType.ACTIVITIES"
+      [disclosures]="activities"
+      [conflictPropertyName]="'activitiesHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsActivityDisclosures">
+    </app-disclosure-edit>
+
+    <app-disclosure-edit
+      [title]="'Contributions'"
+      [description]="'Are you or any family member, a substantial contributor, grantor, donor or adviser to any similar benefactor to the organization or receive benefits or grants from any fund connected with this organization?'"
+      [disclosureType]="DisclosureType.CONTRIBUTOR"
+      [disclosures]="contributions"
+      [conflictPropertyName]="'contributionsHasConflict'"
+      [user]="user"
+      [columnMetaData]="columnsContributionDisclosures">
+    </app-disclosure-edit>
+
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <button mat-raised-button *ngIf="!editOther" class="btn btn-primary" (click)="finishClickHandler()">Finish &
+          confirm everything is up to date
+        </button>
+        <button mat-raised-button *ngIf="editOther" class="btn btn-primary" (click)="finishClickHandler()">Finish
+          editing
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

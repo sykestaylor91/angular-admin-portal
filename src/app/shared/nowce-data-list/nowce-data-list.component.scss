@@ -1,0 +1,24 @@
+//.nowce-data-list th, .nowce-data-list td, .nowce-data-list .card-header{
+//  font-size: 0.9em !important;
+//}
+.tab-label {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  //font-size: 14px;
+  font-weight: 500;
+}
+.search-box {
+  padding-top: 0 !important;
+}
+
+.search-box div.mat-form-field-infix {
+  border-top: none !important;
+}
+.mat-form-field-label-wrapper {
+  position: absolute ;
+  left: 2px !important;
+  top: 1px !important;
+}
+
+.search-chip-list-container {
+    margin-top: -15px;
+}

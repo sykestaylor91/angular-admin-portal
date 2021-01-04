@@ -1,0 +1,58 @@
+<div class="relative">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div>
+    <form [formGroup]="contributionFormGroup" novalidate>
+      <div class="form-group required"
+           [class.has-error]="contributionDetails.hasError('required') && formSubmitted">
+        <label class="control-label" for="contributionDetails">Contribution Details</label>
+        <input type="text"
+               class="form-control"
+               id="contributionDetails"
+               formControlName="contributionDetails"
+               placeholder="Contribution Details">
+      </div>
+      <div class="form-group required"
+           [class.has-error]="benefitsDetails.hasError('required') && formSubmitted">
+        <label class="control-label" for="benefitsDetails">Benefit Details </label>
+        <input type="text"
+               class="form-control"
+               id="benefitsDetails"
+               formControlName="benefitsDetails"
+               placeholder="Benefit Details">
+      </div>
+
+      <div class="row required">
+        <div class="form-group col-12 required">
+          <label class="control-label">Year disclosed</label>
+          <input type="date"
+                 class="form-control"
+                 id="yearDisclosed"
+                 formControlName="yearDisclosed"
+                 placeholder="Year disclosed">
+        </div>
+      </div>
+
+      <div class="form-group pull-right">
+
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                *ngIf="showDelete"
+                (click)="deleteHandler()">
+          Delete
+        </button>
+
+        <button mat-raised-button type="submit"
+                class="btn btn-primary"
+                [disabled]="!contributionFormGroup.valid"
+                (click)="submitHandler()">
+          Save
+        </button>
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                (click)="cancelHandler()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<button mat-button class="md-button md-button-toggle width-100" [class.toggled]="isShown" (click)="isShown = !isShown">
+  {{route.label}}
+  <mat-icon class="md-toggle-icon" [class.toggled]="isShown">expand_more</mat-icon>
+</button>
+<ul [class.zeroHeight]="!isShown" class="menu-toggle-list">
+  <li *ngFor="let page of route.subMenu">
+    <app-nav-menu-link [sidenav]="sidenav" [route]="page"></app-nav-menu-link>
+  </li>
+</ul>

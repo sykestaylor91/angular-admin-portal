@@ -1,0 +1,49 @@
+<div>
+  <app-dialog-header [title]="data.title"
+                   [showLoading]="showLoading"
+                   (closeDialog)="onCloseDialog()">
+  </app-dialog-header>
+
+<div class="width-100 margin-bottom-10" *ngIf="newItemMode">
+  <app-text-editor width-100 [showCitation]="false" [showVideo]="false" [setFocus]="true"></app-text-editor>
+</div>
+<div class="row margin-bottom-10" *ngIf="newItemMode">
+  <div class="col-12">
+    <button mat-raised-button class="btn button-default save-button pull-right" (click)="onCloseAndSave()">Save</button>
+    <button mat-raised-button class="btn btn-secondary pull-right margin-right-10" (click)="switchItemMode()">Cancel</button>
+  </div>
+</div>
+<div class="dialog-comment-container margin-top-20 margin-bottom-10" *ngIf="!newItemMode">
+  <p-table class=" margin-top-20 " [value]="localItems" [paginator]="false" *ngIf="hasData" [alwaysShowPaginator]="false" >
+    <ng-template let-item pTemplate="body" let-i="index">
+      <div class="row small width-100 margin-bottom-10" *ngIf="!item.hidden">
+        <div class="avatar col-sm-1">
+          <ngx-avatar gravatarId="{{item.email}}"  name="{{item.person}}" size="50"></ngx-avatar>
+        </div>
+        <div class="col-sm-11">
+          <div class="panel panel-default card">
+            <div class="panel-heading card-header">
+              <div class="row">
+                <div class="col-sm-8">
+                  <span><span class="bold">By:</span><span *ngIf="showReviewerName(item)"> <span class="comment-name ml-1" [innerHtml]="item.person"></span><span class="small font-italic text-muted" *ngIf="item.user" [innerText]="' (' + getRoleLabel(item) + ') '"></span></span></span>
+                </div>
+                <div class="date-column col-sm-4">
+                  <span class="date-label bold">Date:</span> <span class="text-muted ml-1" [innerHtml]="item.time | date:'medium'"></span>
+                </div>
+              </div>
+              <button *ngIf="canDelete(item.userId)" mat-icon-button class="btn btn-danger delete-comment" (click)="onDeleteComment(i)" matTooltip="Delete comment">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div class="panel-body card-body" [innerHtml]="item.text"></div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-table>
+  <div *ngIf="!hasData">
+    <mat-card class="margin-bottom-10 width-100">No items found</mat-card>
+  </div>
+</div>
+<button mat-raised-button class="btn btn-primary pull-right" (click)="newItemMode = !newItemMode" *ngIf="!newItemMode">Add comment</button>
+</div>

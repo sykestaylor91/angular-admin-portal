@@ -1,0 +1,43 @@
+<div class="row margin-bottom-20" *ngIf="isAcceptedMessageVisible">
+  <div class="col-12">
+    <h2>Thank you for accepting the invitation to the "{{ acceptedActivityName }}" activity.</h2>
+  </div>
+</div>
+<div class="form-group margin-top-20">
+<div  class="margin-bottom-10" *ngIf="exams && exams.length > 0">
+  <div class="row">
+    <div class="col-1">
+    </div>
+    <div *ngFor="let column of columns" class="{{column.class}}">
+      <label class="template-orange">{{column.title}}</label>
+    </div>
+  </div>
+  <p-table [value]="filteredExams" >
+    <ng-template let-exam pTemplate="body" let-i="index">
+      <mat-card class="margin-bottom-20">
+        <mat-card-title-group>
+          <img mat-card-sm-image  [src]="getImageFromList(exam.courseImage)">
+          <mat-card-title>{{exam.title}}</mat-card-title>
+          <mat-card-subtitle>	{{exam.subtitle}}</mat-card-subtitle>
+        </mat-card-title-group>
+        <mat-card-content>
+          <span class="catalog-attr-title">Target audience:</span>
+          <span class="catalog-attr-value" >{{exam.targetAudience | blank:'---'}}</span>
+          <span class="margin-left-10 catalog-attr-title">Difficulty:</span>
+          <span class="catalog-attr-value">{{exam.levelOfDifficulty | blank:'---'}}</span>
+          <div class="" [innerHTML]="exam.introduction | stripTags | firstNWords:100"></div>
+        </mat-card-content>
+         <mat-card-actions [align]="'end'">
+           <button mat-raised-button class="btn btn-primary " (click)="displayReadMoreClickHandler(exam)">Read More</button>
+           <button *ngIf="!exam.canRetake && !exam.canResume" mat-raised-button class="btn btn-primary " (click)="takeCourseClickHandler(exam)">Take</button>
+           <button  *ngIf="exam.canRetake" mat-raised-button class="btn btn-primary" (click)="takeCourseClickHandler(exam)">Retake</button>
+           <button  *ngIf="exam.canResume" mat-raised-button class="btn btn-primary" (click)="takeCourseClickHandler(exam)">Resume</button>
+         </mat-card-actions>
+      </mat-card>
+</ng-template>
+</p-table>
+</div>
+<mat-card *ngIf="!exams || exams.length === 0" class="margin-bottom-10 width-100">
+  There are no items to display
+</mat-card>
+<app-pre-activity-information></app-pre-activity-information>

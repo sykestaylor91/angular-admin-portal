@@ -1,0 +1,83 @@
+<div class="height-100"  id='top-container' *ngIf="loaded">
+  <mat-sidenav-container   id='sidenav-container'>
+    <mat-toolbar class="header mat-elevation-z3">
+      <span>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span style="font-size: 70%;" [title]="rolesDisplay()" >{{User.fullName(sessionService.loggedInUser.firstName, sessionService.loggedInUser.lastName)}}</span>
+      </span>
+      <span class="fill-remaining-space"></span>
+      <span style="font-size: 50%;">{{connectionStatus}}</span>
+      <span>
+        <button mat-button *ngIf="currentHelp" (click)="showHelp()">
+          <mat-icon>help</mat-icon>
+          Help
+        </button>
+        <button mat-icon-button style="margin-top: -10px;" [matMenuTriggerFor]="ThemeMenu" matTooltip="Show settings" ><mat-icon>settings</mat-icon></button>
+        <mat-menu #ThemeMenu="matMenu">
+            <button mat-menu-item (click)="themingService.setTheme(themingService.accessibility, 'light-theme')" [ngClass]="{'theme-menu':true, 'theme-active': themingService.theme.value.indexOf('light-theme') !== -1 }" matTooltip="Use light mode" ><mat-icon >brightness_6</mat-icon>Light</button>
+            <button mat-menu-item (click)="themingService.setTheme(themingService.accessibility, 'dark-theme')" [ngClass]="{'theme-menu':true, 'theme-active': themingService.theme.value.indexOf('dark-theme') !== -1 }"  matTooltip="Use dark mode" ><mat-icon>brightness_3</mat-icon>Dark</button>
+            <button mat-menu-item (click)="themingService.setTheme(themingService.accessibility, 'lowcontrast-theme')" [ngClass]="{'theme-menu':true, 'theme-active': themingService.theme.value.indexOf('lowcontrast-theme') !== -1}" matTooltip="Use low contrast mode"><mat-icon >invert_colors</mat-icon>Low Contrast</button>
+
+            <button *ngIf=" themingService.theme.value.indexOf('accessibility') === -1 " mat-menu-item class="theme-menu" (click)="themingService.setTheme(true, themingService.color)" matTooltip="Use larger font"><mat-icon  >text_fields</mat-icon>Font</button>
+            <button *ngIf=" themingService.theme.value.indexOf('accessibility') !== -1 " mat-menu-item class="theme-menu theme-active" style="margin-top: -10px;color: #E65520" (click)="themingService.setTheme(false, themingService.color)" matTooltip="Use smaller font"><mat-icon >text_fields</mat-icon>Font</button>
+        </mat-menu>
+
+        <button style="margin-top: -10px;" mat-icon-button *ngIf="sessionService.loggedInUser" [matMenuTriggerFor]="UserMenu" ><ngx-avatar  gravatarId="{{sessionService.loggedInUser.email}}" src="/assets/images/avatar_2x.png" size="30" matTooltip="View options"></ngx-avatar>
+        </button>
+        <mat-menu #UserMenu="matMenu">
+          <button mat-menu-item  routerLink='/reader/account' ><mat-icon>person</mat-icon>
+          <span>Details</span>
+          </button>
+          <button mat-menu-item (click)="logout()"><mat-icon>exit_to_app</mat-icon>
+            Logout
+          </button>
+        </mat-menu>
+      </span>
+
+      <span>
+        <div *ngIf="!providerOrgService?.provider.logo" class="logo pointer" routerLink='/home'></div>
+        <img width="60" src="'{{providerOrgService.provider.logo}}'" *ngIf="providerOrgService?.provider.logo"
+             class="pointer" routerLink='/home'/>
+      </span>
+
+    </mat-toolbar>
+    <mat-sidenav #sidenav mode="over" opened="false" click="sidenav.toggle()">
+      <app-side-nav [sidenav]="sidenav"></app-side-nav>
+    </mat-sidenav>
+
+    <div id="content-container" class="content-container">
+      <div class="container">
+        <router-outlet (activate)="onActivate($event)" ></router-outlet>
+      </div>
+    </div>
+
+    <footer>
+        <div class="container">
+<!--            <div>-->
+<!--                <a href="http://www.nowce.com/terms-and-conditions/" target="_blank">Terms & Conditions</a> |-->
+<!--                <a href="http://www.nowce.com/contact-us/" target="_blank">Contact NowCE</a> |-->
+<!--                <a href="http://www.nowce.com" target="_blank">Roundpoint NowCE</a><br>-->
+<!--                <span>San Francisco</span> |-->
+<!--                <span>Cambridge</span>-->
+<!--            </div>-->
+            <div>
+                <h6><small>&copy; {{environment.copyright}} | Version {{environment.version}}</small></h6>
+            </div>
+        </div>
+
+        <div class="container"  *ngIf="!environment.production" style='text-align: center;'>
+          <span *ngFor="let role of roles" class="checkbox-wrap">
+            <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="rolesObj[role]">{{role}}</label>
+          </span>
+          <br />
+          <button mat-button class="btn-primary" (click)="changeUserRoles()">
+            Change Role(s)
+          </button>
+      </div>
+    </footer>
+  </mat-sidenav-container>
+
+  <simple-notifications [options]="options"></simple-notifications>
+</div>

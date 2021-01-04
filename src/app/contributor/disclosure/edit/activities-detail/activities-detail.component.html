@@ -1,0 +1,51 @@
+<div class="relative">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div>
+    <form [formGroup]="activitiesFormGroup" novalidate>
+      <div class="row required"
+           [class.has-error]="activityDetails.hasError('required') && formSubmitted">
+        <div class="form-group col-12 required">
+          <label class="control-label"
+                 for="activitiesComment">Details</label>
+          <input type="text"
+                 class="form-control"
+                 id="activitiesComment"
+                 formControlName="activityDetails"
+                 placeholder="Disclosure or name of connected person or organization">
+        </div>
+      </div>
+      <div class="row required">
+        <div class="form-group col-12 required">
+          <label class="control-label">Year disclosed</label>
+          <input type="date"
+                 class="form-control"
+                 id="yearDisclosed"
+                 formControlName="yearDisclosed"
+                 placeholder="Year disclosed">
+        </div>
+      </div>
+
+      <div class="form-group pull-right">
+
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                *ngIf="showDelete"
+                (click)="deleteHandler()">
+          Delete
+        </button>
+
+        <button mat-raised-button type="submit"
+                class="btn btn-primary"
+                [disabled]="!activitiesFormGroup.valid"
+                (click)="submitHandler()">
+          Save
+        </button>
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                (click)="cancelHandler()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

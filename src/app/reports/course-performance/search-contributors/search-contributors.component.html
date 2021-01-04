@@ -1,0 +1,26 @@
+<h3>{{title}}</h3>
+<div class="relative">
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-7">
+        <label>Select Activity</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <select class="form-control ng-pristine ng-invalid ng-touched" [(ngModel)]="selectedCourse">
+          <option value="">Please Select</option>
+          <option *ngFor="let exam of exams" value="{{exam.id}}">
+            {{exam.title}}
+          </option>
+        </select>
+      </div>
+      <div class="col-7">
+        <button mat-raised-button class="btn btn-primary" (click)="submitQuery()"><i class="fa fa-search"></i> Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr/>
+</div>

@@ -1,0 +1,92 @@
+<div  *ngIf="!mediaService.selectedMedia">
+  <div >
+    <div class="card card-1 drag-drop-container align-center margin-bottom-20" (dragover)="drag($event)"
+         (dragleave)="dragLeave($event)"
+         (drop)="dragLeave($event)"
+         [class.img-drop-hover]="dragEvent"
+         [class.card-4]="dragEvent" style="padding: 0"
+         [class.invalid]="!selectedFile && formSubmitted"
+         [class.valid]="selectedFile && formSubmitted">
+      <form>
+        <input type="file" id="file" (change)="fileSelected($event)" accept=".png,.gif,.jpg,.jpeg,.pdf,.mp3,.mp4"/>
+        <br/>
+        <p>
+          <span class="ql-size-large">Drag your files into or click in this area to upload.</span>
+        </p>
+
+        <div class="row icon-container align-center">
+          <div class="col-sm-3">
+            <mat-icon>image</mat-icon>
+            <p>Add Image</p>
+          </div>
+          <div class="col-sm-3">
+            <mat-icon>video_call</mat-icon>
+            <p>Add Video</p>
+          </div>
+          <div class="col-sm-3">
+            <mat-icon>volume_up</mat-icon>
+            <p>Add Audio</p>
+          </div>
+          <div class="col-sm-3">
+            <mat-icon>picture_as_pdf</mat-icon>
+            <p>Add PDF</p>
+          </div>
+        </div>
+        <br/>
+        <div style="width: 100%; max-width: 400px; text-align: left; margin: auto;">
+          <ul>
+            <li>The maximum file size for uploads is <span class="bold">20 MB</span>.</li>
+            <li>Only <span class="bold">PNG, GIF, JPG, JPEG, PDF, MP3 and MP4</span> files are allowed.</li>
+            <li>Save PowerPoints as PDFs before adding to Media Library.</li>
+          </ul>
+        </div>
+        <div id="preview" class="preview">
+          <img>
+        </div>
+        <h4 *ngIf="selectedFile" class="notification">
+          {{selectedFile.name}}
+        </h4>
+      </form>
+    </div>
+  </div>
+</div>
+<form class="row" [formGroup]="mediaFormGroup">
+  <div class="col-6 offset-3 margin-bottom-10">
+    <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+      <mat-label>Title <mat-icon>required</mat-icon>
+      </mat-label>
+      <input #title matInput placeholder="Title" required type="text" formControlName="mediaTitle">
+      <mat-error *ngIf="!title.value">
+        <strong>Required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-6 offset-3 margin-bottom-10">
+    <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+      <mat-label>Author(s) <mat-icon>required</mat-icon>
+      </mat-label>
+      <input #author matInput placeholder="Author(s)" required type="text" formControlName="author">
+      <mat-error *ngIf="!author.value">
+        <strong>Required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-6 offset-3  margin-bottom-10">
+    <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+      <mat-label>Level of Evidence</mat-label>
+      <input matInput placeholder="Level of Evidence"  type="text" required formControlName="levelOfEvidence">
+    </mat-form-field>
+  </div>
+  <div class="col-6 offset-3  margin-bottom-10">
+    <div class="col-6 offset-3 margin-bottom-10">
+      <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+        <mat-label>Caption
+        </mat-label>
+        <textarea #caption class="width-100" matInput formControlName="caption"></textarea>
+        <mat-error *ngIf="!caption.value">
+          <strong>Required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</form>

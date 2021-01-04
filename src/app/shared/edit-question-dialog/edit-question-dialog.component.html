@@ -1,0 +1,10 @@
+<button mat-icon-button class="pull-right dialog-close-button" (click)="closeDialog(false)">
+  <mat-icon>clear</mat-icon>
+</button>
+
+<mat-dialog-content>
+    <app-question-form [subComponent]="true"
+    (questionSave)="saveQuestion($event)"
+    [editQuestion]="question">
+    </app-question-form>
+</mat-dialog-content>

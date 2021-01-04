@@ -1,0 +1,39 @@
+<div class="row">
+    <h3>
+      Introduction, Needs &amp; Objectives
+    </h3>
+</div>
+<div>
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+    <div class="panel-body">
+      <form [formGroup]="introFormGroup" novalidate>
+
+ <app-change-history-texteditor
+          [resourceElement]="'introduction'"
+          [selectedResource]="selectedExam"
+          [formGroup]="introFormGroup"
+          [inputType]="InputType.Custom"
+          [label]="'Activity introduction'"
+          [formControlName]="'introduction'" >
+        </app-change-history-texteditor>
+
+        <app-change-history-texteditor
+          [resourceElement]="'needs'"
+          [selectedResource]="selectedExam"
+          [formGroup]="introFormGroup"
+          [inputType]="InputType.Custom"
+          [isHidden]="needsHidden"
+          [label]="'Learning needs'"
+          [formControlName]="'needs'">
+        </app-change-history-texteditor>
+        <app-change-history-texteditor
+          [resourceElement]="'educationObjectives'"
+          [selectedResource]="selectedExam"
+          [formGroup]="introFormGroup"
+          [inputType]="InputType.Custom"
+          [isHidden]="educationObjectivesHidden"
+          [label]="'Education objectives'"[formControlName]="'educationObjectives'" >
+        </app-change-history-texteditor>
+      </form>
+    </div>
+</div>

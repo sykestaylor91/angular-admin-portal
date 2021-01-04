@@ -1,0 +1,227 @@
+<!--<quill-editor matInput-->
+<!--  class="prime-editor"-->
+<!--  [readOnly]="isDisabled"-->
+<!--  [disabled]="isDisabled"-->
+<!--  [class.disabled]="isDisabled"-->
+<!--  [(ngModel)]="modelValue"-->
+<!--  [modules]="{imageResize: {}, videoResize: {}}"-->
+<!--  [bounds]="'self'"-->
+<!--  (onEditorCreated)="editorCreated($event)"-->
+<!--  (ngModelChange)="onEditorChange($event)">-->
+<!--  <div quill-editor-toolbar>-->
+<!--    <div class="ui-editor-toolbar ui-widget-header ui-corner-top">-->
+<!--      <div class="text-editor-group">-->
+<!--        <select title="Size" class="ql-size" [disabled]="isDisabled">-->
+<!--          <option value="small"></option>-->
+<!--          <option value="normal"></option>-->
+<!--          <option value="large"></option>-->
+<!--          <option value="huge"></option>-->
+<!--        </select>-->
+<!--        <div class="ql-format-group">-->
+<!--          <button title="Bold" class="ql-bold" [disabled]="isDisabled"></button>-->
+<!--          <button title="Italic" class="ql-italic" [disabled]="isDisabled"></button>-->
+<!--          <button title="Underline" class="ql-underline" [disabled]="isDisabled"></button>-->
+<!--          <button title="Strike" class="ql-strike" [disabled]="isDisabled"></button>-->
+<!--        </div>-->
+<!--        <div class="ql-format-group">-->
+<!--          <select title="Colour" class="ql-color" title="Color" [disabled]="isDisabled">-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <div class="ql-format-group">-->
+<!--          <button type="button" title="Insert Special Character" class="editor-button"-->
+<!--                  (click)="openDialog(MediaType.Symbols)">-->
+<!--            <span>&Omega;</span>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="text-editor-group">-->
+<!--        <div class="ql-format-group">-->
+<!--          <button type="button" title="Ordered List" class="ql-list" value="ordered" [disabled]="isDisabled"></button>-->
+<!--          <button type="button" title="Bullet Point List" class="ql-list" value="bullet" [disabled]="isDisabled"></button>-->
+<!--          <select title="Alignment" class="ql-align" defaultValue="left" [disabled]="isDisabled"></select>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="text-editor-group">-->
+<!--        <div class="ql-format-group">-->
+<!--          <button type="button" title="Subscript" class="ql-script" value="sub" [disabled]="isDisabled"></button>-->
+<!--          <button type="button" title="Superscript" class="ql-script" value="super" [disabled]="isDisabled"></button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="showMedia" class="text-editor-group">-->
+<!--        <div class="ql-format-group">-->
+<!--          <button type="button" title="Add Link (Select text first)" class="ql-link" [disabled]="isDisabled"></button>-->
+<!--          <button type="button" title="Add local image" class="ql-image"  [disabled]="isDisabled"></button>-->
+<!--          <button type="button" title="Embed video" class="ql-video"  [disabled]="isDisabled"></button>-->
+<!--          <button *ngIf="showImage" type="button" title="Add image from library" (click)="openDialog(MediaType.Image)"-->
+<!--                  class="editor-button" [disabled]="isDisabled"><span class="fa fa-picture-o"></span></button>-->
+<!--          <button *ngIf="showVideo" type="button" title="Add video from library" (click)="openDialog(MediaType.Video)"-->
+<!--                  class="editor-button" [disabled]="isDisabled"><i class="fa fa-video-camera" aria-hidden="true"></i></button>-->
+<!--          <button *ngIf="showPdf" type="button" title="Add pdf from library" (click)="openDialog(MediaType.Pdf)"-->
+<!--                  class="editor-button" [disabled]="isDisabled"><img class="pdf-image" src="assets/images/file-pdf-solid.png"/></button>-->
+<!--          <button *ngIf="showAudio" type="button" title="Add audio from library" (click)="openDialog(MediaType.Audio)"-->
+<!--                  class="editor-button" [disabled]="isDisabled"><i class="fa fa-volume-up" aria-hidden="true"></i></button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="showCitation" class="text-editor-group">-->
+<!--        <div class="ql-format-group">-->
+<!--          <button type="button" title="Insert Citation" value="Insert Citation"-->
+<!--                  (click)="openDialog(MediaType.Citation)"-->
+<!--                  [disabled]="isDisabled"-->
+<!--                  class="editor-button"><span class="fa fa-book"></span> Add Citation-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="text-editor-group">-->
+<!--        <div class="ql-format-group">-->
+<!--          <button *ngIf="showSource" type="button" title="View Source" (click)="onViewSourceClicked()" [disabled]="isDisabled"-->
+<!--                  class="editor-button"><span class="fa fa-code"></span></button>-->
+<!--          <button type="button" title="Full Screen" (click)="onToggleFullScreen()" [disabled]="isDisabled"-->
+<!--                  class="editor-button"><span class="fa fa-arrows-alt"></span></button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</quill-editor>-->
+
+<div class="form-group width-100 input-label {{cssClass}}"
+     [hidden]="isHiddenCustom"
+     [class.disabled]="isDisabled"
+     [class.required]="isRequiredCustom"
+     [class.has-error]="hasErrorCustom"
+     [class.is-valid]="!hasErrorCustom">
+  <mat-form-field  class="width-100 input-icon-textarea" [floatLabel]="'always'" appearance="outline" [class.mat-focused]="showFocused"><!--  -->
+    <mat-label>{{label}}<mat-icon>required</mat-icon>
+    </mat-label>
+    <button class="input-icon gray" mat-icon-button matSuffix (click)="showToolbar=!showToolbar">
+      <mat-icon [class.black]="showToolbar" [matTooltip]="(showToolbar)?'Hide editor tools':'Show editor tools'">build</mat-icon>
+    </button>
+    <button *ngIf="tooltip" class="input-icon gray" mat-icon-button matSuffix (click)="showHint=!showHint">
+      <mat-icon [class.black]="showHint" matTooltip="Show help">help_outline</mat-icon>
+    </button>
+    <!--  <app-text-editor matInput-->
+    <!--  id="{{resourceElement}}"-->
+    <!--    [(ngModel)]="modelValue"-->
+    <!--    (ngModelChange)="onUpdateValue($event);"-->
+    <!--   [selectedResource]="selectedResource"-->
+    <!--   [showVideo] = "showVideo"-->
+    <!--[showPdf] = "showPdf"-->
+    <!--[showAudio] = "showAudio"-->
+    <!--[showCitation] = "showCitation"-->
+    <!--[showImage] = "showImage"-->
+    <!--[showMedia] = "showMedia"-->
+    <!--[showSource] = "showSource"-->
+    <!--[showFullScreen] = "showFullScreen"-->
+    <!--[startFullScreen] = "startFullScreen"-->
+    <!--[setFocus] = "setFocus">-->
+    <!--    </app-text-editor>-->
+    <quill-editor matInput
+                  class="width-100"
+                  [styles]="{'font-size': '100%'}"
+                  [readOnly]="isDisabled"
+                  [disabled]="isDisabled"
+                  [class.disabled]="isDisabled"
+                  [(ngModel)]="modelValue"
+                  [modules]="{imageResize: {}, videoResize: {}}"
+                  (onFocus)="setFocused()"
+                  (onBlur)="setBlurred()"
+                  [bounds]="'self'"
+                  [required]="isRequiredCustom"
+                  [placeholder]="placeholder || ''"
+                  (onEditorCreated)="editorCreated($event)"
+                  (ngModelChange)="onEditorChange($event)">
+      <div quill-editor-toolbar>
+        <div  class="ui-editor-toolbar ui-widget-header ui-corner-top">
+          <div class="text-editor-group">
+            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'" style="text-align: left;">
+              <select title="Size" class="ql-size" [disabled]="isDisabled">
+                <option value="small"></option>
+                <option value="normal"></option>
+                <option value="large"></option>
+                <option value="huge"></option>
+              </select>
+            </div>
+            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'">
+              <button title="Bold" class="ql-bold" [disabled]="isDisabled"></button>
+              <button title="Italic" class="ql-italic" [disabled]="isDisabled"></button>
+              <button title="Underline" class="ql-underline" [disabled]="isDisabled"></button>
+              <button title="Strike" class="ql-strike" [disabled]="isDisabled"></button>
+            </div>
+            <div class="ql-format-group" style="display: none;"> <!--[style.visibility]="(showToolbar)?'visible':'hidden'"-->
+              <select title="Colour" class="ql-color" title="Color" [disabled]="isDisabled">
+              </select>
+            </div>
+            <div class="ql-format-group"  >
+              <!--              <button type="button" title="Insert Special Character" class="editor-button"-->
+              <!--                      (click)="openDialog(MediaType.Symbols)">-->
+              <!--                <span>&Omega;</span>-->
+              <!--              </button>-->
+            </div>
+          </div>
+
+          <!--          <div class="text-editor-group">-->
+          <!--            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'">-->
+          <!--              <button type="button" title="Ordered List" class="ql-list" value="ordered" [disabled]="isDisabled"></button>-->
+          <!--              <button type="button" title="Bullet Point List" class="ql-list" value="bullet" [disabled]="isDisabled"></button>-->
+          <!--              <select title="Alignment" class="ql-align" defaultValue="left" [disabled]="isDisabled"></select>-->
+          <!--            </div>-->
+          <!--          </div>-->
+
+          <div class="text-editor-group">
+            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'">
+              <button type="button" title="Subscript" class="ql-script" value="sub" [disabled]="isDisabled"></button>
+              <button type="button" title="Superscript" class="ql-script" value="super" [disabled]="isDisabled"></button>
+            </div>
+          </div>
+
+          <div *ngIf="showMedia" class="text-editor-group gray">
+            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'">
+              <button type="button" title="Add Link (Select text first)" class="ql-link" [disabled]="isDisabled"></button>
+              <button type="button" title="Add local image" class="ql-image"  [disabled]="isDisabled"></button>
+              <button type="button" title="Embed video" class="ql-video"  [disabled]="isDisabled"></button>
+              <button *ngIf="showImage" type="button" title="Add image from library" (click)="openDialog(MediaType.Image)"
+                      class="editor-button" [disabled]="isDisabled"><span class="fa fa-picture-o"></span></button>
+              <button *ngIf="showVideo" type="button" title="Add video from library" (click)="openDialog(MediaType.Video)"
+                      class="editor-button" [disabled]="isDisabled"><i class="fa fa-video-camera" aria-hidden="true"></i></button>
+              <button *ngIf="showPdf" type="button" title="Add pdf from library" (click)="openDialog(MediaType.Pdf)"
+                      class="editor-button" [disabled]="isDisabled"><img style="height:16px;" class="pdf-image" src="assets/images/file-pdf-solid.png"/></button>
+              <button *ngIf="showAudio" type="button" title="Add audio from library" (click)="openDialog(MediaType.Audio)"
+                      class="editor-button" [disabled]="isDisabled"><i class="fa fa-volume-up" aria-hidden="true"></i></button>
+            </div>
+          </div>
+<!--          <div *ngIf="showCitation" class="text-editor-group">-->
+<!--            <div class="ql-format-group" [style.visibility]="(showToolbar)?'visible':'hidden'">-->
+<!--              <button type="button" title="Insert Citation" value="Insert Citation"-->
+<!--                      (click)="openDialog(MediaType.Citation)"-->
+<!--                      [disabled]="isDisabled"-->
+<!--                      class="editor-button"><span class="fa fa-book"></span> Add Citation-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+          <!--          <div class="text-editor-group">-->
+          <!--            <div class="ql-format-group">-->
+          <!--              <button *ngIf="showSource" type="button" title="View Source" (click)="onViewSourceClicked()" [disabled]="isDisabled"-->
+          <!--                      class="editor-button"><span class="fa fa-code"></span></button>-->
+          <!--              <button type="button" title="Full Screen" (click)="onToggleFullScreen()" [disabled]="isDisabled"-->
+          <!--                      class="editor-button"><span class="fa fa-arrows-alt"></span></button>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </quill-editor>
+    <textarea matInput [(ngModel)]="modelValue" style="display:none;"></textarea>
+    <mat-hint *ngIf="showHint"><mat-icon (click)="showHint=!showHint" *ngIf="tooltip">help_outline</mat-icon> {{tooltip}}</mat-hint>
+    <mat-error *ngIf="hasErrorCustom">
+      {{errorLabel || tooltip}}
+    </mat-error>
+    <mat-error *ngIf="isRequiredCustom && hasErrorCustom">
+      <strong>Required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+<textarea *ngIf="isFullScreen" class="isFullScreen" [disabled]="isDisabled" [(ngModel)]="sourceCode"></textarea>
+

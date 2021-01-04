@@ -1,0 +1,17 @@
+<div [class.zeroHeight]="focusedContributor !== contributor" class="menu-toggle-list box-text">
+  <div class="row margin-bottom-10" style="text-transform: none !important">
+    <div class="col-sm-12">
+      <div>
+        <label>Select a role</label>
+        <select class="form-control ng-pristine ng-invalid ng-touched" [(ngModel)]="selectedRole">
+          <option *ngFor="let role of userRoles" [value]="role">{{ startCase(role) }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-bottom-20">
+    <div class="col-sm-12">
+      <button mat-raised-button class="pull-right btn btn-primary" (click)="addToTeam()">Invite to team</button>
+    </div>
+  </div>
+</div>

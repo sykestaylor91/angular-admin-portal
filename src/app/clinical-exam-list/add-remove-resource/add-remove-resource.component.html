@@ -1,0 +1,14 @@
+<button mat-icon-button class="btn btn-danger pull-right dialog-close-button-no-margin" matTooltip="Close" (click)="closeDialog()">
+  <mat-icon>clear</mat-icon>
+</button>
+<div class="row">
+  <div class="col-lg-12"><h2 class="template-orange mat-dialog-title">{{dialogTitle}}</h2></div>
+</div>
+<div class="form-group">
+  <app-nowce-data-list
+  [cols]="columns"
+  [saveType]="listType"
+  [dataArray]="sourceList"
+  [selectedItems]="selectedItems"
+  ></app-nowce-data-list>
+</div>

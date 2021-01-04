@@ -1,0 +1,143 @@
+<h2 class="template-orange">{{formType}} circuit</h2>
+
+<button (click)="dialogRef.close()" *ngIf="subComponent" class="pull-right dialog-close-button" mat-icon-button>
+  <mat-icon>clear</mat-icon>
+</button>
+<form *ngIf="formLoaded" [formGroup]="form" novalidate>
+  <div class="row margin-bottom-10">
+    <div class="col-sm-12">
+      <button (click)="saveChanges()" class="btn button-default save-button pull-right" mat-raised-button >Save</button>
+    </div>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-input-component
+      [formControlName]="'title'"
+      [formGroup]="form"
+      [inputType]="InputType.Text"
+      [label]="'Circuit title'"
+      [resourceElement]="'title'"
+      [selectedResource]="circuit"
+      [tooltip]="'Enter a title for this circuit'"
+      class="col-md-6">
+    </app-change-history-input-component>
+    <app-change-history-input-component
+      [formControlName]="'dateScheduled'"
+      [formGroup]="form"
+      [inputType]="InputType.Date"
+      [label]="'Date Scheduled'"
+      [resourceElement]="'dateScheduled'"
+      [selectedResource]="circuit"
+      [tooltip]="'The first release date of this circuit'"
+      class="col-md-6">
+    </app-change-history-input-component>
+  </div>
+  <div class="row form-group margin-bottom-10">
+    <app-change-history-input-component
+      [formControlName]="'keywords'"
+      [formGroup]="form"
+      [inputType]="InputType.Text"
+      [label]="'Keywords'"
+      [resourceElement]="'keywords'"
+      [selectedResource]="circuit"
+      [tooltip]="'The keywords used to find the circuit'"
+      class="col-12">
+    </app-change-history-input-component>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-texteditor
+      [formControlName]="'intro'"
+      [formGroup]="form"
+      [label]="'Intro'"
+      [resourceElement]="'intro'"
+      [selectedResource]="circuit"
+      [showCitation]="false"
+      [tooltip]="'The introduction for this circuit'"
+      class="col"
+    ></app-change-history-texteditor>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-texteditor
+      [formControlName]="'text'"
+      [formGroup]="form"
+      [label]="'Text'"
+      [resourceElement]="'text'"
+      [selectedResource]="circuit"
+      [showCitation]="false"
+      [tooltip]="'The main text of this circuit'"
+      class="col"
+    ></app-change-history-texteditor>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-texteditor
+      [formControlName]="'examinerNotes'"
+      [formGroup]="form"
+      [label]="'Notes for examiners'"
+      [resourceElement]="'examinerNotes'"
+      [selectedResource]="circuit"
+      [showCitation]="false"
+      [tooltip]="'Notes for examiners'"
+      class="col"
+    ></app-change-history-texteditor>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-texteditor
+      [formControlName]="'candidateNotes'"
+      [formGroup]="form"
+      [label]="'Notes for candidates'"
+      [resourceElement]="'candidateNotes'"
+      [selectedResource]="circuit"
+      [showCitation]="false"
+      [tooltip]="'Notes for candidates'"
+      class="col"
+    ></app-change-history-texteditor>
+  </div>
+  <div class="row margin-bottom-10 form-group">
+    <app-change-history-texteditor
+      [formControlName]="'actorScripts'"
+      [formGroup]="form"
+      [label]="'Scripts for any actors'"
+      [resourceElement]="'actorScripts'"
+      [selectedResource]="circuit"
+      [showCitation]="false"
+      [tooltip]="'Scripts for any actors'"
+      class="col"
+    ></app-change-history-texteditor>
+  </div>
+  <div>
+    <h2 class="template-orange mat-dialog-title">Stations in this circuit</h2>
+    <label>Click and drag your stations to change their order.</label>
+    <div [sortableData]="circuitStations" class="list-group" dnd-sortable-container>
+      <mat-card (onDragEnd)="onDropSuccess(item)" *ngFor="let item of circuitStations; let i = index"
+                [sortableIndex]="i" class="margin-bottom-10" dnd-sortable>
+        <div class="row">
+          <div class="col-sm-1">
+            <button [matMenuTriggerFor]="menu" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button (click)="editStationClickHandler(item)" mat-menu-item>
+                <span>Edit station</span>
+              </button>
+              <button (click)="removeStationClickHandler(item.id)" mat-menu-item>
+                <span>Remove station</span>
+              </button>
+              <button (click)="openPreviewNewWindow(item)" mat-menu-item>
+                <span>Preview station</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div [innerHtml]="item.title | firstNChars:100" class="col-sm-11 ql-size-large question-sneak-peak"></div>
+        </div>
+      </mat-card>
+    </div>
+    <button (click)="addStationsClickHandler()" class="btn btn-primary" mat-raised-button>Add or remove station
+    </button>
+    <button (click)="createStationClickHandler()" class="btn btn-primary" mat-raised-button>Create station
+    </button>
+    <br>
+    <mat-card *ngIf="!circuitStations || circuitStations.length === 0" class="margin-bottom-10">
+      There are currently no stations in this circuit.
+    </mat-card>
+  </div>
+  <button (click)="saveChanges()" class="btn btn-primary pull-right" mat-raised-button> Save</button>
+</form>

@@ -1,0 +1,64 @@
+@mixin accessibility-theme() {
+  $fontRate: 1.5;
+  
+  font-size: #{0.8 * $fontRate}em;
+  
+  .mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab{
+      font-size: #{14 * $fontRate}px;
+  }
+  
+  body .ui-widget{
+      font-size: 1.1rem;
+  }
+}
+
+$lowcontrast-primary: mat-palette($mat-purple);
+$lowcontrast-accent:  mat-palette($mat-deep-purple, A200, A100, A400);
+$lowcontrast-warn:    mat-palette($mat-red);
+
+$mat-lowcontrast-theme-background: (
+  status-bar: map_get($mat-deep-purple, 300),
+  app-bar:    map_get($mat-deep-purple, 100),
+  background: map_get($mat-deep-purple, 50),
+  hover:      rgba(black, 0.04), // TODO(kara): check style with Material Design UX
+  card:       map_get($mat-deep-purple, 800),
+  dialog:     map_get($mat-deep-purple, 800),
+  disabled-button: rgba(black, 0.12),
+  raised-button: white,
+  focused-button: $dark-focused,
+  selected-button: map_get($mat-deep-purple, 300),
+  selected-disabled-button: map_get($mat-deep-purple, 400),
+  disabled-button-toggle: map_get($mat-deep-purple, 200),
+  unselected-chip: map_get($mat-deep-purple, 300),
+  disabled-list-option: map_get($mat-deep-purple, 200),
+  tooltip: map_get($mat-deep-purple, 700),
+);
+
+$mat-lowcontrast-theme-foreground: (
+  base:              black,
+  divider:           $dark-dividers,
+  dividers:          $dark-dividers,
+  disabled:          $dark-disabled-text,
+  disabled-button:   rgba(black, 0.26),
+  disabled-text:     $dark-disabled-text,
+  elevation:         black,
+  hint-text:         $dark-disabled-text,
+  secondary-text:    $dark-secondary-text,
+  icon:              rgba(black, 0.54),
+  icons:             rgba(black, 0.54),
+  text:              rgba(black, 0.87),
+  slider-min:        rgba(black, 0.87),
+  slider-off:        rgba(black, 0.26),
+  slider-off-active: rgba(black, 0.38),
+);
+
+@function mat-lowcontrast-theme(){
+    @return (
+        primary: $lowcontrast-primary,
+        accent: $lowcontrast-accent,
+        warn: $lowcontrast-warn,
+        is-dark: false,
+        foreground: $mat-lowcontrast-theme-foreground,
+        background: $mat-lowcontrast-theme-background,
+    );
+}

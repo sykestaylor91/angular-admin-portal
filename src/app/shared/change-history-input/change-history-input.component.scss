@@ -1,0 +1,25 @@
+.input-label {
+  min-height: 23px;
+  font-size: 120%;
+}
+.input-icon {
+  color: gray;
+  cursor: pointer;
+  position: relative;
+  margin-top: -2px;
+  font-size: 100% !important;
+}
+.lightgrey {
+  color: lightgrey;
+}
+.gray{
+  color: gray;
+  font-size: 120%;
+  margin-top: -2px;
+}
+.black {
+  color: black;
+}
+button[disabled] {
+  cursor: not-allowed;
+}

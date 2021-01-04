@@ -1,0 +1,132 @@
+<!-- single choice -->
+<form>
+  <div *ngIf="type === questionType.SingleChoice">
+    Select one
+    <br/>
+
+    <div *ngFor="let choice of modelValue; let i = index;" >
+      <mat-card [class.disabledAnswerOption]="choice.disabled" class="answer-container pointer margin-bottom-10 relative " mat-ripple >
+
+        <div [class.disabledAnswerOption]="choice.disabled" class="answer-label">
+          {{i + 1}}
+        </div>
+        <div class="row margin-left-40">
+          <div (click)="onResponseChanged($event, choice)" class="col-1">
+            <mat-radio-button (click)="onResponseChanged($event, choice)" [checked]="choice.selected"
+                              [disabled]="answerSubmitted || choice.disabled"
+                              id="ques-{{i}}"
+                              name="question-single">
+            </mat-radio-button>
+          </div>
+          <div (click)="onResponseChanged($event, choice)" class="col-9 ml-1">
+            <label [innerHTML]="choice.text"></label>
+          </div>
+          <div class="col-1">
+            <i (click)="updateDisabled(choice)" matTooltip="strikethrough and disable the answer option" class="material-icons answer-strikethrough">strikethrough_s</i>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="type === questionType.MultipleChoice">
+    <div *ngFor="let choice of modelValue; let i = index;" >
+      <mat-card [class.disabledAnswerOption]="choice.disabled" class="answer-container pointer margin-bottom-10 relative" mat-ripple >
+
+        <div (click)="onResponseChangedMulti($event, choice)" [class.disabledAnswerOption]="choice.disabled"
+             class="answer-label">
+          {{i + 1}}
+        </div>
+        <div class="row margin-left-40">
+          <div (click)="onResponseChangedMulti($event, choice)" class="col-1">
+            <mat-checkbox (click)="onResponseChangedMulti($event, choice)" [checked]="choice.selected"
+                          [disabled]="answerSubmitted || choice.disabled"
+                          id="ques-{{i}}"
+                          name="question-multiple">
+            </mat-checkbox>
+          </div>
+          <div (click)="onResponseChangedMulti($event, choice)" class=" col-9 ml-1">
+            <label [innerHTML]="choice.text"></label>
+          </div>
+          <!-- <div *ngIf="choice.selected && examMode" class="col-sm-1 col-lg-1" (click)="onResponseChangedMulti($event, choice)">
+            <i  class="fa fa-circle-o fa-2x " aria-hidden="true"></i>
+          </div> -->
+          <div class="col-1" >
+            <i (click)="updateDisabled(choice)" class=" pointer material-icons answer-strikethrough" matTooltip="strikethrough and disable the answer option">strikethrough_s</i>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</form>
+<div *ngIf="type === questionType.FreeText">
+
+  <span></span>
+  <div class="row">
+    <div class="col-12">
+      <app-text-editor (ngModelChange)="onEditorChange($event)"
+                   *ngIf="!answerSubmitted"
+                   [(ngModel)]="freeTextAnswerGiven"
+                   [setFocus]="false"
+                   [showAudio]="false"
+                   [showCitation]="false"
+                   [showFullScreen]="false"
+                   [label]="'Enter answer below'"
+                   [showImage]="false"
+                   [showMedia]="false"
+                   [showPdf]="false"
+                   [showSource]="false"
+                   [showVideo]="false"></app-text-editor>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div *ngIf="answerSubmitted" [innerHTML]="freeTextAnswerGiven" class="very-short-answer-input">
+  </div>
+</div>
+
+<div *ngIf="type===questionType.VeryShortAnswer">
+  <br/>
+  <br/>
+  <mat-label>Enter answer below (three words maximum)</mat-label>
+  <input matInput (keyup)="onVSAUpdate($event)"
+         (ngModelChange)="onVSAChange($event)"
+         *ngIf="!answerSubmitted"
+         [(ngModel)]="freeTextAnswerGiven"
+         class="very-short-answer-input width-100">
+  <br/>
+  <br/>
+  <div *ngIf="answerSubmitted" [innerHTML]="freeTextAnswerGiven" class="very-short-answer-input margin-bottom-10">
+    <br/>
+  </div>
+</div>
+
+<div *ngIf="type === questionType.SingleSentence">
+  <br/>
+  <mat-label>Enter answer below (15 words maximum)</mat-label>
+  <input matInput (keyup)="onSingleSentenceUpdate($event)"
+         (ngModelChange)="onSingleSentenceChange($event)"
+         *ngIf="!answerSubmitted"
+         [(ngModel)]="freeTextAnswerGiven"
+         class="very-short-answer-input width-100">
+  <br/>
+  <br/>
+  <div *ngIf="answerSubmitted" [innerHTML]="freeTextAnswerGiven" class="very-short-answer-input">
+    <br/>
+
+  </div>
+</div>
+<div *ngIf="type === questionType.EvaluationRating" class="margin-bottom-20"><!---->
+    <label class="pull-left">Disagree</label>
+    <label class="pull-right">Agree</label>
+    <mat-button-toggle-group  style="width:100%" appearance="legacy" [disabled]="answerSubmitted">
+        <mat-button-toggle style="width:20%;" *ngFor="let choice of modelValue; let i = index;"
+             (click)="onRatingChanged((i+1).toString())"
+            [attr.disabled]="answerSubmitted || choice.disabled"
+            id="ques-{{i}}"
+            name="question-rating"
+            class="template-blue"
+            value="{{i+1}}">
+          <mat-label style="font-size:200%">{{i+1}}</mat-label>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+</div>

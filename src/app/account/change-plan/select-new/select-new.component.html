@@ -1,0 +1,196 @@
+<div class="margin-bottom-20">
+  <p>Select your new NowCE Plan</p>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="plan-container">
+      <div class="plan-title enterprise-plan">
+        Enterprise Plans
+      </div>
+      <div class="plan-subheader enterprise-plan-secondary">
+        <div class="row">
+          <div class="col-sm-3">
+            Plan
+          </div>
+          <div class="col-sm-3">
+            Courses
+          </div>
+          <div class="col-sm-3">
+            Cost
+          </div>
+          <div class="col-sm-3">
+            Overage
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="arrow-down arrow-down-enterprise"></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="arrow-down arrow-down-enterprise"></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="arrow-down arrow-down-enterprise"></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="arrow-down arrow-down-enterprise"></div>
+        </div>
+      </div>
+      <div class="plan-detail enterprise-border">
+        <div class="row">
+          <div class="col-sm-3">
+            E100
+          </div>
+          <div class="col-sm-3">
+            100
+          </div>
+          <div class="col-sm-3">
+            $500
+          </div>
+          <div class="col-sm-3">
+            $4.75
+          </div>
+          <hr class="enterprise-border"/>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            E500
+          </div>
+          <div class="col-sm-3">
+            500
+          </div>
+          <div class="col-sm-3">
+            $2000
+          </div>
+          <div class="col-sm-3">
+            $3.75
+          </div>
+          <hr class="enterprise-border"/>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            E1000
+          </div>
+          <div class="col-sm-3">
+            1000
+          </div>
+          <div class="col-sm-3">
+            $3500
+          </div>
+          <div class="col-sm-3">
+            $3.00
+          </div>
+          <hr class="enterprise-border"/>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            E5000
+          </div>
+          <div class="col-sm-3">
+            5000
+          </div>
+          <div class="col-sm-3">
+            $12,000
+          </div>
+          <div class="col-sm-3">
+            $2.25
+          </div>
+          <hr class="enterprise-border"/>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            E Unlimited
+          </div>
+          <div class="col-sm-3">
+            10,000
+          </div>
+          <div class="col-sm-3">
+            $20,000
+          </div>
+          <div class="col-sm-3">
+            $2.00
+          </div>
+          <hr class="enterprise-border"/>
+        </div>
+        <div class="row">
+          <button mat-raised-button class="btn btn-primary enterprise-plan-secondary" (click)="selectPlan('E100_30d')">
+            E100
+          </button>
+          <button mat-raised-button class="btn btn-primary enterprise-plan-secondary" (click)="selectPlan('E500_30d')">
+            E500
+          </button>
+          <button mat-raised-button class="btn btn-primary enterprise-plan-secondary" (click)="selectPlan('E1000_30d')">
+            E1000
+          </button>
+          <button mat-raised-button class="btn btn-primary enterprise-plan-secondary" (click)="selectPlan('E5000_30d')">
+            E5000
+          </button>
+          <button mat-raised-button class="btn btn-primary enterprise-plan-secondary"
+                  (click)="selectPlan('Eunlim_30d')">E Unlimited
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="plan-container">
+      <div class="plan-title pay-go-plan">
+        PayGo Plans
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="plan-title pay-go-plan">
+            PG50
+          </div>
+          <div class="plan-subheader pay-go-plan-secondary">
+            <span>$75/month</span>
+          </div>
+          <div class="arrow-down arrow-down-pay-go"></div>
+          <div class="plan-detail pay-go-plan-border">
+            <div class="margin-bottom-10">
+              Provider revenue share 50%
+              <br/>Includes: server resource, connectivity, activity build and management, metrics
+              <br/>20 questions per activity
+              <br/>Minimum activity price $5
+            </div>
+            <button mat-raised-button class="btn btn-primary pay-go-plan-secondary width-100"
+                    (click)="selectPlan('PayGo50_30d')">Select
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="plan-title pay-go-plan">
+            PG70
+          </div>
+          <div class="plan-subheader pay-go-plan-secondary">
+            <span>$200/month</span>
+          </div>
+          <div class="arrow-down arrow-down-pay-go"></div>
+          <div class="plan-detail pay-go-plan-border">
+            <div class="margin-bottom-10">
+              Provider revenue share 75%
+              <br/>Includes: server resource, connectivity, activity build and management, metrics
+              <br/>100 questions per activity
+              <br/>Minimum activity price $5
+            </div>
+            <button mat-raised-button class="btn btn-primary pay-go-plan-secondary width-100"
+                    (click)="selectPlan('PayGo70_30d')">Select
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <div class="form-group pull-right">
+      <br/>
+      <button mat-raised-button (click)="cancelClickHandler()" class="btn btn-primary">Cancel</button>
+    </div>
+  </div>
+</div>

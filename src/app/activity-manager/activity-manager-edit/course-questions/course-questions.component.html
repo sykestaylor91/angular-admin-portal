@@ -1,0 +1,80 @@
+<div class="relative"  *ngIf="!hideRevealAnswers">
+  <h3>
+    Discussion rules
+  </h3>
+  <div class="row panel-body" [formGroup]="questionsFormGroup">
+      <app-change-history-input-component
+        class="col-12"
+        [resourceElement]="'revealAnswers'"
+        [selectedResource]="selectedExam"
+        [formGroup]="questionsFormGroup"
+        [inputType]="InputType.Custom"
+        [showCommentChangeHistory]="false"
+        [label]="'Reveal answer discussion'">
+        <br />
+        <select class="col-md-8 form-control" [formControlName]="'revealAnswers'" id="revealAnswers">
+          <option [value]="RevealAnswerType.AfterRightAnswer">After giving right answer</option>
+          <option [value]="RevealAnswerType.AfterWrongAnswer">After giving wrong answer</option>
+          <option [value]="RevealAnswerType.AfterAny">After any answer given</option>
+          <option [value]="RevealAnswerType.WhenActivityComplete">When activity is completed</option>
+          <option [value]="RevealAnswerType.Never" *ngIf="!hideNever">Never</option>
+          <option [value]="RevealAnswerType.InStudyMode" *ngIf="!hideStudy">In study mode</option>
+        </select>
+      </app-change-history-input-component>
+  </div>
+</div>
+
+<div class="row form-group">
+  <div class="col-6">
+    <h3>
+      Activity questions
+    </h3>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button
+            class="btn btn-primary pull-right"
+            [disabled]="isReadOnly"
+            (click)="openAddRemoveDialog()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Create, add or remove questions
+    </button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+    <label>Click and drag your questions to change their order.</label>
+    <div class="list-group" dnd-sortable-container [sortableData]="courseQuestions">
+      <mat-card *ngFor="let item of courseQuestions; let i = index" class="margin-bottom-10"
+                dnd-sortable [sortableIndex]="i" (onDragEnd)="onDropSuccess(item)">
+        <div class="row">
+          <div class="col-sm-1">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openPreviewQuestion(item)">
+                <span>Preview question</span>
+              </button>
+              <button mat-menu-item (click)="openEditQuestionDialog(item)">
+              <span>Edit question</span>
+              </button>
+              <button mat-menu-item (click)="removeCourseClickHandler(item.id)" *ngIf="!isReadOnly">
+                <span>Remove question</span>
+              </button>
+            </mat-menu>
+          </div>
+
+          <div class="col-sm-10 ql-size-large question-sneak-peak" [innerHtml]="item.question | firstNChars:100"></div>
+          <div class="col-sm-1 ql-size-large question-sneak-peak" [innerHtml]="(i+1).toString()"></div>
+        </div>
+      </mat-card>
+    </div>
+    <mat-card class="margin-bottom-10"
+              *ngIf="!courseQuestions || courseQuestions.length === 0">
+      There are currently no questions on this activity.
+    </mat-card>
+  </div>
+</div>

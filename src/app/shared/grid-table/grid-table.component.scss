@@ -1,0 +1,25 @@
+@import "../../../assets/scss/core/variables";
+
+::ng-deep div.ui-table-wrapper table {
+  border: none;
+}
+
+::ng-deep .ui-table .ui-table-thead > tr > th {
+  background-color: transparent;
+  color: $c-secondaryColor;
+  font-weight: bold;
+  border: none;
+  vertical-align: bottom;
+}
+
+::ng-deep .ui-table .ui-paginator-bottom,
+::ng-deep .ui-table .ui-table-tbody > tr > td {
+  border: none;
+  border-top: 1px solid $c-grayMedium;
+  cursor: pointer;
+}
+
+::ng-deep .ui-table .ui-table-tbody > tr > td.details-row {
+  padding: 0;
+  border: none;
+}

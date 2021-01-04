@@ -1,0 +1,68 @@
+<mat-card class="navigation-card" *ngIf="userExam">
+  <app-course-timer *ngIf="!userExam.studyMode && !previewMode && !postCourseEvaluationMode"
+                    [startTime]="userExam.elapsedSeconds"
+                    [allQuestionsAnswered]="allQuestionsAnswered"
+                    (timeUp)="onTimeUp()">
+  </app-course-timer>
+  <div class="margin-bottom-10"
+       *ngIf="userExam && userExam.questions && !postCourseEvaluationMode && !userExam.studyMode && !previewMode">
+    <p>Questions answered: <span >{{getUniqueQuestionIds || 0}}</span></p>
+    <p>Total questions: <span >{{totalQuestionCount}}</span></p>
+
+    <div>
+      <!--<span>-->
+      <!--Correct: <b>{{userExam.score | number : '1.2-2'}} &#37;</b>-->
+      <!--</span>-->
+    </div>
+
+
+  </div>
+  <div class="margin-bottom-10">
+    <button mat-raised-button class="btn btn-primary btn-navigate btn-next-back"
+            (click)="onNavigate('back');"
+            *ngIf="questionIndex > 0 && (userExam.examMode || userExam.studyMode)">
+      <i class="fa fa-backward text-right" aria-hidden="true"></i>
+    </button>
+
+    <button mat-raised-button class="btn btn-presponsesrimary btn-pause"
+            *ngIf="!userExam.studyMode && !previewMode && !allQuestionsAnswered  && !allQuestionsAnsweredCorrectly"
+            (click)="pauseOrStartTimer()">
+      <i class="fa" [ngClass]="{'fa-pause': timerRef, 'fa-play': !timerRef}" aria-hidden="true"></i>
+    </button>
+
+    <button mat-raised-button class="btn btn-primary btn-navigate btn-next-back"
+            (click)="onNavigate('next');"
+            *ngIf="userExam && userExam.questions && questionIndex < userExam.questions.length-1 && questionIndex > -1 && !allQuestionsAnsweredCorrectly">
+      <i class="fa fa-forward text-right" aria-hidden="true"></i>
+    </button>
+
+    <br/>
+    <br/>
+
+    <button mat-raised-button class="btn btn-primary"
+            *ngIf="userExam.studyMode"
+            (click)="endStudyMode()">
+      Exit
+    </button>
+
+    <div *ngIf="previewMode">
+      <button mat-raised-button class="btn btn-primary" (click)="endPreview()">End preview</button>
+    </div>
+
+    <div *ngIf="!previewMode">
+      <br/>
+      <button *ngIf="allQuestionsAnswered || (userExam && questionIndex == userExam.questions.length-1)" mat-raised-button class="btn btn-primary" (click)="onViewCompleteCourse()">Finish activity now</button>
+    </div>
+
+  </div>
+
+  <div>
+    <app-course-map *ngIf="userExam.examMode"
+                    [userExam]="userExam"
+                    [responses]="responses"
+                    [questions]="questions"
+                    [revisitList]="revisitList"
+                    (questionChange)="onNavigate($event)">
+    </app-course-map>
+  </div>
+</mat-card>

@@ -1,0 +1,4 @@
+<app-dialog-actions (dialogResult)="onDialogResult($event)" [displayContent]="false">
+    <iframe [srcdoc]="htmlSrc | safeHtml" *ngIf="htmlSrc" style='width: 100%; height: 100%;'>iFrame not supported</iframe>
+</app-dialog-actions>
+      

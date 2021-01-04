@@ -1,0 +1,26 @@
+<form>
+  <div class="margin-bottom-20">
+    <div>
+      <label class="template-orange" [innerHtml]="question.question"></label>
+    </div>
+    <div class="col-md-6" *ngFor="let answer of this.currentQuestionAnswers; let i = index;">
+      <mat-card mat-ripple mdRippleColor="rgba(235,235,235, .2)" mdRippleSpeedFactor="2"
+                class="answer-container pointer margin-bottom-10 relative "
+                (click)="responseClickHandler(answer, question)">
+        <div class="row">
+          <div class="answer-label">
+            {{i + 1}}
+          </div>
+          <div class="col-sm-1 margin-left-40">
+            <mat-radio-button disableRipple id="ques-{{i}}" name="ques-{{i}}" [value]="answer"
+                              (click)="responseClickHandler(answer, question)"
+                              [checked]="checkedResponse(answer)"></mat-radio-button>
+          </div>
+          <div class="col-sm-9">
+            <span [innerHTML]="answer.text" for="answer"></span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</form>

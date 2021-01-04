@@ -1,0 +1,23 @@
+<div class="row margin-bottom-20">
+  <div class="col-5">
+    <p *ngIf="user">
+    Welcome, {{User.fullName(user.firstName, user.lastName)}}</p>
+    <app-chat-component [roomId]="1234" [chatTitle]="'Demo chatroom'"></app-chat-component>
+    <!--<button mat-raised-button class="btn btn-primary" (click)="myAccountNavigate()">-->
+    <!--<span>My account</span>-->
+    <!--</button>-->
+
+    <!-- <button mat-raised-button class="btn btn-primary" (click)="showNotificationsClickHandler()">
+      <span>{{notificationsCount}} Notifications & messages</span>
+    </button> -->
+    <!-- <div>
+      <app-notifications [show]="showNotifications" (notificationCount)="notificationCount($event)"></app-notifications>
+    </div> -->
+  </div>
+<!--  <div class="col-7">-->
+<!--    <app-reader-stats *ngIf=" user && sessionService.verifyLoggedInUserPermission(Role.Reader)"></app-reader-stats>-->
+<!--  </div>-->
+</div>
+<div>
+  <app-reader-home *ngIf=" user && sessionService.verifyLoggedInUserPermission(Role.Reader)"></app-reader-home>
+</div>

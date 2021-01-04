@@ -1,0 +1,56 @@
+@import "../core/variables";
+
+.ql-toolbar {
+  //border-top-left-radius: 0px;
+  //border-top-right-radius: 0px;
+  //border-bottom: 1px gray solid !important;
+}
+.dark-theme .ql-snow.ql-toolbar button, .dark-theme .ql-snow.ql-toolbar .ql-size {
+  background: lightgrey !important;
+}
+
+.ql-container {
+  border: none !important;
+  //border-bottom-left-radius: 0px;
+  //border-bottom-right-radius: 0px;
+}
+/* like bootstrap 4 */
+.required.is-valid {
+  .ql-toolbar {
+    //border: none !important;
+    //border-top-color: #28a745;
+    //border-left-color: #28a745;
+    //border-right-color: #28a745;
+  }
+  .ql-container {
+    border: none !important;
+    //border-left-color: #28a745;
+    //border-right-color:#28a745;
+    //border-bottom-color: #28a745;
+  }
+}
+.required.has-error {
+  .ql-toolbar {
+    //border: none !important;
+    //border-top-color: $c-required;
+    //border-left-color: $c-required;
+    //border-right-color: $c-required;
+  }
+  .ql-container {
+    //border: none !important;
+    //border-left-color: $c-required;
+    //border-right-color: $c-required;
+    //border-bottom-color: $c-required;
+  }
+}
+.ql-editor {
+  resize: vertical;
+  overflow-y: scroll;
+}
+
+.ql-toolbar.ql-snow,  {
+  border: none !important;
+  background: none;
+  //text-align:right;
+  margin-top: -35px !important;
+}

@@ -1,0 +1,242 @@
+<!-- TODO:  resizeable cols, frozen cols, column specific filters  -->
+  <p-table #dt [columns]="cols" [frozenColumns]="frozenCols" [paginator]="(showPagination && dataArray?.length > 5)" [reorderableColumns]="true"
+    [rowsPerPageOptions]="rowOptions" [rows]="10" [value]="dataArray">
+    <!-- [resizableColumns]="true" -->
+    <ng-template pTemplate="caption">
+      <div class="row ">
+        <div class="col-3" style="text-align: left;margin-top:-18px; max-width: 200px;margin-left: -15px;">
+          <mat-form-field appearance="outline" class="search-box width-100"  >
+            <button matPrefix mat-icon-button >
+              <mat-icon>search</mat-icon>
+            </button>
+            <input #search matInput [(ngModel)]="search_key" [placeholder]="'Search'" type="text" matTooltip="Search"
+                   (change)="dataFilter()" (input)="dataFilter()" (keyup.enter)="chipsAndFilter()"
+                   >
+            <button mat-button  *ngIf="search.value" matSuffix mat-icon-button title="Clear"
+                    (click)=" clearSearchKey(); ">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="col-3 search-chip-list-container">
+            <mat-chip-list *ngIf="searchChipsArray?.length<2" aria-label="Search selection">
+                <mat-chip
+                  *ngFor="let searchChip of searchChipsArray"
+                  matTooltip="{{searchChip}}"
+                  (removed)="removeSearchChip(searchChip)">
+                  <mat-icon matChipAvatar >local_offer</mat-icon>
+                  {{searchChip | firstNChars}}
+                  <mat-icon matChipRemove matTooltip="Remove search" >cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+            <mat-chip-list *ngIf="searchChipsArray?.length>1" aria-label="Search selection">
+                <mat-chip [matMenuTriggerFor]="menu" matTooltip="Show searches" >
+                    <mat-icon matChipAvatar>local_offer</mat-icon>
+                    {{searchChipsArray.length}} Searches
+                    <mat-icon matChipRemove matTooltip="Remove all searches" (click)="clearSearches()">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item
+                  *ngFor="let searchChip of searchChipsArray"
+                  matTooltip="{{searchChip}}">
+                  <mat-icon (click)="removeSearchChip(searchChip)" matTooltip="Remove search">cancel</mat-icon>
+                  {{searchChip | firstNChars:15}}
+                </button>
+            </mat-menu>
+        </div>
+        <div *ngIf="filterLists?.length < 2" class="col-3"></div>
+        <div *ngFor="let filter of filterLists" class="col-3" style="text-align: left;margin-top:-20px; max-width: 200px;margin-left: -15px;">
+          <mat-form-field appearance="outline"  [floatLabel]="'always'"  class="search-box width-100" matTooltip="Filter by {{filter.label}}">
+            <mat-label style="margin-top: 10px !important;">{{filter.label}}</mat-label>
+            <button matPrefix mat-icon-button >
+              <mat-icon>filter_alt</mat-icon>
+            </button>
+            <mat-select  [(value)]="filter.selected" (selectionChange)="dataFilter()">
+              <mat-option value="" selected>Show all</mat-option>
+              <mat-option *ngFor="let option of filter.options" [(value)]="option.value || option" >{{option.key || option.value || (option | titlecase)}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-columns pTemplate="colgroup">
+      <colgroup>
+        <col *ngIf="contextMenu?.length > 0" [style.width]="'5%'">
+        <col *ngFor="let col of columns" [style.width]="col.width">
+      </colgroup>
+    </ng-template>
+    <ng-template let-columns pTemplate="header">
+      <tr>
+        <th *ngIf="contextMenu?.length > 0" border="none"></th>
+        <th *ngFor="let col of columns" [className]="col.headerClass"
+          [pSortableColumn]="(col.type === columnType.CustomHTML || col.type === columnType.AddRemoveButton ||
+           col.type === columnType.CustomButton || col.type === columnType.CheckBox || col.type === columnType.CustomRadio) ? null : col.field">
+          <label *ngIf="isLessThan(col.width ,10)"  class="tab-label"  [matTooltip]="col.title">{{col.title | firstNChars: 6 }}</label>
+          <label *ngIf="isLessThan(col.width ,20) && !isLessThan(col.width ,10)"  class="tab-label"  [matTooltip]="col.title">{{col.title | firstNChars: 10 }}</label>
+          <label *ngIf="isLessThan(col.width ,30) && !isLessThan(col.width ,10) && !isLessThan(col.width ,20)"  class="tab-label"  [matTooltip]="col.title">{{col.title | firstNChars: 14 }}</label>
+          <label *ngIf="!isLessThan(col.width ,30)"  class="tab-label"  [matTooltip]="col.title">{{col.title}}</label>
+          <span>
+            <p-sortIcon
+              *ngIf="!(col.type === columnType.CustomHTML || col.type === columnType.AddRemoveButton ||
+               col.type === columnType.CustomButton || col.type === columnType.CheckBox || col.type === columnType.CustomRadio)"
+              [field]="col.field" ariaLabel="Sort" ariaLabelAsc="Sort in ascending order" [matTooltip]="'Sort by ' + col.title"
+              ariaLabelDesc="Sort in descending order">
+            </p-sortIcon>
+          </span>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template let-columns="columns" let-rowData pTemplate="body">
+      <tr style="background: none;">
+        <td *ngIf="contextMenu?.length > 0">
+          <div>
+            <button [matMenuTriggerFor]="menu" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button  mat-menu-item (click)="editClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.Edit) > -1 &&
+                  (!contextMenuHide || !contextMenuHide[ContextMenuItems.Edit] || contextMenuHide[ContextMenuItems.Edit].indexOf(rowData.id)===-1)">
+                <mat-icon>create</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="deleteClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.Delete) > -1 &&
+                (!contextMenuHide || !contextMenuHide[ContextMenuItems.Delete] || contextMenuHide[ContextMenuItems.Delete].indexOf(rowData.id)===-1)">
+                <mat-icon>clear</mat-icon>
+                <span>Delete</span>
+              </button>
+              <button mat-menu-item (click)="previewClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.Preview) > -1 &&
+                (!contextMenuHide || !contextMenuHide[ContextMenuItems.Preview] || contextMenuHide[ContextMenuItems.Preview].indexOf(rowData.id)===-1)">
+                <mat-icon>launch</mat-icon>
+                <span>Preview</span>
+              </button>
+              <button mat-menu-item (click)="useAsTemplateClickHandler(rowData)"
+                *ngIf="contextMenu.indexOf(ContextMenuItems.UseAsTemplate) > -1 &&
+                (!contextMenuHide || !contextMenuHide[ContextMenuItems.UseAsTemplate] || contextMenuHide[ContextMenuItems.UseAsTemplate].indexOf(rowData.id)===-1)">
+                <mat-icon>description</mat-icon>
+                <span>Use as a template/blueprint</span>
+              </button>
+              <button  mat-menu-item (click)="unPublishClickHandler(rowData)"
+                *ngIf="contextMenu.indexOf(ContextMenuItems.UnPublish) > -1 &&
+                (!contextMenuHide || !contextMenuHide[ContextMenuItems.UnPublish] || contextMenuHide[ContextMenuItems.UnPublish].indexOf(rowData.id)===-1)">
+                <mat-icon>archive</mat-icon>
+                <span>Unpublish</span>
+              </button>
+              <button mat-menu-item (click)="metricsClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.Metrics) > -1 &&
+                (!contextMenuHide || !contextMenuHide[ContextMenuItems.Metrics] || contextMenuHide[ContextMenuItems.Metrics].indexOf(rowData.id)===-1)">
+                <mat-icon>trending_up</mat-icon>
+                <span>Metrics</span>
+              </button>
+              <button (click)="customMenuClickHandler(rowData)"
+                *ngIf="contextMenu.indexOf(ContextMenuItems.CustomMenu) > -1" mat-menu-item >
+                <mat-icon>launch</mat-icon>
+                <span>{{customMenuLabel}}</span>
+              </button>
+              <button mat-menu-item (click)="resumeActivityClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.ResumeActivity) > -1">
+                <mat-icon>trending_up</mat-icon>
+                <span>Resume Activity</span>
+              </button>
+              <button mat-menu-item (click)="abandonActivityClickHandler(rowData)" *ngIf="contextMenu.indexOf(ContextMenuItems.AbandonActivity) > -1">
+                <mat-icon>delete_forever</mat-icon>
+                <span>Abandon Activity</span>
+              </button>
+            </mat-menu>
+          </div>
+        </td>
+        <td *ngFor="let col of columns" [ngSwitch]="col.type">
+          <div *ngSwitchCase="columnType.Text" [className]="col.class ">
+            {{rowData[col.field]}}
+          </div>
+          <div *ngSwitchCase="columnType.Date" [className]="col.class"
+               matTooltip="{{rowData[col.field]| date: 'full' }}">
+            {{rowData[col.field] | date }}
+          </div>
+          <div *ngSwitchCase="columnType.FirstNWords" [className]="col.class"
+               matTooltip="{{rowData[col.field]| stripTags}}">
+            {{rowData[col.field] | firstNWords: col.limit}}
+          </div>
+          <div *ngSwitchCase="columnType.FirstNWordsStripTags" [className]="col.class"
+               matTooltip="{{rowData[col.field]| stripTags}}">
+            {{rowData[col.field]| stripTags  | firstNWords: col.limit }}
+          </div>
+          <div *ngSwitchCase="columnType.StripTags" [className]="col.class">
+            {{rowData[col.field] | stripTags}}
+          </div>
+          <div *ngSwitchCase="columnType.FirstNChars" [className]="col.class"
+               matTooltip="{{rowData[col.field]| stripTags}}">
+            {{rowData[col.field] | stripTags  | firstNChars: col.limit}}
+          </div>
+          <div *ngSwitchCase="columnType.CustomHTML" [className]="col.class" [innerHTML]="rowData[col.field]">
+          </div>
+          <div *ngSwitchCase="columnType.AddRemoveButton" [className]="col.class">
+            <button mat-raised-button class="btn btn-primary" matTooltip="Add" (click)="addToListClickHandler(rowData)"
+                    *ngIf="!itemInList(rowData)"><mat-icon>add</mat-icon>
+            </button>
+            <button mat-raised-button class="btn button-default" matTooltip="Remove" (click)="removeFromListClickHandler(rowData)"
+              *ngIf="itemInList(rowData)"><mat-icon>remove</mat-icon>
+            </button>
+          </div>
+          <div *ngSwitchCase="columnType.CustomButton" [className]="col.class">
+            <button mat-raised-button class="btn btn-primary" (click)="customClickHandler(rowData)">
+              {{col.customLabel}}
+            </button>
+          </div>
+          <div *ngSwitchCase="columnType.CheckBox" [className]="col.class">
+            <div *ngIf="rowData[col.field]=='true' || rowData[col.field]==true"> <i class="fa fa-check"></i></div>
+          </div>
+          <div *ngSwitchCase="columnType.CustomRadio" [className]="col.class">
+            <input type="radio" (click)="customClickHandler(rowData)" name='allTheSame'>
+          </div>
+          <div *ngSwitchCase="columnType.ArrayLinks" [className]="col.class">
+            <span *ngFor="let activity of rowData.activities;let arrIndex = index">
+              <a [routerLink]="[col.routePath,activity.id]">{{activity.title}}</a>
+              <span *ngIf="arrIndex + 1 < rowData.activities.length">
+                ,
+              </span>
+            </span>
+          </div>
+          <div *ngSwitchCase="columnType.Tags" [className]="col.class">
+            <mat-chip-list style="">
+              <div *ngFor="let tag of rowData[col.field]" style="font-size: 80%">
+                <mat-chip matTooltip="{{tag}}" style="font-size: 80%">
+                  <mat-icon class="template-blue" matChipAvatar>local_offer</mat-icon>
+                  {{tag | firstNChars}}
+                </mat-chip>
+              </div>
+            </mat-chip-list>
+          </div>
+
+          <!-- AlternativeForm -->
+          <div *ngSwitchCase="columnType.AlternativeForm">
+            <div *ngIf="rowData.id != alternativeForm">
+              <button mat-raised-button class="btn btn-primary" (click)="toggleForm(rowData.id)">
+                {{col.customLabel}}
+              </button>
+            </div>
+            <div *ngIf="rowData.id === alternativeForm">
+                <button mat-icon-button class="btn btn-danger pull-right dialog-close-button-no-margin" matTooltip="Close" (click)="toggleForm(rowData.id)">
+                  <mat-icon>clear</mat-icon>
+                </button>
+                <button mat-icon-button class="btn btn-default pull-right"
+                        (click)="alternativeFormSaveClickedHandler(rowData)" [disabled]="selectList.selectedOptions.length===0" [class.btn-primary]="selectList.selectedOptions.length>0" matTooltip="Send invite"><mat-icon>send</mat-icon></button>
+                <label>Select a role</label>
+                <select #selectList class="form-control ng-pristine ng-invalid ng-touched" [(ngModel)]="alternativeSelectedLookUp">
+                  <option *ngFor="let lookupItem of lookupList" [value]="lookupItem">{{lookupItem | titlecase}}
+                  </option>
+                </select>
+              </div>
+          </div>
+            <div *ngSwitchDefault [className]="col.class">
+              {{rowData[col.field] }}
+            </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template let-columns pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="(contextMenu && contextMenu.length > 0) ? cols.length + 1 : cols.length">
+          No records found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>

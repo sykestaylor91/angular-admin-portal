@@ -1,0 +1,9 @@
+<button *ngIf="showClose" mat-icon-button class="btn btn-danger pull-right dialog-close-button-no-margin" matTooltip="{{closeTitle}}" (click)="onCloseDialog()">
+  <mat-icon>clear</mat-icon>
+</button>
+<button *ngIf="showPrevious" mat-icon-button class="btn btn-default pull-right back-button" matTooltip="Previous" (click)="onPreviousClicked()">
+  <mat-icon>chevron_left</mat-icon>
+</button>
+<h2 class="template-orange text-capitalize" mat-dialog-title>{{title}}</h2>
+<ng-content></ng-content>
+<app-loading-spinner [hidden]="!showLoading"></app-loading-spinner>

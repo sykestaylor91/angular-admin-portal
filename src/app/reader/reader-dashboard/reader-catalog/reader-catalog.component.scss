@@ -1,0 +1,32 @@
+.reader-catalog {
+  font-size: 1.2em;
+}
+.catalog-title {
+  margin-top:0px;
+}
+
+mat-card {
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+.catalog-icon {
+  background-color: black;
+  width: 20px;
+  height: 20px;
+}
+
+.catalog-attr-title {
+  color: #e76443;
+}
+
+.catalog-attr-value {
+  color: black;
+}
+
+.catalog-attr-wrapper {
+// display:inline-flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

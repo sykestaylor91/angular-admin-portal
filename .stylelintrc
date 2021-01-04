@@ -1,0 +1,19 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-named": "never",
+    "font-family-name-quotes": "always-where-recommended",
+    "function-url-quotes": "always",
+    "number-max-precision": 2,
+    "time-min-milliseconds": 100,
+    "value-keyword-case": "lower",
+    "rule-empty-line-before": ["always", {
+      "except": ["first-nested"],
+      "ignore": ["after-comment"]
+    }],
+    "declaration-no-important": true,
+    "selector-type-no-unknown": null,
+    "declaration-empty-line-before": null,
+    "at-rule-no-unknown": null
+  }
+}

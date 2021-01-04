@@ -1,0 +1,19 @@
+<mat-card class="align-center stats stat-card" *ngIf="userCoursesData">
+    <ul class="list-inline" style=" display: flex;">
+        <li class="col-xs-4 col-lg-3 col-xl-3">
+            <h3 class="stat-header">{{userCoursesStarted}}</h3>
+            Activities started
+        </li>
+        <li class="col-xs-4 col-lg-3 col-xl-3">
+            <h3 class="stat-header">{{userCoursesFinished}}</h3>
+            Completed
+        <li class="col-xs-4 col-lg-3 col-xl-3">
+            <h3 class="stat-header">{{userCertificatesGained}}</h3>
+            Certificates
+        </li>
+        <li class="col-xs-4 col-lg-2 col-xl-3">
+            <h3 class="stat-header">{{averageScore | number : '1.2-2'}}&#37;</h3>
+            Average score
+        </li>
+    </ul>
+</mat-card>

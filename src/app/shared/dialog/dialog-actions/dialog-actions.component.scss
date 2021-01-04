@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.actions-wrapper {
+  width: 100%;
+  padding-bottom: 30px;
+}
+
+.action-button {
+  text-transform: capitalize;
+  margin-left: 10px;
+}

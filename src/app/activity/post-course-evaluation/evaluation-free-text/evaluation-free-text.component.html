@@ -1,0 +1,8 @@
+<div class="margin-bottom-20">
+  <div>
+    <label class="template-orange" [innerHtml]="question.question"></label>
+  </div>
+  <app-text-editor [(ngModel)]="freeTextAnswer" [showVideo]="false" [showPdf]="false" [showAudio]="false" [showCitation]="false"
+                   [showImage]="false" [showSource]="false" [showFullScreen]="false"
+                   (ngModelChange)="updateResponse($event, question.question)"></app-text-editor>
+</div>

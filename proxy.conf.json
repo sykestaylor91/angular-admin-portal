@@ -1,0 +1,22 @@
+{
+  "/NowCEDevelop": {
+    "target": "http://localhost:13990",
+    "secure": false
+  },
+  "/logout": {
+    "target": "http://localhost:13994",
+    "secure": false
+  },
+  "/login": {
+    "target": "http://localhost:13994",
+    "secure": false
+  },
+  "/callback": {
+    "target": "http://localhost:13994",
+    "secure": false
+  },
+  "/provider": {
+    "target": "http://localhost:13994",
+    "secure": false
+  }
+}

@@ -1,0 +1,159 @@
+<div class="relative">
+  <div class="panel-body">
+    <div class="form-group">
+      <div class="row margin-bottom-20">
+        <div class="col-sm-12">
+          <h1>Activity Selector</h1>
+        </div>
+      </div>
+      <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+      <div class="row form-group" *ngIf="!courses || courses.length === 0">
+        <div class="col-sm-12 ">
+          No activities are currently available
+        </div>
+      </div>
+      <div>
+        <div> <!-- *ngIf="showAll || course.type === filter" -->
+          <div class="row form-group">
+            <div class="col-sm-4">
+              <label>Search</label><br/>
+              <input type="text"
+                     class="form-control ui-inputtext ui-corner-all ui-state-default ui-widget input-with-filter"
+                     [(ngModel)]="filterTerm"
+                     id="search"
+                     placeholder="Search activities">
+              <button class="btn btn-default filter-button" (click)="clearFilters()"><i class="fa fa-close"></i>
+              </button>
+            </div>
+            <div class="col-sm-3">
+              <label>Filter activity type</label>
+              <select class="form-control ng-pristine ng-invalid ng-touched" [(ngModel)]="filterByTypeSelect"
+                      (change)="filterByType($event.target.value)">
+                <option value="all" selected>Show All</option>
+                <option *ngFor="let type of courseTypes" value="{{type}}">
+                  {{type}}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-2">
+              <label>Order by</label>
+              <select class="form-control ng-pristine ng-invalid ng-touched"
+                      (change)="reOrder($event.target.value)">
+                <option value="newToOld" selected>New to old</option>
+                <option value="oldToNew">Old to new</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" *ngIf="filteredCourses">
+            <div class="col-lg-12">
+              <!-- // TODO: replace with new table -->
+              <app-filter-list [filterTerm]="filterTerm" [filterType]="filterType" [data]="courses"
+                               (filterOccurrence)="updateFilteredItems($event)"></app-filter-list>
+<!--              <p-table [value]="filteredCourses" [paginator]="true" [rows]="15" [alwaysShowPaginator]="false"-->
+<!--                          >-->
+<!--                <ng-template let-course pTemplate="item">-->
+<!--                  <mat-card class="course-list-container margin-bottom-10">-->
+<!--                    <div class="row form-group">-->
+<!--                      <div class="col-sm-2">-->
+
+<!--                        <div class="nowce-n">-->
+<!--                        </div>-->
+<!--                        <br/>-->
+
+<!--                      </div>-->
+<!--                      <div class="col-sm-10">-->
+<!--                        <h3>{{course.title}}</h3>-->
+<!--                        <span class="template-orange">Level of Difficulty:</span> {{course.levelOfDifficulty}}-->
+<!--                        <br/><span class="template-orange">Date Created:</span> {{course.dateCreated | date}}-->
+<!--                        <br/><span class="template-orange">Credits:</span> {{course.numberOfCredits}}-->
+<!--                        <p>-->
+<!--                          {{course.welcomeMessage | stripTags | firstNWords:60}}-->
+<!--                        </p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="row form-group">-->
+<!--                      <div class="col-sm-6">-->
+<!--                        <div class="relative">-->
+<!--                          <div>-->
+<!--                            <button mat-raised-button class="btn btn-primary"-->
+<!--                                    (click)="displayReadMoreClickHandler(course)">Read More-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="col-sm-6 text-right" *ngIf="course && course.id">-->
+<!--                        <h4 [hidden]="getButtonText( course ) === 'Retake'">Price: ${{course.price}}</h4>-->
+<!--                        <h4 [hidden]="getButtonText( course ) !== 'Retake'">Retakes are free</h4>-->
+<!--                        <div [hidden]="getButtonText( course ) !== 'Remove'">-->
+<!--                          <button mat-raised-button class="btn btn-primary" (click)="deleteClickHandler(course.id)">-->
+<!--                            <i class="fa fa-times" aria-hidden="true"></i> Remove from Cart-->
+<!--                          </button>-->
+<!--                        </div>-->
+<!--                        <div [hidden]="getButtonText( course ) !== 'Take'">-->
+<!--                          <button mat-raised-button class="btn btn-primary"-->
+<!--                                  (click)="takeCourseClickHandler(course)">Take Now-->
+<!--                          </button>-->
+<!--                        </div>-->
+<!--                        <div [hidden]="getButtonText( course ) !== 'Purchase'">-->
+<!--                          <button mat-raised-button class="btn btn-primary"-->
+<!--                                  (click)="addToBasketClickHandler(course)"><i class="fa fa-cart-plus"-->
+<!--                                                                               aria-hidden="true"></i> Add to Cart-->
+<!--                          </button>-->
+<!--                        </div>-->
+<!--                        <div [hidden]="getButtonText( course ) !== 'Retake'">-->
+<!--                          <button mat-raised-button class="btn btn-primary"-->
+<!--                                  (click)="takeCourseClickHandler(course)"><i class="fa fa-repeat"-->
+<!--                                                                              aria-hidden="true"></i> Retake-->
+<!--                          </button>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </mat-card>-->
+<!--                </ng-template>-->
+<!--              </p-table>-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pull-right"><strong>Selection Total: ${{checkoutBasketService.totalPrice}}</strong></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 text-right">
+          <hr/>
+          <button mat-raised-button class="btn btn-primary" (click)="homeClickHandler()"><i class="fa fa-home"
+                                                                                            aria-hidden="true"></i>
+            Back to Home
+          </button>
+          <button mat-raised-button class="btn btn-primary" (click)="checkoutClickHandler()"><i class="fa fa-usd"
+                                                                                                aria-hidden="true"></i>
+            Review & Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showCart" class="cart">
+  <div class="panel-body">
+    <div class="text-right" (click)="dismissCartClickHandler()"><i class="fa fa-times fa-2x" aria-hidden="true"></i>
+    </div>
+    <app-basket></app-basket>
+    <hr/>
+    <div class="row form-group">
+      <div class="col-12 text-right">
+        <button mat-raised-button class="btn btn-primary" (click)="checkoutClickHandler()"><i class="fa fa-usd"
+                                                                                              aria-hidden="true"></i>
+          Review & Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-pre-activity-information></app-pre-activity-information>

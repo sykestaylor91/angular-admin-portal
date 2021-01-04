@@ -1,0 +1,58 @@
+<app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+
+<div *ngIf="router.url === '/question-manager/new'">
+  <h3>Choose a Question Type</h3>
+  <div class="row">
+    <div class="col-xs-4 col-md-4 col-lg-3 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="newQuestionClickHandler('normal')">
+        <i class="info-card-icon material-icons">add</i>
+        <br/>
+        <span>Activity Question</span>
+      </mat-card>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-3  margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="newQuestionClickHandler('precourse')">
+        <i class="info-card-icon material-icons">navigate_before</i>
+        <br/>
+        <span>Pre-Activity Question</span>
+      </mat-card>
+    </div>
+    <div class="col-xs-4 col-md-4 col-lg-3 margin-bottom-10  align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="newQuestionClickHandler('evaluation')">
+        <i class="info-card-icon material-icons">assessment</i>
+        <br/>
+        <span>Post-Activity Question</span>
+      </mat-card>
+    </div>
+     <div class="col-xs-4 col-md-4 col-lg-3 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="newQuestionClickHandler('serial')">
+        <i class="info-card-icon material-icons">list_alt</i>
+        <br/>
+        <span>Nested Question</span>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="row margin-bottom-20">
+  <div class="col-12">
+    <h3 *ngIf="router.url === '/question-manager/list/all' || router.url === '/question-manager/new'">All
+      questions</h3>
+    <h3 *ngIf="router.url === '/question-manager/list/activity'">Activity questions</h3>
+    <h3 *ngIf="router.url === '/question-manager/list/post-activity'">Post activity questions</h3>
+    <h3 *ngIf="router.url === '/question-manager/list/pre-activity'">Pre activity questions</h3>
+    <h3 *ngIf="router.url === '/question-manager/list/serial-questions'">Group nested questions</h3>
+  </div>
+</div>
+
+<div class="margin-bottom-10"> <!-- *ngIf="filteredQuestions && filteredQuestions.length > 0"-->
+  <app-nowce-data-list
+    [cols]="columns"
+    [dataArray]="questions"
+    [contextMenu]="contextMenuItems"
+    (editClicked)="editQuestionClickHandler($event)"
+    (deleteClicked)="confirmActionClickHandler($event)"
+    (previewClicked)="onPreviewClicked($event)"
+    (useAsTemplateClicked)="useAsTemplateClickHandler($event)"
+  ></app-nowce-data-list>
+</div>

@@ -1,0 +1,25 @@
+<html style="overflow-y: hidden;">
+<body>
+<video width="100%" height="100%" controls>
+  <source id="nowce-media" src="" title="" type="video/mp4">
+</video>
+
+<script>
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+    const results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  let media = document.getElementById('nowce-media');
+  media.src = getParameterByName('src');
+  media.title = getParameterByName('title');
+  document.title = media.title;
+
+</script>
+</body>
+</html>

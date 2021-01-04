@@ -1,0 +1,308 @@
+<!-- YG 06/2020 upgrade grids to V9 -->
+<div class="row">
+  <div class="col-lg-12">
+    <h3>
+      Select declarations to associate with this activity
+    </h3>
+    <p>
+      Select any and all personal disclosures that are relevant to this activity. You must write your disclosures before
+      you are able to associate them with
+      this activity
+    </p>
+    <p>
+      <button mat-raised-button class="btn primary pull-right" (click)="createDeclarationsClickHandler()"
+        [disabled]="this.isReadOnly">Create and
+        Manage Declarations
+      </button>
+    </p>
+  </div>
+</div>
+
+<div>
+  <div *ngFor="let contributor of authorDisclosures">
+    <div *ngIf="contributor">
+      Disclosure by:
+      <h2>{{User.fullName(contributor.firstName, contributor.lastName)}}</h2>
+
+      <div class="row">
+        <div class="relative">
+          <div class="panel-body">
+            <!-- -->
+
+            <h4 class="template-orange">Payments</h4>
+            <!--Payments-->
+            <p>Payments for any aspect of work submitted for publication in any part of a provided activity</p>
+            <div class="no-declarations" *ngIf="!contributor.paymentDisclosures || contributor.paymentDisclosures.length === 0">
+              <p>
+                None declared
+              </p>
+            </div>
+
+            <div *ngIf="contributor.paymentDisclosures && contributor.paymentDisclosures.length > 0">
+              <p-table Class="table table-striped table-hover table-padded" [value]="contributor.paymentDisclosures">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Institution or Company</th>
+                    <th>Grant</th>
+                    <th>Personal Fee</th>
+                    <th>Employee</th>
+                    <th>Other</th>
+                    <th>Comment</th>
+                    
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>{{disclosure.institution}}</td>
+                    <td>{{disclosure.grantProvided}}</td>
+                    <td>{{disclosure.personalFee}}</td>
+                    <td>{{disclosure.paidEmployee}}</td>
+                    <td>{{disclosure.otherFee}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <!-- <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td> -->
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+
+            <!--Financial -->
+            <h4 class="template-orange">Financial Relationships</h4>
+            <p>Do you have a relationship, which does not include personally receiving funds with any organization or
+              individual who has provided funds towards the preparation of the activity. Please provide a brief
+              explanation.</p>
+            <div class="no-declarations" *ngIf="!contributor.financialDisclosures || contributor.financialDisclosures.length === 0">
+              <p>
+                None declared
+              </p>
+            </div>
+            <div *ngIf="contributor.financialDisclosures && contributor.financialDisclosures.length > 0">
+              <p-table styleClass="table table-striped table-hover table-padded" [alwaysShowPaginator]="false"
+                [value]="contributor.financialDisclosures" [rows]="20" [paginator]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Institution or Company</th>
+                    <th>Grant</th>
+                    <th>Personal Fee</th>
+                    <th>Employee</th>
+                    <th>Other</th>
+                    <th>Comment</th>
+                    <th>Select</th>
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>{{disclosure.institution}}</td>
+                    <td>{{disclosure.grantProvided}}</td>
+                    <td>{{disclosure.personalFee}}</td>
+                    <td>{{disclosure.paidEmployee}}</td>
+                    <td>{{disclosure.otherFee}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+
+            <!--Patents-->
+            <h4 class="template-orange">Patents</h4>
+            <p>Patents, whether planned, pending or issued that may be considered relevant to or broadly relevant to
+              this
+              work?</p>
+
+            <div class="no-declarations" *ngIf="!contributor.patentDisclosures || contributor.patentDisclosures.length === 0">
+              <p>
+                None declared
+              </p>
+            </div>
+            <div *ngIf="contributor.patentDisclosures && contributor.patentDisclosures.length > 0">
+              <p-table styleClass="table table-striped table-hover table-padded" [alwaysShowPaginator]="false"
+                [value]="contributor.patentDisclosures" [rows]="20" [paginator]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Patent/Application</th>
+                    <th>Pending</th>
+                    <th>Issued</th>
+                    <th>Licensed</th>
+                    <th>Royalties</th>
+                    <th>Licensee</th>
+                    <th>Updated</th>
+                    <th>Comment</th>
+                    <th>Select</th>
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>{{disclosure.patentDetails}}</td> <!-- YG guessing -->
+                    <!-- <td><span [innerHTML]="disclosure.patentPending | checkMark"></span></td> -->
+                    <td><input class="align-center" type="checkbox" [checked]="disclosure.patentPending"></td>
+                    <td><input class="align-center" type="checkbox" [checked]="disclosure.patentIssued"></td>
+                    <td><input class="align-center" type="checkbox" [checked]="disclosure.patentLicensed"></td>
+                    <td><input class="align-center" type="checkbox" [checked]="disclosure.patentRoyalties"></td>
+                    <td><input class="align-center" type="checkbox" [checked]="disclosure.patentLicensee"></td>
+                    <td>{{disclosure.lastUpdated | date}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+
+            <!-- Partnerships -->
+            <h4 class="template-orange">Partnerships</h4>
+            <p>
+              Partnerships or relationships with any organization or entity that could be perceived to have a stake in
+              content produced
+            </p>
+            <div class="no-declarations" *ngIf="!contributor.partnershipDisclosures || contributor.partnershipDisclosures.length === 0">
+              <p>
+                None Declared
+              </p>
+            </div>
+            <div *ngIf="contributor.partnershipDisclosures &&  contributor.partnershipDisclosures.length > 0">
+              <p-table styleClass="table table-striped table-hover table-padded" [alwaysShowPaginator]="false"
+                [value]="contributor.partnershipDisclosures" [rows]="20" [paginator]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Partnership</th>
+                    <th>Comment</th>
+                    <th>Select</th>
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>?-No field provided</td>
+                    <!-- <td><span [innerHTML]="disclosure.patentPending | checkMark"></span></td> -->
+                    <td>{{disclosure.partnershipDetails}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+            <!-- Activities -->
+            <h4 class="template-orange">Activities or Relationships</h4>
+            <p>
+              Activities or relationships that readers could perceive to have influenced, or give the appearance of
+              potentially influencing, submitted work
+            </p>
+            <div class="no-declarations" *ngIf="!contributor.activityDisclosures || contributor.activityDisclosures.length === 0">
+              <p>
+                None Declared
+              </p>
+            </div>
+            <div *ngIf="contributor.activityDisclosures && contributor.activityDisclosures.length > 0">
+              <p-table styleClass="table table-striped table-hover table-padded" [alwaysShowPaginator]="false"
+                [value]="contributor.activityDisclosures" [rows]="20" [paginator]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Activity</th>
+                    <th>Comment</th>
+                    <th>Select</th>
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>?-No field provided</td>
+                    <!-- <td><span [innerHTML]="disclosure.patentPending | checkMark"></span></td> -->
+                    <td>{{disclosure.activityDetails}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+
+            <!-- Contributions -->
+            <h4 class="template-orange">Contributions</h4>
+            <p>
+              Contributions: Is this person or any family member, a substantial contributor, grantor, donor or adviser
+              to
+              any similar benefactor to the organization or receive benefits or grants from any fund connected with this
+              organization?
+            </p>
+            <div class="no-declarations" *ngIf="!contributor.contributionDisclosures || contributor.contributionDisclosures.length === 0">
+              <p>
+                None declared
+              </p>
+            </div>
+            <div *ngIf="contributor.contributionDisclosures  && contributor.contributionDisclosures.length > 0">
+              <p-table styleClass="table table-striped table-hover table-padded" [alwaysShowPaginator]="false"
+                [value]="contributor.contributionDisclosures" [rows]="20" [paginator]="true">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Contribution</th>
+                    <th>Comment</th>
+                    <th>Select</th>
+                  </tr>
+                </ng-template>
+                <ng-template let-disclosure pTemplate="body" class="align-center">
+                  <tr>
+                    <td>{{disclosure.contributionDetails}}</td>
+                    <!-- <td><span [innerHTML]="disclosure.patentPending | checkMark"></span></td> -->
+                    <td>{{disclosure.activityDetails}}</td>
+                    <td>
+                      <button mat-button (click)="viewCommentClickHandler(disclosure)" class="btn btn-default"
+                        [disabled]="isReadOnly" *ngIf="disclosure.comment">View comment
+                      </button>
+                      <span *ngIf="!disclosure.comment">No comment</span>
+                    </td>
+                    <td>
+                      <input class="align-center" type="checkbox" [checked]="disclosureInList(disclosure.id)"
+                        [disabled]="isReadOnly" (click)="includeDisclosureClickHandler(disclosure.id)"
+                        value="disclosure">
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

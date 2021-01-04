@@ -1,0 +1,81 @@
+<div *ngIf="readerPerformanceService.selectedUser" class="margin-bottom-20">
+  <mat-card>
+    <h3>{{title}}</h3>
+    <div class="relative">
+      <div class="row relative">
+        <div class="col-sm-2">
+          <label>Client Name</label>
+        </div>
+        <div class="col-sm-8">
+          {{clientName}}
+        </div>
+      </div>
+      <div class="row relative">
+        <div class="col-sm-2">
+          <label>User Name</label>
+        </div>
+        <div class="col-sm-8">
+          {{User.fullName(readerPerformanceService.selectedUser.firstName, readerPerformanceService.selectedUser.lastName)}}
+        </div>
+      </div>
+      <div class="row relative">
+        <div class="col-sm-2">
+          <label>User ID</label>
+        </div>
+        <div class="col-sm-8">
+          {{readerPerformanceService.selectedUser.id}}
+        </div>
+      </div>
+      <app-nowce-data-list [cols]="columnsSummary" [dataArray]="readerPerformanceService.userExams"
+        (customButtonClicked)="selectedUserExamClickHandler($event)">
+      </app-nowce-data-list>
+      <!-- // TODO: replace with new table -->
+      <!--    <p-table class="table ui-datatable table-hover" [value]="readerPerformanceService.userExams"-->
+      <!--                  [alwaysShowPaginator]="false"-->
+      <!--                 [rows]="10" [paginator]="true">-->
+      <!--      <p-column field="title" header="Activity Title" [sortable]="true"></p-column>-->
+      <!--      <p-column styleClass="col-button">-->
+      <!--        <ng-template pTemplate="header">-->
+      <!--          Date Activity Started-->
+      <!--        </ng-template>-->
+      <!--        <ng-template let-stat="rowData" pTemplate="body">-->
+      <!--          {{ stat.dateCreated | date: 'medium' }}-->
+      <!--        </ng-template>-->
+      <!--      </p-column>-->
+      <!--      <p-column styleClass="col-button">-->
+      <!--        <ng-template pTemplate="header">-->
+      <!--          Date Activity Completed-->
+      <!--        </ng-template>-->
+      <!--        <ng-template let-stat="rowData" pTemplate="body">-->
+      <!--          {{ stat.dateCompleted | date }}-->
+      <!--        </ng-template>-->
+      <!--      </p-column>-->
+      <!--      <p-column styleClass="col-button">-->
+      <!--        <ng-template pTemplate="header">-->
+      <!--          Date Activity Abandoned-->
+      <!--        </ng-template>-->
+      <!--        <ng-template let-stat="rowData" pTemplate="body">-->
+      <!--          {{ stat.status == 'abandoned' ? stat.lastUpdated : null | date }}-->
+      <!--        </ng-template>-->
+      <!--      </p-column>-->
+      <!--      <p-column field="certificateClaimed" header="Was Certificate Claimed" [sortable]="true"></p-column>-->
+      <!--      <p-column field="score" header="Final Score" [sortable]="true"></p-column>-->
+      <!--      <p-column field="elapsedSeconds" header="Lapse Time" [sortable]="true"></p-column>-->
+      <!--      <p-column styleClass="col-button">-->
+      <!--        <ng-template pTemplate="header">-->
+      <!--          Select-->
+      <!--        </ng-template>-->
+      <!--        <ng-template let-stat="rowData" pTemplate="body">-->
+      <!--          <input type="radio" name="selectedUserExam" value="{{stat}}"-->
+      <!--                 (click)="selectedUserExamClickHandler(stat)">-->
+      <!--        </ng-template>-->
+      <!--      </p-column>-->
+      <!--    </p-table>-->
+
+
+      <div *ngIf="!readerPerformanceService.userExams && readerPerformanceService.length === 0">
+        <p>No Data</p>
+      </div>
+    </div>
+  </mat-card>
+</div>

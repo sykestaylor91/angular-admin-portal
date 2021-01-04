@@ -1,0 +1,20 @@
+<div class="row form-group">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <app-text-editor [(ngModel)]="publicationText" type="text" name="text" [setFocus]="true"></app-text-editor>
+    </div>
+  </div>
+</div>
+<div class="row form-group">
+  <div class="col-sm-12">
+    <div class="form-group pull-right">
+      <button mat-raised-button class="btn btn-primary" (click)="cancelClickHandler()"><i class="fa fa-times"
+                                                                                          aria-hidden="true"></i> Cancel
+      </button>
+      <button mat-raised-button class="btn btn-primary" (click)="saveClickHandler()"><i class="fa fa-floppy-o"
+                                                                                        aria-hidden="true"></i> Save
+        Publication
+      </button>
+    </div>
+  </div>
+</div>

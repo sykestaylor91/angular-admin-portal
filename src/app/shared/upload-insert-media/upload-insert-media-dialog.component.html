@@ -1,0 +1,21 @@
+<div class="row margin-bottom-20">
+  <div class="col-md-8">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="col-md-4 margin-bottom-20">
+    <button *ngIf="mode === 'uploadMedia'" mat-raised-button class="btn btn-primary pull-right"
+            (click)="selectMediaModeClickHandler()">Cancel
+    </button>
+    <button *ngIf="mode === 'selectMedia'" mat-raised-button class="btn btn-primary pull-right"
+            (click)="uploadMediaModeClickHandler()">Upload New
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 align-center">
+    <app-shared-upload-media (selectImage)="selectImage($event)"
+                             *ngIf="mode === 'uploadMedia'"></app-shared-upload-media>
+    <app-shared-select-media (mediaSelected)="selectImage($event)"
+                             *ngIf="mode === 'selectMedia'"></app-shared-select-media>
+  </div>
+</div>

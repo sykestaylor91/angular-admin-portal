@@ -1,0 +1,58 @@
+<div class="relative margin-top-20">
+    <mat-card class="width-100 margin-bottom-20">
+        <div class="row create-new">
+          <div class="pull-right">
+            <button class="btn btn-primary mat-raised-button" (click)="newDocumentClickHandler()">
+              <i class="fa fa-plus" aria-hidden="true"></i> Create New Document
+            </button>
+          </div>
+        </div>
+        <div  class="row" *ngIf="helpService.helpDocuments && helpService.helpDocuments.length > 0">
+            <div class="col-1">
+            </div>
+            <div class="col-4">
+              <label class="template-orange">Document</label>
+            </div>
+            <div class="col-4">
+              <label class="template-orange">Page</label>
+            </div>
+            <div class="col-3">
+              <label class="template-orange">Author</label>
+            </div>
+            <hr class="citation-break"/>
+        </div>
+      <!-- // TODO: replace with new table -->
+      <p-table *ngIf="helpService.helpDocuments && helpService.helpDocuments.length> 0" [value]="helpService.helpDocuments" [paginator]="true" [rows]="12" [alwaysShowPaginator]="false" >
+            <ng-template let-document pTemplate="body" let-i="index">
+                <div class="row">
+                  <div class="col-1">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="editDocumentClickHandler(document)">
+                        <span>Edit</span>
+                      </button>
+                      <button mat-menu-item (click)="deleteClickHandler(document)">
+                        <span>Delete</span>
+                      </button>
+                    </mat-menu>
+                  </div>
+                  <div class="col-4">
+                    <div class="box-text" [innerHTML]="document.title"></div>
+                  </div>
+                  <div class="col-4">
+                    <div class="box-text" [innerHTML]="document.page"></div>
+                  </div>
+                  <div class="col-3">
+                    <div class="box-text" [innerHTML]="document.author"></div>
+                  </div>
+                </div>
+                <hr class="citation-break" />
+            </ng-template>
+          </p-table>
+          <div *ngIf="!helpService.helpDocuments || helpService.helpDocuments.length === 0">
+            <p>You have no help configured.</p>
+          </div>
+    </mat-card>
+  </div>

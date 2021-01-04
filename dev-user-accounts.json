@@ -1,0 +1,221 @@
+[
+  {
+    "id": "auth0|57a39c4791c954876b82a943",
+    "dateCreated": "2016-08-12T14:20:00.403Z",
+    "lastUpdated": "2016-08-12T17:19:59.307Z",
+    "displayName": "darryl.west@raincitysoftware.com",
+    "nickname": "darryl.west",
+    "email": "darryl.west@raincitysoftware.com",
+    "emailList": [],
+    "picture": "https://s.gravatar.com/avatar/29efb020fa96419e40679b543f1c8c8a?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fda.png",
+    "emailVerified": false,
+    "token": "Bearer:ipQrVmTAPJVdjiEP",
+    "userId": "ea4deb61b8fa4277a551ece63792c208",
+    "roles": [],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|5812619a1a13bf151d726e9d",
+    "dateCreated": "2016-11-11T16:23:36.571Z",
+    "lastUpdated": "2016-11-11T20:13:27.652Z",
+    "displayName": "steve.farwell@roundpoint.com",
+    "nickname": "steve.farwell",
+    "email": "steve.farwell@roundpoint.com",
+    "emailList": [],
+    "picture": "https://s.gravatar.com/avatar/b5beb785dada860fb52efbda3ef474c9?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fst.png",
+    "emailVerified": true,
+    "token": "Bearer:gB3gimuGYF1yrjoo",
+    "userId": "169ff91b8173474ab801477a0cf80ed1",
+    "roles": [],
+    "groups": [],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f0265d4d1ee811bcbb4fb",
+    "dateCreated": "2016-11-30T16:50:54.898Z",
+    "lastUpdated": "2016-11-30T16:50:54.898Z",
+    "displayName": "nowce.super_admin@roundpoint.com",
+    "nickname": "nowce.super_admin",
+    "email": "nowce.super_admin@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/86f5560e0f98dafdbdcbd5a11b6d22b7?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:0lNhS0waBihWx1vN",
+    "userId": "9fed44cc988e4a659dfeaf8500340fff",
+    "roles": [
+      "super_admin"
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f04a87742e8377c08f194",
+    "dateCreated": "2016-11-30T17:11:34.149Z",
+    "lastUpdated": "2016-11-30T17:11:34.149Z",
+    "displayName": "nowce.admin@roundpoint.com",
+    "nickname": "nowce.admin",
+    "email": "nowce.admin@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/37fb90334ff3878c631f6a594e42105c?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:RT7W3TsUCHmh6Fsq",
+    "userId": "0ac5e6008510448fa94ce31f3b2d7989",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f04cc50d162d918a33e58",
+    "dateCreated": "2016-11-30T17:14:06.925Z",
+    "lastUpdated": "2016-11-30T17:14:06.925Z",
+    "displayName": "nowce.author@roundpoint.com",
+    "nickname": "nowce.author",
+    "email": "nowce.author@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/c81ceb3273799acacb1bac7294cbb82d?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:jL2RQcTTezTiJEEJ",
+    "userId": "b8350a700ae04680b51c1256ac6cf005",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f05de50d162d918a33e95",
+    "dateCreated": "2016-11-30T17:15:07.327Z",
+    "lastUpdated": "2016-11-30T17:15:07.327Z",
+    "displayName": "nowce.editor@roundpoint.com",
+    "nickname": "nowce.editor",
+    "email": "nowce.editor@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/dd35f904a175f06776b26aa598db04eb?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:G3Rww6QGyw5X0GQM",
+    "userId": "af41a48f7d904031b24e32a5c05f8e1e",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f0608d4d1ee811bcbb5d6",
+    "dateCreated": "2016-11-30T17:16:10.354Z",
+    "lastUpdated": "2016-11-30T17:16:10.354Z",
+    "displayName": "nowce.helper@roundpoint.com",
+    "nickname": "nowce.helper",
+    "email": "nowce.helper@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/64232a09bb25a38656aad8c9bfe0ae42?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:QaMIyMfwBOjdAUeY",
+    "userId": "6b952646c873401281ee41003ee88df6",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f06225e5686fa0d44b6dc",
+    "dateCreated": "2016-11-30T17:17:59.525Z",
+    "lastUpdated": "2016-11-30T17:17:59.525Z",
+    "displayName": "nowce.media_admin@roundpoint.com",
+    "nickname": "nowce.media_admin",
+    "email": "nowce.media_admin@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/6e1f8739ac470392329394c46d88718c?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:tmVXJsDN6QZjuNuS",
+    "userId": "0a0fc410f9c64a82a2f299be75ef5037",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f063a5e5686fa0d44b6e5",
+    "dateCreated": "2016-11-30T17:19:19.210Z",
+    "lastUpdated": "2016-11-30T17:19:19.210Z",
+    "displayName": "nowce.planner@roundpoint.com",
+    "nickname": "nowce.planner",
+    "email": "nowce.planner@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/eafc3868164f5a714b0ee980e0b0c7d2?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:Qo4UHiGU9dQzpuzn",
+    "userId": "2b10ecd3d5b648bdbe706db25f379ea1",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f064b50d162d918a33eaa",
+    "dateCreated": "2016-11-30T17:26:50.291Z",
+    "lastUpdated": "2016-11-30T17:26:50.291Z",
+    "displayName": "nowce.provider@roundpoint.com",
+    "nickname": "nowce.provider",
+    "email": "nowce.provider@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/b7973d85595bdcb86a61d36ddd731283?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:Inc8I3cT0oD8uCLu",
+    "userId": "9bbc3c60bd334d9da791e44381e3b51c",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f066b50d162d918a33eb2",
+    "dateCreated": "2016-11-30T17:28:00.414Z",
+    "lastUpdated": "2016-11-30T17:28:00.414Z",
+    "displayName": "nowce.publisher@roundpoint.com",
+    "nickname": "nowce.publisher",
+    "email": "nowce.publisher@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/de16351fa64fac17d43cf6536d0c9824?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:waqPQzRazQjgFx5O",
+    "userId": "57669af7b1d24dfb9ab7cb4ae18e54be",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f06d6d1ba0978134087b1",
+    "dateCreated": "2016-11-30T17:32:37.065Z",
+    "lastUpdated": "2016-11-30T17:32:37.065Z",
+    "displayName": "nowce.reader@roundpoint.com",
+    "nickname": "nowce.reader",
+    "email": "nowce.reader@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/2efc7bf26a78f66bb27284182d7f1c08?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:HT8BrAktO42sG6lT",
+    "userId": "d3958eabb1154ae09b10ba6e5d7e55ba",
+    "roles": [
+    ],
+    "route": "develop"
+  },
+  {
+    "id": "auth0|583f07a35e5686fa0d44b746",
+    "dateCreated": "2016-11-30T17:33:48.527Z",
+    "lastUpdated": "2016-11-30T17:33:48.527Z",
+    "displayName": "nowce.reviewer@roundpoint.com",
+    "nickname": "nowce.reviewer",
+    "email": "nowce.reviewer@roundpoint.com",
+    "emailList": [
+    ],
+    "picture": "https://s.gravatar.com/avatar/bf68ba6411154f9eadeb738a4417a29f?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fno.png",
+    "emailVerified": false,
+    "token": "Bearer:JQxSoIT1v8Ijqu6v",
+    "userId": "10f3045d9cb542a099005ff51a509934",
+    "roles": [
+    ],
+    "route": "develop"
+  }
+]

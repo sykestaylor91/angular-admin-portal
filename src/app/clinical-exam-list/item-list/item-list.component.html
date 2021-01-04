@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-6">
+    <h3>Item list</h3>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button
+            class="btn btn-primary pull-right"
+            (click)="createItemClickHandler()">
+      Create item
+    </button>
+  </div>
+</div>
+  <app-nowce-data-list
+  [cols]="itemColumns"
+  [dataArray]="items"
+  [contextMenu]="contextMenuItems"
+  (editClicked)="editItemClickHandler($event)"
+  (deleteClicked)="deleteItemClickHandler($event)"
+  (useAsTemplateClicked)="useItemAsBlueprintClickHandler($event)"
+  ></app-nowce-data-list>
+
+<div class="row">
+  <div class="col-6">
+    <h3>Answer formats</h3>
+  </div>
+  <div class="col-6">
+    <button mat-raised-button
+            class="btn btn-primary pull-right"
+            (click)="createAnswerFormatClickHandler()">
+      Create answer format
+    </button>
+  </div>
+</div>
+  <app-nowce-data-list
+    [cols]="answerFormatColumns"
+    [dataArray]="answerFormats"
+    [contextMenu]="contextMenuItems"
+    (editClicked)="editAnswerFormatClickHandler($event)"
+    (deleteClicked)="deleteAnswerFormatClickHandler($event)"
+    (useAsTemplateClicked)="useAnswerFormatAsBlueprintClickHandler($event)"
+  ></app-nowce-data-list>

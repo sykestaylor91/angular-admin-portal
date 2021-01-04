@@ -1,0 +1,135 @@
+
+<form [formGroup]="serialQuestionsFormGroup" novalidate>
+  <div class="row margin-bottom-20">
+    <div class="col-12">
+      <h3>{{stitle}}</h3>
+      <button *ngIf="selectedQuestion && !subComponent" (click)="previewQuestionClickHandler()" mat-raised-button class="button-default save-button">Save and preview</button>
+      <button mat-raised-button class="button-default pull-right save-button" (click)="saveChanges()">Save</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div>
+      <div class="row">
+        <div class="col-md-12 col-lg-12">
+          <div class="form-group">
+            <app-change-history-input-component [formControlName]="'userRef'" [label]="'Provider reference'"
+                                                [resourceElement]="'userRef'"
+                                                [selectedResource]="selectedQuestion"
+                                                [formGroup]="serialQuestionsFormGroup" [inputType]="InputType.Text">
+            </app-change-history-input-component>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-bottom-10">
+        <div class="col-md-12 col-lg-12">
+          <div class="form-group">
+            <app-change-history-input-component [formControlName]="'title'" [label]="'Question title'"
+                                                [resourceElement]="'title'"
+                                                [selectedResource]="selectedQuestion"
+                                                [formGroup]="serialQuestionsFormGroup" [inputType]="InputType.Text">
+            </app-change-history-input-component>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-bottom-10">
+        <div class="col-md-12 col-lg-12">
+          <div class="form-group">
+            <app-change-history-texteditor [formControlName]="'intro'" [label]="'Question evidence/introduction'"
+                                           [resourceElement]="'intro'"
+                                           [selectedResource]="selectedQuestion" [formGroup]="serialQuestionsFormGroup"
+                                           [inputType]="InputType.Custom" name="intro" [formControlName]="intro"
+                                           [showCitation]="false">
+            </app-change-history-texteditor>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-bottom-10">
+        <div class="col-md-12 col-lg-12">
+          <div class="form-group">
+            <app-change-history-texteditor [formControlName]="'discussion'" [label]="'Question discussion'"
+                                           [resourceElement]="'discussion'"
+                                           [tooltip]="'Add discussion/explanation or simply skip to hide section for examinations or other activities where this is not required. To share an \'answer discussion\' within your editorial team only  add and save the discussion to \'Author notes\' below'"
+                                           [selectedResource]="selectedQuestion" [formGroup]="serialQuestionsFormGroup"
+                                           [inputType]="InputType.Custom" name="discussion" [formControlName]="discussion"
+                                           [showCitation]="false">
+            </app-change-history-texteditor>
+          </div>
+        </div>
+      </div>
+      <div class="row margin-bottom-10">
+        <div class="col-md-12 col-lg-12">
+          <app-change-history-texteditor [formControlName]="'question'" [label]="'Question text'"
+                                         [resourceElement]="'question'"
+                                         [selectedResource]="selectedQuestion" [formGroup]="serialQuestionsFormGroup"
+                                         [inputType]="InputType.Custom" name="question"
+                                         [showCitation]="false"></app-change-history-texteditor>
+        </div>
+      </div>
+    </div>
+    <div class="row margin-bottom-10">
+      <div class="col-md-12 col-lg-12">
+        <div class="form-group">
+          <app-change-history-input-component [formControlName]="'keywords'" [label]="'Keywords'"
+                                              [resourceElement]="'keywords'"
+                                              [selectedResource]="selectedQuestion"
+                                              [formGroup]="serialQuestionsFormGroup" [inputType]="InputType.Text">
+            <p>Enter keywords or keyword phrases separated by a comma (,) here. e.g. key, key phrase, keyword </p>
+          </app-change-history-input-component>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="relative">
+    <div class="panel-body" [formGroup]="serialQuestionsFormGroup">
+      <div class=" row form-group">
+        <div class="col-sm-6">
+          <h3>
+            Group nested questions
+          </h3>
+        </div>
+        <div class="col-sm-6">
+          <button mat-raised-button class="btn btn-primary pull-right"
+                  (click)="openAddRemoveDialog()">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Create, add or remove questions
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label>Click and drag your questions to change their order.</label>
+          <div class="list-group" dnd-sortable-container [sortableData]="serialQuestions">
+            <mat-card *ngFor="let item of serialQuestions; let i = index" class="margin-bottom-10" dnd-sortable
+                      [sortableIndex]="i" (onDragEnd)="onDropSuccess(item)">
+              <div class="row">
+                <div class="col-1">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openPreviewQuestion(item.id)">
+                      <span>Preview question</span>
+                    </button>
+                    <button mat-menu-item (click)="openEditQuestionDialog(item)">
+                      <span>Edit question</span>
+                    </button>
+                    <button mat-menu-item (click)="removeQuestionClickHandler(item.id)">
+                      <span>Remove question</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                <div class="col-10 ql-size-large question-sneak-peak"
+                     [innerHtml]="item.question | firstNChars:100">
+                </div>
+                <div class="col-1 ql-size-large question-sneak-peak"
+                   [innerHtml]="(i+1).toString()">
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <mat-card class="margin-bottom-10" *ngIf=" serialQuestions && serialQuestions.length === 0">
+            There are currently no questions nested inside this parent.
+          </mat-card>
+        </div>
+        <button mat-raised-button class="btn button-default save-button pull-right" (click)="saveChanges()">Save Question</button>
+      </div>

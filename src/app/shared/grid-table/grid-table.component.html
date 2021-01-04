@@ -1,0 +1,53 @@
+<app-loading-spinner *ngIf="showLoading"></app-loading-spinner>
+<p-table [columns]="columnMetaData"
+         [value]="dataList"
+         [paginator]="config.isPaged"
+         [alwaysShowPaginator]="false"
+         [loading]="false"
+         [rows]="config.rowCount"
+         [styleClass]="'grid-table'">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="row">
+      <th *ngFor="let col of columns" class="{{col.columnClassName}}">
+        {{col.displayName ? col.displayName : ''}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row let-columns="columns" let-i="rowIndex">
+    <tr class="row" (click)="onRowClicked(row)">
+      <td *ngFor="let col of columns" class="{{col.columnClassName}}"
+          [ngSwitch]="col.type">
+        <span *ngSwitchCase="ColumnDataType.RowIndex">{{ i + 1 }}</span>
+        <span *ngSwitchCase="ColumnDataType.Date">{{ row[col.field] | date}}</span>
+        <span *ngSwitchCase="ColumnDataType.Empty">&nbsp;</span>
+        <span *ngSwitchCase="ColumnDataType.Radio">
+          <ng-template [ngTemplateOutlet]="radioRef"
+                       [ngTemplateOutletContext]="{$implicit: row}"></ng-template>
+        </span>
+        <span *ngSwitchCase="ColumnDataType.Menu">
+          <ng-template [ngTemplateOutlet]="menuRef"
+                       [ngTemplateOutletContext]="{$implicit: row}"></ng-template>
+        </span>
+        <span *ngSwitchCase="ColumnDataType.CheckMark" class="padding-left-10" [innerHTML]="row[col.field] | checkMark"></span>
+        <span *ngSwitchCase="ColumnDataType.HTML" [innerHtml]="row[col.field]"></span>
+        <span *ngSwitchCase="ColumnDataType.Array">
+          <span *ngFor="let item of row[col.field]; let arrIndex = index">
+            [
+            <a [routerLink]="[col.arrayColumn.routePath, item[col.arrayColumn.field]]">{{(item[col.arrayColumn.displayName] || item[col.arrayColumn.field]) | firstNChars: 10}}</a>
+            ]
+            <span *ngIf="arrIndex + 1 < row[col.field].length">
+              ,
+            </span>
+          </span>
+        </span>
+        <span *ngSwitchDefault>{{row[col.field]}}</span>
+      </td>
+    </tr>
+    <tr *ngIf="config.hasDetailsRow">
+      <td colspan="12" class="details-row">
+        <ng-template [ngTemplateOutlet]="detailsRowRef"
+                     [ngTemplateOutletContext]="{$implicit: row}"></ng-template>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

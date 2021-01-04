@@ -1,0 +1,198 @@
+<app-loading-spinner [hidden]="!showLoading"></app-loading-spinner>
+
+<div *ngIf="!viewCourseComplete && (userExam && !userExam.securityLock) &&  ( (isSerialQuestion  && serialQuestionsLoaded) || (!isSerialQuestion  && questionLoaded) )" [@enterAnimation]>
+  <app-activity-learning-material  *ngIf="learningMaterialActive"
+                                   (close)="learningMaterialClose()"
+                                   [learningMaterial]="userExam.learningMaterial">
+  </app-activity-learning-material>
+  <div  class="row" *ngIf="!learningMaterialActive">
+    <div class="col-md-8">
+      <div class="content-margin-10">
+        <div>
+          <h4 *ngIf='userExam'>{{userExam.title}}</h4>
+          <h4 *ngIf='userExam?.subtitle'>{{userExam.subtitle}}</h4>
+          <h4 *ngIf='currentQuestion?.title'  >
+            {{currentQuestion.title}}
+          </h4>
+        </div>
+        <button #trigger="matMenuTrigger" (click)="showSelectedText()" [matMenuTriggerFor]="highlightMenu"
+                style="visibility: hidden">
+        </button>
+        <button (click)="removeHighlighting()" *ngIf="highlightingAdded" class="pull-right btn btn-primary"
+                mat-raised-button>
+          <mat-icon>border_color</mat-icon>
+          Remove
+        </button>
+        <div *ngIf="currentQuestion?.intro">
+          <h4>Question introduction</h4>
+          <div (mouseup)="showHighlightMenu()" [innerHtml]="currentQuestion.intro | safeHtml"></div>
+        </div>
+        <div   (mouseup)="showHighlightMenu()" [innerHTML]="currentQuestion?.question | safeHtml"
+             class="section-label question"></div>
+        <mat-menu #highlightMenu="matMenu" [xPosition]="'after'" [yPosition]="'below'">
+          <button (click)="highlightText()" mat-menu-item>
+            <mat-icon>border_color</mat-icon>
+            <span>Highlight selected text</span>
+          </button>
+        </mat-menu>
+        <div *ngIf="isSerialQuestion">
+          <div *ngFor="let serialQuestion of serialQuestions; let i = index">
+            <div (mouseup)="showHighlightMenu()"
+                 [innerHtml]="serialQuestion?.intro | safeHtml" style="font-size:130%">
+            </div>
+            <div (mouseup)="showHighlightMenu()"
+                 [innerHTML]="serialQuestion?.question | safeHtml" style="font-size:130%">
+                 class="section-label question">
+            </div>
+            <app-question-answer *ngIf="(!userExam || (userExam && !userExam.studyMode))"
+                                 (ngModelChange)="serialQuestionResponseChanged($event, i)"
+                                 [(answerSubmitted)]="answerSubmitted"
+                                 [currentResponse]="getLatestResponse(serialQuestion.id)"
+                                 [examMode]="userExam && userExam.examMode"
+                                 [ngModel]="serialQuestionAnswerOptions[i]"
+                                 [previewMode]="previewMode"
+                                 [questionId]="serialQuestion?.id"
+                                 [type]="serialQuestion?.dataType">
+            </app-question-answer>
+          </div>
+        </div>
+        <div *ngIf="!isSerialQuestion">
+          <div *ngIf="(!userExam || (userExam && !userExam.studyMode))">
+          <app-question-answer (ngModelChange)="responseChanged($event)"
+                                 [(answerSubmitted)]="answerSubmitted"
+                                 [currentResponse]="getLatestResponse(currentQuestion.id)"
+                                 [examMode]="userExam && userExam.examMode"
+                                 [ngModel]="answerOptions"
+                                 [previewMode]="previewMode"
+                                 [type]="currentQuestion?.dataType">
+          </app-question-answer>
+          </div>
+        </div>
+        <div  class="content-margin-10"  *ngIf="!answerSubmitted && !allQuestionsAnswered">
+          <div class="col-12">
+            <button *ngIf="!isSerialQuestion"
+                    [disabled]="previewMode || !answerOptions || answerOptions.length === 0 || !isAnswerSelected"
+                    class="btn btn-primary width-100 submit-button"
+                    mat-raised-button
+                    (click)="submitResponse()" >
+              Submit Answer
+            </button>
+            <button *ngIf="isSerialQuestion"
+                    [disabled]="previewMode || !serialQuestionAnswerOptions || serialQuestionAnswerOptions.length === 0"
+                    class="btn btn-primary width-100 submit-button"
+                    mat-raised-button
+                    (click)="submitSerialResponse()">
+            Submit Answer
+            </button>
+            <div class="margin-top-10" *ngIf="userExam.examMode && !answerSubmitted" >
+              <button
+                class="btn btn-revisit width-100 "
+                mat-raised-button
+                (click)="markToRevisit()">
+                Revisit later
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="answerSubmitted  && !userExam.examMode && currentQuestion.dataType !== 'evaluationRating'" class="row content-margin-10">
+            <div class="col-12">
+              <i aria-hidden="true" [ngClass]="{'fa-times red':!responseCorrect, 'fa-check green':responseCorrect}"
+                 class="fa fa-2x"></i>
+              <label *ngIf="!responseCorrect">Your answer was incorrect</label>
+              <label *ngIf="responseCorrect">Your answer was correct</label>
+            </div>
+        </div>
+        <div *ngIf="answerSubmitted || allQuestionsAnswered" class="row">
+          <div class="col-12">
+            <hr/>
+            <div class="col-6">
+              You have answered this question.
+            </div>
+            <div class="col-6">
+              <button
+                (click)="resetResponse()"
+                *ngIf="userExam.examMode" class="btn btn-primary pull-right" mat-raised-button>Change answer
+              </button>
+            </div>
+          </div>
+          <!--<div class="row">-->
+          <!--<div class="col-12">-->
+          <!--Mark your answer:-->
+          <!--<br/>-->
+          <!--<button mat-button class="btn" (click)="markAnswer(Confidence.Confident)">-->
+          <!--I am confident with this answer-->
+          <!--</button>-->
+          <!--<button mat-button class="btn" (click)="markAnswer(Confidence.Unsure)">-->
+          <!--I am unsure about this answer-->
+          <!--</button>-->
+          <!--<button mat-button class="btn" (click)="markAnswer(Confidence.Wrong)">-->
+          <!--I think this answer is bloody wrong-->
+          <!--</button>-->
+          <!--</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+      <div *ngIf="revealDiscussion">
+        <div class="col-12">
+          <h4>Discussion</h4>
+          <div [innerHTML]="currentQuestion.discussion"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 padding-15">
+      <app-course-navigation (changeQuestion)="setQuestion($event)"
+                             (viewCompleteCourse)="viewCompleteCourse()"
+                             [(answerSubmitted)]="answerSubmitted"
+                             [(selectedExam)]="selectedExam"
+                             [revisitList]="revisitList"
+                             [allQuestionsAnsweredCorrectly]="allQuestionsAnsweredCorrectly"
+                             [allQuestionsAnswered]="isExamCompleted || !hasMoreQuestionsToAnswer"
+                             [previewMode]="previewMode"
+                             [questionIndex]="currentQuestionIndex"
+                             [question]="currentQuestion"
+                             [questions]="questions"
+                             [responses]="responses"
+                             [totalQuestionCount]="totalQuestionCount"
+                             [userExam]="userExam">
+      </app-course-navigation>
+        <div *ngIf="!previewMode">
+          <br>
+          <div style="width:50%;float:right;">
+            <button (click)="addNote()" mat-icon-button  style="margin-left:50px;">
+            <i [ngClass]="{'template-blue': userExam.notes, 'template-orange': userExam.notes[currentQuestion.id] }"
+               class="material-icons">edit
+            </i>
+            Notes
+          </button>
+          </div>
+          <div style="width:50%;" class="width-50">
+
+          <button (click)="showCalculator = !showCalculator; trackCalcEvent();" mat-icon-button  style="margin-left:50px;">
+            <i [ngClass]="{'template-blue': !showCalculator, 'template-orange':showCalculator}"
+            class="material-icons">dialpad
+            </i>
+            Calculator
+          </button>
+          </div>
+          <br>
+          <div  *ngIf="showCalculator" [@enterAnimation] >
+            <app-calculator></app-calculator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div *ngIf="viewCourseComplete">
+  <app-course-complete (retakeCompletedCourse)="retakeCompletedCourse()"
+                       [(selectedExam)]="selectedExam"
+                       [allAnsweredCorrectly]="allQuestionsAnsweredCorrectly"
+                       [previewMode]="previewMode"
+                       [userExam]="userExam">
+  </app-course-complete>
+  <!--<app-post-course-evaluation *ngIf="postCourseEvaluationMode"-->
+  <!--[selectedExam]="selectedExam">-->
+  <!--</app-post-course-evaluation>-->
+  <!--<app-rate-course *ngIf="userCourseService.showRateCourse && !userCourseService.previewMode"></app-rate-course>-->
+
+</div>
+

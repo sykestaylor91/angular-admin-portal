@@ -1,0 +1,10 @@
+<app-nowce-data-list
+  [cols]= "columns"
+  [dataArray]= "contributorList"
+  [selectedItems]= "selectedItems"
+  [contextMenu]= "contextMenu"
+  [customMenuLabel]= "customMenuLabel"
+  (customMenuClicked)= "viewDisclosuresClickHandler($event)"
+  (deleteClicked)= "onShowRemoveDialog($event)"
+  ></app-nowce-data-list>
+

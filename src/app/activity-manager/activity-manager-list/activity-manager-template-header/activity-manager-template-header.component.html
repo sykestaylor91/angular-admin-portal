@@ -1,0 +1,48 @@
+<div >
+  <h3>Select an activity category and create new</h3>
+  <div class="row  margin-bottom-20">
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="onNewCourseClick(NewCourseType.Other)">
+        <i class="info-card-icon material-icons">add</i>
+        <br/>
+        <span>Create custom activity</span>
+      </mat-card>
+    </div>
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card"
+                (click)="onNewCourseClick(NewCourseType.SelfAssessment)">
+        <i class="info-card-icon material-icons">assignment</i>
+        <br/>
+        <span style="font-size: 89%;">Learning / Study / Self assessment</span>
+      </mat-card>
+    </div>
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="onNewCourseClick(NewCourseType.ExamOrAssessment)">
+        <i class="info-card-icon material-icons">create</i>
+        <br/>
+        <span>Exam or formal assessment</span>
+      </mat-card>
+    </div>
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="onNewCourseClick(NewCourseType.RevisionOrRefresher)">
+        <i class="info-card-icon material-icons">replay</i>
+        <br/>
+        <span>Revision or refresher quiz</span>
+      </mat-card>
+    </div>
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="onNewCourseClick(NewCourseType.PreActivity)">
+        <i class="info-card-icon material-icons">navigate_before</i>
+        <br/>
+        <span>Pre-activity questionnaire</span>
+      </mat-card>
+    </div>
+    <div class="col-lg-2 col-md-4 col-xs-6 margin-bottom-10 align-center">
+      <mat-card class="margin-bottom-10 info-card" (click)="newPostCourseClickHandler()">
+        <i class="info-card-icon material-icons">assessment</i>
+        <br/>
+        <span>Post-activity evaluation (feedback)</span>
+      </mat-card>
+    </div>
+  </div>
+</div>

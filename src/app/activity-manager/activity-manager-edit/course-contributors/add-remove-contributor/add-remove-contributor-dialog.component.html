@@ -1,0 +1,14 @@
+<app-dialog-header [title]="authors && authors.length > 0 ? 'Activity team' : ''" [showLoading]="showLoading"
+    (closeDialog)="onCloseDialog()"></app-dialog-header>
+
+<app-activity-contributor-associations [authors]="authors" (viewDisclosureClicked)="onCloseDialog()"
+    *ngIf="authors && authors.length > 0" (authorRemoved)="onAuthorRemoved($event)">
+</app-activity-contributor-associations>
+
+<!-- <hr *ngIf="authors && authors.length > 0" /> -->
+<div
+    *appPermissionCheck="{allowedRoles: [Role.Planner, Role.SuperAdmin, Role.Provider, Role.Publisher, Role.Editor, Role.Author], exam: selectedExam}">
+    <h2 class="template-orange" mat-dialog-title>Select contributor and Invite to team</h2>
+    <app-activity-contributor-list [users]="filteredUsers" (authorAdded)="onAuthorAdded($event)">
+    </app-activity-contributor-list>
+</div>

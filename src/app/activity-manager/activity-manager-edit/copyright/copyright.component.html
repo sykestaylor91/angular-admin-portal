@@ -1,0 +1,88 @@
+
+<h3>Copyright & other</h3>
+<div  class="panel-body">
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+      <form [formGroup]="copyrightFormGroup" novalidate>
+        <div class="row">
+          <div class="col-12">
+        <app-change-history-texteditor
+          [resourceElement]="'copyright'"
+          [selectedResource]="selectedExam"
+          [formGroup]="copyrightFormGroup"
+          [inputType]="InputType.Custom"
+          [tooltip]="'As appropriate, declare your content and/or materials are protected by copyright and/or that you have permission to publish material in this activity from the copyright owner. If the material is without copyright you should state it is copyright free. If further use is permitted you should state that the material is published with the permission of (the name of the holder) along with any restrictions of use'"
+          [label]="'Copyright'"
+            formControlName="copyright"
+            [isDisabled]="isReadOnly"
+        >
+        </app-change-history-texteditor>
+          </div>
+        </div>
+
+        <div class="row">
+          <app-change-history-input-component
+            class="col-md-6"
+            [formControlName]="'republicationRequest'"
+            [resourceElement]="'republicationRequest'"
+            [selectedResource]="selectedExam"
+            [formGroup]="copyrightFormGroup"
+            [label]="'Republication request'"
+            [isHidden]="republicationRequestHidden"
+            [tooltip]="'Enter contact details and hours of operation'">
+          </app-change-history-input-component>
+
+          <app-change-history-input-component
+            class="col-md-6"
+            [formControlName]="'readerSupport'"
+            [resourceElement]="'readerSupport'"
+            [selectedResource]="selectedExam"
+            [formGroup]="copyrightFormGroup"
+            [isHidden]="readerSupportHidden"
+            [label]="'Reader support'"
+            [placeholder]="'Enter text here - required'"
+            [tooltip]="'Enter contact details and hours of operation'">
+          </app-change-history-input-component>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <app-change-history-texteditor
+              [resourceElement]="'otherInformation'"
+              [selectedResource]="selectedExam"
+              [formGroup]="copyrightFormGroup"
+              [inputType]="InputType.Custom"
+              [isHidden]="otherInformationHidden"
+              [label]="'Other information'"formControlName="otherInformation" [isDisabled]="isReadOnly">
+            </app-change-history-texteditor>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <app-change-history-input-component
+              [resourceElement]="'followOnActivity'"
+              [selectedResource]="selectedExam"
+              [formGroup]="copyrightFormGroup"
+              [class]="'col-md-6'"
+              [inputType]="InputType.Custom"
+              [isHidden]="followOnActivityHidden"
+              [label]="'Follow on activity'">
+              <select class="form-control" formControlName="followOnActivity" placeholder="Follow on activity">
+                <option *ngFor="let course of courses" [value]="course.id">{{ getExamPii(course) }}</option>
+              </select>
+            </app-change-history-input-component>
+
+            <app-change-history-input-component
+              [resourceElement]="'postActivityEvaluation'"
+              [selectedResource]="selectedExam"
+              [formGroup]="copyrightFormGroup"
+              [class]="'col-md-6'"
+              [inputType]="InputType.Custom"
+              [isHidden]="postActivityEvaluationHidden"
+              [label]="'Select post activity evaluation'">
+              <select class="form-control" formControlName="postActivityEvaluation" placeholder="Post Activity Evaluation">
+                <option *ngFor="let course of postCourseEvaluations" [value]="course.id">{{ getExamPii(course) }}</option>
+              </select>
+            </app-change-history-input-component>
+          </div>
+      </form>
+</div>

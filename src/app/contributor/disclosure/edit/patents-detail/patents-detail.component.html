@@ -1,0 +1,157 @@
+<div class="relative">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div>
+    <form [formGroup]="patentFormGroup" novalidate>
+      <div class="form-group required"
+           [class.has-error]="patentNumber.hasError('required') && formSubmitted">
+        <label class="control-label"
+               for="patentNumber">Patent Number / Application Number</label>
+        <input type="text"
+               class="form-control"
+               id="patentNumber"
+               formControlName="patentNumber"
+               placeholder="Enter Patents Number if issued or Application number if pending. Do not disclose details">
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div>
+            <p>A Yes/No answer must be given to all questions</p>
+            <div class="row">
+              <!--Pending-->
+              <div class="col-lg-2">
+                <div class="form-group required input-group-lg"
+                     [class.has-error]="patentPending.hasError('required') && formSubmitted">
+                  <div><label class="control-label">Pending</label></div>
+                  <mat-radio-group disableRipple class="example-radio-group" formControlName="patentPending">
+                    <mat-radio-button [value]="'true'">
+                      Yes
+                    </mat-radio-button>
+                    <br/>
+                    <mat-radio-button [value]="'false'">
+                      No
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <!--Issued-->
+              <div class="col-lg-2">
+                <div class="form-group required"
+                     [class.has-error]="patentIssued.hasError('required') && formSubmitted">
+                  <div><label class="control-label">Issued</label></div>
+                  <mat-radio-group disableRipple class="example-radio-group" formControlName="patentIssued">
+                    <mat-radio-button [value]="'true'">
+                      Yes
+                    </mat-radio-button>
+                    <br/>
+                    <mat-radio-button [value]="'false'">
+                      No
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <!-- licenced -->
+              <div class="col-lg-2">
+                <div class="form-group required"
+                     [class.has-error]="patentLicensed.hasError('required') && formSubmitted">
+                  <div><label class="control-label">Licenced</label></div>
+                  <mat-radio-group disableRipple class="example-radio-group" formControlName="patentLicensed">
+                    <mat-radio-button [value]="'true'">
+                      Yes
+                    </mat-radio-button>
+                    <br/>
+                    <mat-radio-button [value]="'false'">
+                      No
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <!--licensee-->
+              <div class="col-lg-2">
+                <div class="form-group required"
+                     [class.has-error]="patentLicensee.hasError('required') && formSubmitted">
+                  <div><label class="control-label">Licensee</label></div>
+                  <mat-radio-group disableRipple class="example-radio-group" formControlName="patentLicensee">
+                    <mat-radio-button [value]="'true'">
+                      Yes
+                    </mat-radio-button>
+                    <br/>
+                    <mat-radio-button [value]="'false'">
+                      No
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <!--royalties-->
+              <div class="col-lg-2">
+                <div class="form-group required"
+                     [class.has-error]="patentRoyalties.hasError('required') && formSubmitted">
+                  <div><label class="control-label">Royalties</label></div>
+                  <mat-radio-group disableRipple class="example-radio-group" formControlName="patentRoyalties">
+                    <mat-radio-button [value]="'true'">
+                      Yes
+                    </mat-radio-button>
+                    <br/>
+                    <mat-radio-button [value]="'false'">
+                      No
+                    </mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row required">
+              <div class="form-group col-12 required">
+                <label class="control-label">Year disclosed</label>
+                <input type="date"
+                       class="form-control"
+                       id="yearDisclosed"
+                       formControlName="yearDisclosed"
+                       placeholder="Year disclosed">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="patentComment">Comment</label>
+        <input type="text"
+               class="form-control"
+               id="patentComment"
+               formControlName="comment"
+               placeholder="Comment">
+      </div>
+
+
+      <div class="form-group pull-right">
+
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                *ngIf="showDelete"
+                (click)="deleteHandler()">
+          Delete
+        </button>
+
+        <button mat-raised-button type="submit"
+                class="btn btn-primary"
+                [disabled]="!patentFormGroup.valid"
+                (click)="submitHandler()">
+          Save
+        </button>
+        <button mat-raised-button type="button"
+                class="btn btn-primary"
+                (click)="cancelHandler()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

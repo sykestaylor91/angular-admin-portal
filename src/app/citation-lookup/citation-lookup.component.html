@@ -1,0 +1,5 @@
+<mat-card>
+  <h1>Citation</h1>
+  <span *ngIf="citation" [innerHtml]="citation.text"></span>
+  <span *ngIf="!citation">Citation not found</span>
+</mat-card>

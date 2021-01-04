@@ -1,0 +1,97 @@
+<section>
+  
+  <div class="row">
+    <div class="col-12">
+      <h3>{{title}}</h3>
+      <div>
+        <p>{{description}}</p>
+
+        <mat-radio-group class="example-radio-group"
+                         [(ngModel)]="hasConflict"
+                         (ngModelChange)="onConflictChange($event)">
+          <mat-radio-button [disableRipple]="true" [value]="true">
+            Yes
+          </mat-radio-button>
+          <br/>
+          <mat-radio-button [disableRipple]="true" [value]="false">
+            No
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+  <br/>
+</section>
+
+
+<section *ngIf="hasDisclosures">
+  <app-nowce-data-list 
+  [cols]="columnMetaData" 
+  [dataArray]="disclosures"
+  [contextMenu]="contextMenuItems"
+      (editClicked)="onEditSelect($event)"
+      (deleteClicked)="onDeleteSelect($event)">
+  </app-nowce-data-list>
+  <!-- <app-grid-table
+    [showLoading]="false"
+    [columnMetaData]="columnMetaData"
+    [config]="config"
+    [dataList]="disclosures">
+    <ng-template #menuRef let-item>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu>
+        <button mat-menu-item (click)="onEditSelect(item)">
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="onDeleteSelect(item)">
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </ng-template>
+  </app-grid-table> -->
+<!-- && hasConflict -->
+  <button mat-raised-button *ngIf="!isDetailFormVisible "
+          class="btn btn-primary pull-right"
+          (click)="addDisclosureHandler()">Add
+  </button>
+  <br/>
+  <br/>
+</section>
+
+<section *ngIf="(hasConflict && isDetailFormVisible) || (hasConflict && !disclosures)" class="relative"
+         [ngSwitch]="disclosureType">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+
+  <app-edit-payments-detail *ngSwitchCase="DisclosureType.PAYMENTS"
+                            [disclosureSetter]="selectedDisclosure"
+                            (cancelCalled)="hideForm($event)"
+                            (saveDisclosure)="saveDisclosure($event)"></app-edit-payments-detail>
+
+  <app-edit-financial-detail *ngSwitchCase="DisclosureType.FINANCIAL"
+                             [disclosureSetter]="selectedDisclosure"
+                             (cancelCalled)="hideForm($event)"
+                             (saveDisclosure)="saveDisclosure($event)"></app-edit-financial-detail>
+
+  <app-edit-patents-detail *ngSwitchCase="DisclosureType.PATENTS"
+                           [disclosureSetter]="selectedDisclosure"
+                           (cancelCalled)="hideForm($event)"
+                           (saveDisclosure)="saveDisclosure($event)"></app-edit-patents-detail>
+
+  <app-edit-partnerships-detail *ngSwitchCase="DisclosureType.PARTNERSHIPS"
+                                [disclosureSetter]="selectedDisclosure"
+                                (cancelCalled)="hideForm($event)"
+                                (saveDisclosure)="saveDisclosure($event)"></app-edit-partnerships-detail>
+
+  <app-disclosure-edit-activities-detail *ngSwitchCase="DisclosureType.ACTIVITIES"
+                                         [disclosureSetter]="selectedDisclosure"
+                                         (cancelCalled)="hideForm($event)"
+                                         (saveDisclosure)="saveDisclosure($event)"></app-disclosure-edit-activities-detail>
+
+  <app-disclosure-edit-contributions-detail *ngSwitchCase="DisclosureType.CONTRIBUTOR"
+                                            [disclosureSetter]="selectedDisclosure"
+                                            (cancelCalled)="hideForm($event)"
+                                            (saveDisclosure)="saveDisclosure($event)"></app-disclosure-edit-contributions-detail>
+</section>
+<hr class="section" />

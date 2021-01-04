@@ -1,0 +1,131 @@
+<div class="row margin-bottom-20">
+  <div class="col-sm-6">
+    <h3>{{title}}</h3>
+  </div>
+  <div class="col-sm-6">
+    <button mat-raised-button class="btn btn-primary pull-right" (click)="newMediaClickHandler()">Upload New</button>
+  </div>
+</div>
+<div class="relative">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+
+  <div>
+      <p-dataView #dv [value]="media" [paginator]="true" [rows]="20" paginatorPosition="bottom" filterBy="title"
+                [sortField]="sortField" [sortOrder]="sortOrder">
+
+      <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="col-4 pull-left">
+              <mat-form-field appearance="outline" class="search-box width-100"  >
+                <button matPrefix mat-icon-button >
+                  <mat-icon>search</mat-icon>
+                </button>
+                <input #search matInput  [placeholder]="'Search'" type="text"
+                       (change)="dv.filter(search.value || '')"
+                       (input)="dv.filter(search.value || '')">
+                <button mat-button  *ngIf="search.value" matSuffix mat-icon-button matTooltip="Clear"
+                        (click)="search.value='';dv.filter('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+<!--                <input type="search" pInputText placeholder="Search items" [(ngModel)]="filterTerm" (keyup)="dv.filter(filterTerm)"-->
+<!--                       class="form-control ui-inputtext ui-corner-all ui-state-default ui-widget input-with-filter">-->
+<!--                <button class="btn btn-default filter-button form-control" (click)="filterTerm=''; dv.filter(filterTerm)"><i class="fa fa-close"></i></button>-->
+            </div>
+            <div class="col-3 pull-left">
+              <!--<label>Order by</label>-->
+<!--              <select class="form-control ng-pristine ng-invalid ng-touched ui-inputswitch-checked" (change)="reOrder($event.target)">-->
+<!--                <option value="newToOld" selected>Order new to old</option>-->
+<!--                <option value="oldToNew">Order old to new</option>-->
+<!--              </select>-->
+            </div>
+            <div class=" text-right" *ngIf="showLayoutButtons">
+              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+            </div>
+        </div>
+      </p-header>
+
+      <p-header *ngIf="dv.layout === 'list'">
+        <div class="row">
+          <div class="col-1">
+          </div>
+          <div class="col-5">
+            <label>Title</label>
+          </div>
+          <div class="col-2">
+            <label>Author</label>
+          </div>
+          <div class="col-2">
+            <label>File type</label>
+          </div>
+          <div class="col-2">
+            <label>Date uploaded</label>
+          </div>
+        </div>
+      </p-header>
+
+            <hr class="citation-break"/>
+
+      <ng-template let-media pTemplate="listItem" let-i="index">
+            <div class="col-1">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="onGetMediaLinkClicked(media)">
+                  <span>Get link / preview</span>
+                </button>
+                <button mat-menu-item (click)="onEditMediaClicked(media)">
+                  <span>Edit information</span>
+                </button>
+                <button mat-menu-item (click)="onDeleteMediaClicked(media)">
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+            <div class="col-5">
+              <div class="box-text" [innerHTML]="media.title"></div>
+            </div>
+            <div class="col-2">
+              <div class="box-text" [innerHTML]="media.author"></div>
+            </div>
+            <div class="col-2">
+              <div class="box-text" [innerHTML]="media.contentType"></div>
+            </div>
+            <div class="col-2">
+              <div class="box-text" [innerHTML]="media.dateCreated | date" matTooltip="{{media.dateCreated | date: 'full'}}"></div>
+            </div>
+      </ng-template>
+<!--        <div  class="row" >-->
+      <ng-template let-media pTemplate="gridItem" let-i="index">
+        <div class="p-col-12 p-md-3 ">
+        <mat-card class="box margin-bottom-10 media-container text-center">
+          <span [innerHtml]="media.title"></span>
+          <hr/>
+          <img *ngIf="media.contentType === 'png' || media.contentType === 'jpg' || media.contentType === 'jpeg' || media.contentType === 'gif'" src="{{baseUrl+media.id}}.{{media.contentType}}" alt="No Preview Available" border="0"/>
+          <pdf-viewer *ngIf="media.contentType === 'pdf'" [src]="baseUrl+media.id+'.'+media.contentType" [render-text]="true" [original-size]="false"	[external-link-target]="'blank'" style="display: block;"></pdf-viewer>
+          <video *ngIf="media.contentType === 'mp4'" width="100" controls><source id="nowce-media" src="{{baseUrl+media.id}}.{{media.contentType}}" title="" type="video/mp4"></video>
+          <div class="overlay">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="onGetMediaLinkClicked(media)">
+                <span>Get link / preview</span>
+              </button>
+              <button mat-menu-item (click)="onEditMediaClicked(media)">
+                <span>Edit information</span>
+              </button>
+              <button mat-menu-item (click)="onDeleteMediaClicked(media)">
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </div>
+        </mat-card>
+        </div>
+      </ng-template>
+<!--        </div>-->
+      </p-dataView>
+  </div>
+</div>

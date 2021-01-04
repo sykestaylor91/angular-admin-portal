@@ -1,0 +1,17 @@
+{
+  "plugins": [],
+  "indent-width": 2,
+  "indent-width-cont": true,
+  "line-end-style": false,
+  "attr-name-style": false,
+  "attr-req-value": false,
+  "id-class-ignore-regex": "[a-z0-9-]*{{..*}}[a-z0-9-]*",
+  "id-class-style": "dash",
+  "img-req-alt": false,
+  "img-req-src": false,
+  "label-req-for": false,
+  "line-end-style": false,
+  "attr-bans": ["align", "background", "bgcolor", "border", "frameborder", "longdesc", "marginwidth", "marginheight", "scrolling", "width"],
+  "attr-no-unsafe-char": false,
+  "spec-char-escape": false
+}

@@ -1,0 +1,142 @@
+@import "../core/variables";
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle,
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $c-primaryColor !important;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: $c-primaryColor !important;
+}
+
+.mat-tooltip {
+  font-size: 1.1em !important;
+}
+
+button.mat-menu-item span {
+  margin-left: -4px;
+}
+
+div.cdk-overlay-pane.pos-relative {
+  position: relative !important; // have to set important as the element as styles applied to it
+}
+
+.mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-ink-bar {
+  background-color: $c-primaryColor;
+}
+
+.invalid {
+  color: #a94442 !important;
+  font-weight:bold;
+}
+
+div.mat-tab-body-wrapper,
+div.mat-tab-body-content,
+mat-tab-body.mat-tab-body.mat-tab-body-active {
+  overflow: visible;
+}
+
+div > mat-card > mat-tab-group > mat-tab-header > div.mat-tab-header-pagination {
+  &.mat-tab-header-pagination-after,
+  &.mat-tab-header-pagination-before {
+    z-index: 1;
+  }
+}
+
+.mat-select {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.mat-tab-body {
+  padding: 15px;
+}
+
+mat-radio-button.mat-radio-disabled label.mat-radio-label,
+mat-radio-button.mat-radio-disabled,
+mat-checkbox.mat-checkbox-disabled,
+.mat-checkbox-disabled .mat-checkbox-label {
+  cursor: not-allowed;
+  color: lightgrey !important;
+}
+
+.is-invalid label, .has-error label {
+  color: $c-required !important;
+}
+
+mat-card.mat-card.info-card:hover {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+.sidenav-container .mat-sidenav {
+  min-width: 20% !important;
+}
+
+.sidenav-container .mat-sidenav-content,
+.sidenav-container mat-sidenav {
+  display: flex;
+  overflow: visible;
+}
+
+mat-sidenav {
+  overflow: visible;
+  width: 300px;
+}
+
+.hideOverflow > .mat-sidenav-content {
+  overflow: hidden !important;
+}
+
+.mat-raised-button + .mat-raised-button {
+  margin-left: 10px;
+}
+
+.mat-drawer,  .mat-drawer-backdrop {
+  position:fixed !important;
+}
+
+.mat-drawer-content {
+  height: 100vh !important;
+}
+
+.mat-radio-label {
+  font-size:1em;
+}
+
+.mat-form-field .mat-form-field-prefix .mat-icon-button, .mat-form-field .mat-form-field-suffix .mat-icon-button, .mat-form-field-outline .mat-form-field-suffix .mat-icon-button {
+  display: inline-block !important;
+  //font-size: 80%;
+}
+.mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon, .mat-form-field-appearance-outline .mat-form-field-suffix .mat-icon {
+  width: 1em !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-suffix .mat-icon-button .mat-icon {
+  font-size: inherit !important;
+}
+
+.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+  display: block;
+  font-size: inherit;
+  width: 1.5em !important;
+  height: 1.5em !important;
+  top: -2px;
+}
+
+.search-box div.mat-form-field-infix {
+  border-top: none !important;
+  top: -4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  .mat-form-field-label-wrapper {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+}
+.dark-theme .search-box div.mat-form-field-infix {
+  color: white;
+}
+
+//.mat-form-field-appearance-fill .mat-form-field-flex, .mat-form-field-appearance-legacy .mat-form-field-flex, .mat-form-field-appearance-outline .mat-form-field-flex {
+//  background-color: white;
+//}

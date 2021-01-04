@@ -1,0 +1,13 @@
+<mat-nav-list>
+  <img class="sidebar-logo" src="./assets/images/nowce.png"
+       *ngIf="!providerOrgService.provider.logo">
+  <img width="200" src="'{{providerOrgService.provider.logo}}'" *ngIf="providerOrgService.provider.logo" class="pointer"
+       routerLink='/home'/>
+
+  <ul class="side-menu">
+    <li *ngFor="let route of menuItems" [class.toggled]="true">
+      <app-nav-menu-link [route]="route" [sidenav]="sidenav" *ngIf="route.subMenu.length === 0 && hasPermission(route)"></app-nav-menu-link>
+      <app-nav-sub-menu [route]="route" [sidenav]="sidenav" *ngIf="route.subMenu.length > 0 && hasPermission(route)"></app-nav-sub-menu>
+    </li>
+  </ul>
+</mat-nav-list>

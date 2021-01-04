@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>{{title}}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <br/>
+        <div class="row">
+          <div class="col-sm-4">
+            <label>Provider logo</label> <br/>
+            <app-upload-insert-media (emitSelectedImage)="emitSelectedImage($event)"
+                                     [preSelectedFile]="providerService.provider.logo"></app-upload-insert-media>
+          </div>
+          <div class="col-sm-4">
+            <label>Provider Details</label> <br/>
+            <mat-card>
+              <div class="margin-bottom-10">
+                Id: {{provider.id}}
+                <br/>Name: {{provider.name}}
+                <br/>Domain: {{provider.domain}}
+                <br/>Contact: {{provider.contactInfo}}
+                <br/>Status: {{provider.status}}
+              </div>
+              <button mat-raised-button (click)="registrationFormEditClickHandler()" class="btn btn-primary">Update your
+                registration details
+              </button>
+            </mat-card>
+          </div>
+          <div class="col-sm-4">
+            <label>Subscription details</label> <br/>
+            <mat-card class="align-center margin-bottom-10">
+              <h3>Plan</h3>
+              <label>{{currentPlan}}</label>
+            </mat-card>
+            <button mat-raised-button class="btn btn-primary margin-bottom-10"
+                    (click)="changeSubscriptionClickHandler()">Change plan
+            </button>
+            <button mat-raised-button class="btn btn-primary margin-bottom-10"
+                    (click)="cancelSubscriptionClickHandler()">Cancel plan
+            </button>
+          </div>
+        </div>
+        <hr/>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <label>Transactions</label><br/>
+    <app-account-ledger></app-account-ledger>
+  </div>
+</div>

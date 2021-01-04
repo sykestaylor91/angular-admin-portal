@@ -1,0 +1,104 @@
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <h1 class="margin-bottom-20">{{title}}</h1>
+    <p *ngIf="sessionService?.loggedInUser['publicationDeclarationUpdate']">
+      You are required to reaffirm these publications are up to date by
+      {{sessionService?.loggedInUser['publicationDeclarationUpdate'] | date:'fullDate' }}
+    </p>
+  </div>
+</div>
+
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <h3>Author {{User.fullName(author.firstName, author.lastName)}}</h3>
+    <p class="margin-bottom-20">
+      For consistency, we suggest you follow the NLM guidelines format as published at <a href="https://www.nlm.nih.gov/bsd/policy/cit_format.html" target="_blank">https://www.nlm.nih.gov/bsd/policy/cit_format.html</a>.</p>
+
+<p>Here is a sample citation in the Summary (text) Display Format:</p>
+
+<p>“Freedman SB, Adler M, Seshadri R, Powell EC. Oral ondansetron for gastroenteritis in a pediatric emergency department. N Engl J Med. 2006 Apr 20;354(16):1698-705. PubMed PMID: 16625009."
+    </p>
+    <hr/>
+  </div>
+</div>
+
+<app-add-my-publication (saved)="onSaved($event)" (cancel)="onCancel($event)"
+                        *ngIf="showEditPublication"></app-add-my-publication>
+
+<div class="row margin-bottom-20">
+  <div class="col-sm-6">
+    <div class="ui-global-search" *ngIf="publications && publications.length > 0">
+      <input type="text"
+             class="form-control ui-inputtext ui-corner-all ui-state-default ui-widget"
+             size="50"
+             (keyup)="onFilterKeyUp()"
+             [(ngModel)]="filterTerm"
+             id="search"
+             placeholder="Search publications">
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <button mat-raised-button *ngIf="!showEditPublication" class="btn btn-primary pull-right"
+            (click)="showEditPublicationClickHandler()"><i class="fa fa-plus" aria-hidden="true"></i> Add a
+      publication
+    </button>
+  </div>
+</div>
+
+<!-- // TODO: replace with new table -->
+<!--<div *ngIf="publications && publications.length > 0" class="content-margin">-->
+<!--  <p-table [value]="filteredPublications" [paginator]="true" [rows]="20" [alwaysShowPaginator]="false" >-->
+<!--    <ng-template let-publication pTemplate="listItem" let-i="index + 1" let-even="index % 2 == 0">-->
+<!--      <div class="form-group" [ngClass]="{ 'citation-group-even' : even }">-->
+<!--        <div class="box">-->
+<!--          <div class="citation-group">-->
+<!--            <div class="citation-group-number">-->
+<!--              {{i}}.-->
+<!--            </div>-->
+<!--            <div class="citation-group-text" [innerHTML]="publication.text"></div>-->
+<!--            <div class="citation-group-action">-->
+<!--              <button mat-raised-button class="btn btn-primary"-->
+<!--                      (click)="editPublicationClickHandler(publication, i - 1)">-->
+<!--                Edit-->
+<!--              </button>-->
+<!--              <button mat-raised-button class="btn btn-primary"-->
+<!--                      (click)="deletePublicationClickHandler(publication, i - 1)">-->
+<!--                Delete-->
+<!--              </button>-->
+<!--            </div>-->
+<!--            <div class='clearfix'></div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-template>-->
+<!--  </p-table>-->
+<!--</div>-->
+<div *ngIf="!publications || publications.length === 0" class="content-margin">
+  No publications
+</div>
+
+<div class="row">
+  <div class="col-sm-12 text-center align-center">
+    <button mat-raised-button class="btn btn-primary" (click)="finishClickHandler()">Finish & confirm everything is
+      up to date
+    </button>
+  </div>
+</div>
+
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="text-right" (click)="dismissModal()">
+          <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <app-edit-publication (saved)="editOnSave($event)" (cancel)="dismissModal()"></app-edit-publication>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

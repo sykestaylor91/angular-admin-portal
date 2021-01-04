@@ -1,0 +1,26 @@
+<div class="mat-elevation-z6 notifications-box"
+     *ngIf="(notifications ||  teamMessage) && show">
+
+  <!-- Team and Reader notifications -->
+  <div class="col-md-12 col-lg-12 margin-bottom-20">
+    <br/>
+    <label>Notifications & Messages</label>
+    <div *ngIf="notifications.length > 0">
+      <div *ngFor="let notification of notifications">
+        <hr/>
+        <div *ngIf="!notification.id" class="pointer notification" (click)="viewNotification(notification.type)">
+          <span [innerHTML]="notification.content"></span>
+          <i class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></i>
+        </div>
+        <div *ngIf="notification.id">
+          <span [innerHTML]="notification.content"></span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="notifications.length === 0">
+      <div>
+        No notifications or messages
+      </div>
+    </div>
+  </div>
+</div>

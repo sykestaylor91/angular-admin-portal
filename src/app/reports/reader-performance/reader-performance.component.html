@@ -1,0 +1,30 @@
+<div class="row relative">
+  <div class="col-lg-12">
+    <h1>{{title}}</h1>
+  </div>
+</div>
+<div class="relative">
+  <div class="panel-body">
+    <div class="row relative">
+      <div class="col-lg-12">
+        <app-search-user (searchDestroy)="onSearchDestroy($event)"></app-search-user>
+        9fed44cc988e4a659dfeaf8500340fff
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <app-results></app-results>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <app-summary (setResponses)="setResponses($event)"></app-summary>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <app-response-details></app-response-details>
+      </div>
+    </div>
+  </div>
+</div>

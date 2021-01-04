@@ -1,0 +1,73 @@
+//@import '../../../../assets/scss/core/variables';
+//@import '../../../../assets/scss/core/mixins';
+//
+//::ng-deep p-panel div.ui-panel-titlebar {
+//  display: none;
+//}
+//.overlay {
+//  width: 100%;
+//  padding-top: 6px;
+//  text-align: left;
+//  font-size: 25px;
+//  color: $c-grayDarker;
+//  height: 100%;
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  opacity: 0;
+//  @include transition(all 0.2s ease-in-out);
+//}
+//
+//.box:hover .overlay {
+//  opacity: 1;
+//  background-color: rgba(238, 238, 238, 0.7);
+//}
+//
+//.image-container {
+//  padding: 3px;
+//}
+//
+//.grid-wrapper {
+//  text-align: center;
+//}
+//
+//.media-container {
+//  hr {
+//    margin-top: 10px;
+//    margin-bottom: 10px;
+//  }
+//
+//  img {
+//    object-fit: contain;
+//    max-width: 100%;
+//    max-height: 120px;
+//  }
+//}
+//
+//::ng-deep p-dropdown.sort-by {
+//  div.ui-dropdown {
+//    min-width: 150px;
+//  }
+//}
+//
+//::ng-deep div.ui-dataview-content {
+//  margin-top: 10px;
+//
+//  &.ui-widget-content > div {
+//    justify-content: space-evenly;
+//  }
+//  &.ui-widget-content > .p-grid {
+//    display: flex;
+//    flex-wrap: wrap;
+//    margin-right: -15px;
+//    margin-left: -15px;
+//  }
+//}
+//
+//::ng-deep p-paginator {
+//  .ui-paginator-top {
+//    position: absolute;
+//    width: 100%;
+//    top: -23px;
+//  }
+//}

@@ -1,0 +1,61 @@
+@import '../../../../../assets/scss/core/variables';
+@import '../../../../../assets/scss/core/mixins';
+
+.has-revisit {
+  color: #ffffff;
+  background-color: $c-yellow;
+}
+.has-response {
+  color: #ffffff;
+  background-color: #83b512;
+}
+
+.confident-answer {
+  color: #005500;
+  background-color: #dddd33;
+}
+
+.unsure-answer {
+  color: #000055;
+  background-color: #eeee22;
+}
+
+.wrong-answer {
+  color: #440055;
+  background-color: #aaaa11;
+}
+
+
+.map-button-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  .btn {
+    width: 35px;
+    min-width: 35px;
+    padding: 0;
+    margin: 8px;
+  }
+
+  .active-question {
+    color: #ffffff !important;
+    background-color: #cccccc;
+  }
+
+  .serial-question:before {
+    content: "\e242" !important;
+    position: absolute;
+    margin-left: -.95em;
+    margin-top: -.3em;
+    font-family: "Material Icons" !important;
+  }
+
+  .has-note:after { // e06f e616  e3c9
+    content: "\e3c9" !important;
+    position: absolute;
+    margin-right: -.95em;
+    margin-top: -.3em;
+    font-family: "Material Icons" !important;
+  }
+}

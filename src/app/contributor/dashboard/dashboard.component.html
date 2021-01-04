@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="col-lg-6">
+    <!--  //TODO: find out about adding widgets
+    <p>Space for widget</p>
+    just an inline place holder-->
+    <div></div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-lg-4" *ngFor="let panel of panels">
+    <div class="text-center">
+      <i class="fa fa-5x {{panel.image}}" aria-hidden="true"></i>
+      <h3>{{panel.title}}</h3>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item pointer" *ngFor="let item of panel.items" (click)="onSelect(item)">
+        <span [innerHTML]="item.title"></span>
+        <i class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></i>
+      </li>
+
+    </ul>
+  </div>
+</div>

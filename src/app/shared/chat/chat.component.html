@@ -1,0 +1,38 @@
+<button mat-raised-button *ngIf="!alwaysExpand" (click)="(!expanded)?expand():collapse()"
+        matTooltip="{{(this.unseenCount > 0) ? 'Show '+this.chatTitle+'.\n '+ this.unseenCount + ' unseen message'+((this.unseenCount > 1)?'s.':'.') : (!expanded)?'Show '+this.chatTitle:'Hide '+this.chatTitle}}"
+          >
+  <mat-icon matBadge="{{(this.unseenCount>0)?this.unseenCount:null}}" matBadgeColor="warn" matBadgePosition="before">chat</mat-icon>
+  {{this.chatTitle}}
+</button>
+<mat-card *ngIf="expanded || alwaysExpand" class="chatroom-card width-100" [@enterAnimation]>
+  <button  mat-icon-button (click)="collapse()"  class="pull-right" matTooltip="Hide {{this.chatTitle}}"><mat-icon>expand_less</mat-icon></button>
+  <button  mat-icon-button *ngIf="this.muted && !alwaysMute" (click)="muteUnmute()"  class="pull-right" matTooltip="Unmute chat sounds" ><mat-icon>volume_off</mat-icon></button>
+  <button  mat-icon-button  *ngIf="!this.muted  && !alwaysMute" (click)="muteUnmute()" class="pull-right" matTooltip="Mute chat sounds"><mat-icon>volume_up</mat-icon></button>
+  <mat-card-title-group>
+    <mat-card-title>{{chatTitle}}
+    </mat-card-title>
+  </mat-card-title-group>
+    <div *ngFor="let user of connectedUsers | keyvalue"  class="user-list">
+      <span class="margin-left-10" style="display: inline-flex;">
+        <ngx-avatar gravatarId="{{user.value?.email}}" name="{{user.key}}" matTooltip="{{user.key}} {{user.value?.status}}" size="30"></ngx-avatar>
+        <mat-icon class="typing-icon active-chat-icon" *ngIf="user.value?.status == 'active'" [@enterAnimation]  >brightness_1</mat-icon>
+        <mat-icon class="typing-icon" *ngIf="lessThan500Old(user.value?.typing)" matTooltip="{{user.value?.authorName}} is typing" [@enterAnimation] >edit</mat-icon>
+      </span>
+    </div>
+  <mat-card-content>
+    <div #messageWindow [scrollTop]="messageWindow.scrollHeight" class="container chat-window width-100 margin-top-10" *ngIf="localChatLog.length>0">
+      <label class="pull-right">Chat log</label><br>
+      <p>Welcome to chat. The chat log appears below this line.</p>
+      <div *ngFor="let message of localChatLog" class="row" style="padding: 5px;" matTooltip="{{message.authorName}}, {{message.timestamp | date: 'full'}}">
+        <ngx-avatar gravatarId="{{message.authorEmail}}"  name="{{message.authorName}}"  size="20"></ngx-avatar> &nbsp;
+        <span>{{message.body}}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <mat-form-field appearance="outline" class="width-100" >
+      <input [(ngModel)]="chatInput" placeholder="Enter message" matInput (keyup)="($event.keyCode == 13 ) ? sendMessage() : sendEvent('typing');" />
+      <button matSuffix mat-icon-button (click)="sendMessage()"><mat-icon matToolitp="Send message">send</mat-icon></button>
+    </mat-form-field>
+  </mat-card-actions>
+</mat-card>

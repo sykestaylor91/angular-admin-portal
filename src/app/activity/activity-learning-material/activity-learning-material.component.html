@@ -1,0 +1,53 @@
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <h3>Learning Material</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-8">
+    <mat-card>
+      <div class="row">
+        <div class="col-sm-9">
+          <h2>{{learningMaterial[selectedIndex].heading}}</h2>
+        </div>
+        <div class="col-sm-3 text-right">
+          <h3>{{selectedIndex + 1}} of {{learningMaterial.length}}</h3>
+        </div>
+      </div>
+
+      <span [innerHtml]="learningMaterial[selectedIndex].text | safeHtml"></span>
+      <div class="row">
+        <div class="col-sm-2">
+          <button mat-raised-button class="btn btn-primary pull-left" *ngIf="selectedIndex > 0"
+                  (click)="selectedIndexChange(selectedIndex-1)">
+            Previous Section
+          </button>
+        </div>
+        <div class="col-sm-8">
+          &nbsp;
+        </div>
+        <div class="col-sm-2">
+          <button mat-raised-button class="btn btn-primary pull-right"
+                  *ngIf="selectedIndex < learningMaterial.length - 1" (click)="selectedIndexChange(selectedIndex+1)">
+            Next Section
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+  <div class="col-sm-4">
+    <mat-card>
+      <button mat-raised-button class="btn btn-primary continue-button"
+              (click)="skipLearningMaterial()">
+        Continue to questions
+      </button>
+    </mat-card>
+    <br/>
+    <mat-card>
+      <div class="lm-section-link" [ngClass]="{'lm-active-section': selectedIndex === i }"
+           *ngFor="let section of learningMaterial; let i = index;">
+        <a (click)="selectedIndexChange(i)">{{i+1}}) {{section.heading}}</a>
+      </div>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,229 @@
+<div class="container">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div [formGroup]="generalFormGroup" class="panel-body">
+
+    <div class="row">
+      <app-change-history-input-component
+        [formControlName]="'title'"
+        [formGroup]="generalFormGroup"
+        [isHidden]="titleHidden"
+        [label]="'Activity title'"
+        [placeholder]="'Enter text here - required'"
+        [resourceElement]="'title'"
+        [selectedResource]="selectedExam"
+        [class]="'col-12'">
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <app-change-history-input-component
+        [formControlName]="'subtitle'"
+        [formGroup]="generalFormGroup"
+        [isHidden]="subtitleHidden"
+        [label]="'Activity subtitle'"
+        [resourceElement]="'subtitle'"
+        [selectedResource]="selectedExam"
+        [tooltip]="'Use a subtitle to differentiate an activity with the same activity title or when the activity is part of an overall program'"
+        class="col-md-6">
+      </app-change-history-input-component>
+
+      <app-change-history-input-component
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Custom"
+        [isHidden]="reviewTypeHidden"
+        [label]="'Review required?'"
+        [resourceElement]="'reviewRequired'"
+        [selectedResource]="selectedExam"
+        [showCommentChangeHistory]="false"
+        [class]="'col-md-6'">
+        <br/>
+        <!--<mat-checkbox class="review-required-cb" [value]="true" [formControlName]="'reviewRequired'"></mat-checkbox>-->
+        <select [formControlName]="'reviewType'" class="form-control">
+          <option *ngIf="!isAccredited" [value]="ReviewType.NotRequired">Not required</option>
+          <option [value]="ReviewType.Open">Open</option>
+          <option [value]="ReviewType.Blind">Blind</option>
+        </select>
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <app-change-history-input-component
+        [formControlName]="'otherType'"
+        [formGroup]="generalFormGroup"
+        [isHidden]="otherTypeHidden"
+        [label]="'Custom activity type'"
+        [resourceElement]="'otherType'"
+        [selectedResource]="selectedExam"
+        class="col-12">
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <app-change-history-input-component
+        class="col-md-6"
+        [formControlName]="'providerCourseId'"
+        [formGroup]="generalFormGroup"
+        [isHidden]="providerCourseIdHidden"
+        [label]="'Activity ID'"
+        [placeholder]="'Enter your own activity reference or ignore'"
+        [resourceElement]="'providerCourseId'"
+        [selectedResource]="selectedExam">
+      </app-change-history-input-component>
+
+      <app-change-history-input-component
+        class="col-md-6"
+        [formControlName]="'estimatedCompletionTime'"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Number"
+        [isHidden]="estimatedCompletionTimeHidden"
+        [label]="'Estimated completion time (minutes)'"
+        [resourceElement]="'estimatedCompletionTime'"
+        [selectedResource]="selectedExam">
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <div *ngIf="!(learningAssessmentModeHidden && studyModeHidden && examModeHidden)"
+           class="form-check col-12 margin-bottom-10 " [class.is-invalid]="!modeSelected">
+        <label >Available modes</label> <br/>
+        <div [hidden]="learningAssessmentModeHidden" class="margin-bottom-20">
+          <mat-checkbox (change)="updateModesEnabled()" formControlName="normalModeAllowed"> Learning / assessment mode
+          </mat-checkbox>
+          <mat-icon class="ml-1 help-icon" matTooltip="For board credit purposes check the chosen activity mode complies with the mandatory
+          requirements of the relevant certifying board or accrediting authority">help_outline
+          </mat-icon>
+          <br/>
+          <span>Certified and other activities with questions and marked answers. Options include adding learning
+            materials and discussions.</span>
+        </div>
+        <div [hidden]="studyModeHidden" class="margin-bottom-20">
+          <mat-checkbox (change)="updateModesEnabled()" formControlName="studyModeAllowed"> Review activity in study
+            mode
+          </mat-checkbox>
+          <br/>
+          <span>Allows users to study activity content with learning materials and discussions (optional) –but without
+            questions.</span>
+        </div>
+        <div [hidden]="examModeHidden" class="margin-bottom-20">
+          <mat-checkbox (change)="updateModesEnabled()" formControlName="examModeAllowed"> Exam / survey / quiz mode
+          </mat-checkbox>
+          <br/>
+          <span>Users answer questions without learning materials or discussions. In this mode &quot;given answers&quot;
+            are not marked.</span>
+        </div>
+        <div [hidden]="examModeHidden" class="margin-bottom-20">
+          <mat-checkbox formControlName="useSecurity"> Use security features</mat-checkbox>
+          <mat-icon class="ml-1 help-icon"
+                    matTooltip="Force fullscreen mode and prohibit navigating away or opening browser tools while in an exam session">
+            help_outline
+          </mat-icon>
+          <br/>
+          <span>Apply security features in exam mode.</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+      <app-change-history-texteditor
+        [formControlName]="'disclosureOfCommercialSupport'"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Custom"
+        [isHidden]="disclosureOfCommercialSupportHidden"
+        [label]="'Disclosure of commercial support'"
+        [resourceElement]="'disclosureOfCommercialSupport'"
+        [selectedResource]="selectedExam"
+        [showCitation]="false"
+        [tooltip]="'Required for all accredited activities. -  If an accredited activity has not been supported commercially you should  declare this. For example - &quot;The provider of this activity has not received any commercial support towards this activity&quot; For non-accredited activities a similar declaration may be made at the discretion of the provider'">
+      </app-change-history-texteditor>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+      <app-change-history-texteditor
+        [formControlName]="'welcomeMessage'"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Custom"
+        [isHidden]="welcomeMessageHidden"
+        [label]="'Publisher statement'"
+        [placeholder]="'Enter text here - required - see tool tip above'"
+        [resourceElement]="'welcomeMessage'"
+        [selectedResource]="selectedExam"
+        [showCitation]="false" [tooltip]="'Describe your organization and your overall organization objectives and any other statement you wish to make to end users (optional) For accredited activities you are required to enter; (i) Means of participation – for example - &quot;Means of participation: internet - any time&quot; (ii) Hardware/software required – for example- &quot;A PDF viewer is required&quot; or &quot;Hardware required: An internet connected device with Mp4 video playback capability&quot; (iii) Connection system required (if any) - for example – &quot;Connection system required: An internet connection with download speeds of 2.5Mbps or more&quot; For specific information about this activity&quot;s content at &quot;Activity information&quot;'">
+      </app-change-history-texteditor>
+      </div>
+    </div>
+
+    <div class="row">
+      <app-change-history-input-component
+        class="col-md-6"
+        [formControlName]="'plannedPublicationDate'"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Date"
+        [isHidden]="plannedPublicationDateHidden"
+        [label]="'Publication date'"
+        [resourceElement]="'plannedPublicationDate'"
+        [selectedResource]="selectedExam">
+      </app-change-history-input-component>
+      <app-change-history-input-component
+        class="col-md-6"
+        [formControlName]="'plannedExpireDate'"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Date"
+        [isHidden]="plannedExpireDateHidden"
+        [label]="'Planned expiration date'"
+        [resourceElement]="'plannedExpireDate'"
+        [selectedResource]="selectedExam"
+        [tooltip]="'Required for certified activities'">
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <app-change-history-input-component
+        class="col-md-6"
+        [formGroup]="generalFormGroup"
+        [inputType]="InputType.Custom"
+        [isHidden]="courseImageHidden"
+        [label]="'Activity image'"
+        [resourceElement]="'courseImage'"
+        [selectedResource]="selectedExam"
+        [showCommentChangeHistory]="false"
+        [tooltip]="'The image is displayed to readers prior to selection and/or purchase. Note: the maximum size is width 120 px height 90 px'">
+        <br/>
+        <app-upload-insert-media
+          (emitSelectedImage)="onCourseImageSelected($event)"
+          [isDisabled]="isReadOnly"
+          [preSelectedFile]="selectedExam?.courseImage"
+        ></app-upload-insert-media>
+      </app-change-history-input-component>
+      <app-change-history-input-component
+        class="col-md-6"
+        [formControlName]="'targetAudience'"
+        [formGroup]="generalFormGroup"
+        [isHidden]="targetAudienceHidden"
+        [label]="'Target audience'"
+        [resourceElement]="'targetAudience'"
+        [selectedResource]="selectedExam"
+        [tooltip]="'Required for accredited activities. Enter a short description about the intended audience for this activity. For example: Practicing MOs – Pediatric Nurse Practitioners of 5 years +, etc.'">
+      </app-change-history-input-component>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <app-change-history-texteditor
+          [formControlName]="'disclaimer'"
+          [formGroup]="generalFormGroup"
+          [inputType]="InputType.Custom"
+          [isHidden]="disclaimerHidden"
+          [label]="'Disclaimer'"
+          [resourceElement]="'disclaimer'"
+          [selectedResource]="selectedExam"
+          [tooltip]="'Add a disclaimer if you need to notify users of any restrictions or limits of liability  for the interpretation, use or application of any part of this activity\'s content'">
+        </app-change-history-texteditor>
+      </div>
+    </div>
+
+    <app-certification [form]="form" [selectedExam]="selectedExam"></app-certification>
+    <app-designations [form]="form" [selectedExam]="selectedExam"></app-designations>
+    <app-copyright [form]="form" [selectedExam]="selectedExam"></app-copyright>
+  </div>
+</div>

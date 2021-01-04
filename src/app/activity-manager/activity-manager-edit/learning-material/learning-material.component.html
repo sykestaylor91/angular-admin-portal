@@ -1,0 +1,85 @@
+<div class="row" *ngIf="!hideAll">
+  <div class="col-lg-6">
+    <h3>
+      Learning materials
+    </h3>
+  </div>
+  <div class="col-lg-6">
+    <button mat-raised-button
+            class="btn btn-primary pull-right"
+            [disabled]="isReadOnly"
+            (click)="addLearningMaterial()">
+      Add section of learning material
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!hideAll">
+  <div class="relative">
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+    <div class="panel-body">
+      <div class="form-group" *ngIf="learningMaterialFormGroup" [formGroup]="learningMaterialFormGroup">
+
+        <div formArrayName="learningMaterial">
+          <div *ngFor="let lm of learningMaterials.controls; let i = index" [formGroupName]="i">
+            <div class="col-12 learning-material-section">
+              <div class="row">
+                <br>
+                <div class="col-md-6">
+                  <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+                    <mat-label>Section Heading <mat-icon>required</mat-icon>
+                    </mat-label>
+                    <input #heading matInput placeholder="Section Heading" [required]="isAccredited" type="text" formControlName="heading">
+                    <mat-error *ngIf="!heading.value && isAccredited">
+                      <strong>Required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6 form-group" [class.required]="isAccredited">
+                  <mat-form-field  class="width-100" appearance="outline" [floatLabel]="'always'" >
+                    <mat-label>Level of evidence <mat-icon>required</mat-icon>
+                    </mat-label>
+                    <input #loe matInput placeholder="Enter LoE"  type="text" formControlName="loe"><!--[required]="isAccredited"-->
+                    <mat-error *ngIf="!loe.value && isAccredited">
+                      <strong>Required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <app-change-history-texteditor
+                    [resourceElement]="'text'"
+                    [selectedResource]="selectedExam"
+                    [formGroup]="lm"
+                    [inputType]="InputType.Custom"
+                    [originalValue]="getOriginalText(i)"
+                    [label]="'Add text and content'"
+                    [isRequired]="isAccredited"
+                    [formControlName]="'text'"
+                      [showCitation]="true"
+                      >
+                    </app-change-history-texteditor>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                  <label>&nbsp;</label>
+                  <br/>
+                  <button mat-raised-button class="btn btn-primary pull-right"
+                          [disabled]="isReadOnly"
+                          (click)="removeLearningMaterial(i)">
+                    Remove section
+                  </button>
+                </div>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+          <div *ngIf="learningMaterials.controls.length===0">
+            <p>There are no learning materials added to the activity.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

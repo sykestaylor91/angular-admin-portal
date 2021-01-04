@@ -1,0 +1,211 @@
+<div [formGroup]="form">
+  <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+  <div class="">
+<!--    <mat-card>-->
+    <div class="row margin-bottom-10">
+        <div class="col-6" style="font-size: 1.1em; color: grey; font-style: italic; font-weight: bold">
+          <span>
+            {{form.get('generalFormGroup')?.get('title')?.value || 'Untitled activity'}}
+          </span>
+          <span>
+            {{form.get('generalFormGroup')?.get('subtitle')?.value}}
+          </span>
+        </div>
+        <div class="col-6" style="font-size: 1.1em; color: grey; text-align: right">
+          <span style="padding-right: 10px; font-style: italic; font-weight: bold;">
+            {{ resolveExamTypeName(selectedExam.type) }}
+          </span>
+
+          <span class="pull-right" *ngIf="selectedExam && !selectedExam.lastUpdated">Not yet saved</span>
+          <span class="pull-right" *ngIf="selectedExam && selectedExam.lastUpdated" matTooltip="Last update: {{selectedExam.lastUpdated | date:'full'}}" >Saved {{selectedExam.lastUpdated | date:'short'}}</span>
+        </div>
+  </div>
+    <div class="row">
+      <div class="col-12 col-sm-6">
+          <button mat-raised-button class="button-default mb-1"
+                  [disabled]="!selectedExam?.lastUpdated"
+                  matTooltip="{{(selectedExam?.lastUpdated) ? 'Show team dialog' : 'You must first save an activity to add to the team'}}"
+                  (click)="onShowTeamDialog()">
+            <mat-icon>group</mat-icon> Team
+          </button>
+
+          <button mat-raised-button  class="button-default"
+                  *ngIf="showActivityNotes"
+                  matTooltip="Show activity notes"
+                  (click)="onShowActivityNotesClicked()">
+            <mat-icon>edit</mat-icon> Notes
+          </button>
+        <button mat-raised-button  class="button-default"
+                *ngIf="showReviewNotes"
+                matTooltip="Show review notes"
+                (click)="onShowReviewNotesClicked()">
+          <mat-icon>rate_review</mat-icon> Review
+        </button>
+            <button  [disabled]="!selectedExam?.lastUpdated || isReadOnly" mat-raised-button  class="button-default save-button preview-selector" [matMenuTriggerFor]="preview">
+              <span>Preview</span>
+              <mat-icon>expand_more</mat-icon>
+            </button>
+            <mat-menu #preview="matMenu">
+              <button  [disabled]="!selectedExam?.lastUpdated  || isReadOnly" mat-menu-item (click)="previewActivity()">
+                <span>Save and preview</span>
+              </button>
+              <button mat-menu-item (click)="previewCertificate()">
+                <span>Preview Certificate</span>
+              </button>
+            </mat-menu>
+      </div>
+      <div class="col-12 col-sm-6">
+
+            <span *ngIf="selectedExam.status === StatusCode.Issued">
+              <button mat-raised-button  class="button-default pull-right" (click)="onPublishCourse()"
+                       [disabled]="!isValid || isReadOnly"
+                      *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.SuperAdmin, Role.Provider, Role.Planner], exam: selectedExam}">
+                Publish now
+              </button>
+            </span>
+            <button  mat-raised-button class="button-default pull-right save-button" style="margin-right: 8px; "
+                    [ngClass]="{'static': isSaveStatic}"
+                    [disabled]="!activityHasTitle() || isReadOnly"
+                    (click)="saveChanges(null)">
+              Save
+            </button>
+          <div class=" activity-status pull right">
+                <label>
+                Activity status
+              </label>
+              <button mat-raised-button
+                      class="button-default status-selector-right"
+                      [disabled]="isReadOnly"
+                      [matMenuTriggerFor]="menu">
+                <span>{{ currentStatusFriendlyName }}</span>
+                <mat-icon>expand_more</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Editor, Role.Author, Role.Planner, Role.SuperAdmin, Role.Provider, Role.Publisher], exam: selectedExam}"
+                        [disabled]="!isValid || isDisabled(StatusCode.ReadyToReview)"
+                        (click)="openConfirmStatusDialog(StatusCode.ReadyToReview)">
+                  <mat-icon>create</mat-icon>
+                  <span>{{StatusCode.ReadyToReview | activityStatus}}</span>
+                </button>
+
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.Editor, Role.Reviewer, Role.Planner, Role.SuperAdmin, Role.Provider], exam: selectedExam}"
+                        [disabled]="isDisabled(StatusCode.Returned)"
+                        (click)="openConfirmStatusDialog(StatusCode.Returned)">
+                  <mat-icon>redo</mat-icon>
+                  <span>{{StatusCode.Returned | activityStatus}}</span>
+                </button>
+
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Reviewer, Role.SuperAdmin ], exam: selectedExam}"
+                        [disabled]="isDisabled(StatusCode.UnderReview)"
+                        [hidden]=""
+                        (click)="openConfirmStatusDialog(StatusCode.UnderReview)">
+                  <mat-icon>lock</mat-icon>
+                  <span>{{StatusCode.UnderReview | activityStatus}}</span>
+                </button>
+
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Planner, Role.Reviewer, Role.SuperAdmin], exam: selectedExam}"
+                        [disabled]="!isValid || isDisabled(StatusCode.ReviewApproved)"
+                        (click)="openConfirmStatusDialog(StatusCode.ReviewApproved)">
+                  <mat-icon>done</mat-icon>
+                  <span>{{StatusCode.ReviewApproved | activityStatus}}</span>
+                </button>
+
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.Planner, Role.SuperAdmin, Role.Provider, Role.Reviewer], exam: selectedExam}"
+                        [disabled]="!isValid || isDisabled(StatusCode.Issued)"
+                        (click)="openConfirmStatusDialog(StatusCode.Issued)">
+                  <mat-icon>done_all</mat-icon>
+                  <span>{{StatusCode.Issued | activityStatus}}</span>
+                </button>
+
+                <button mat-menu-item
+                        *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.Provider, Role.Planner, Role.SuperAdmin], exam: selectedExam}"
+                        [disabled]="isDisabled(StatusCode.Withdrawn)"
+                        (click)="openConfirmStatusDialog(StatusCode.Withdrawn)">
+                  <mat-icon>pan_tool</mat-icon>
+                  <span>Withdraw activity</span>
+                </button>
+              </mat-menu>
+            </div>
+      </div>
+    </div>
+      <mat-tab-group (selectedIndexChange)="onNavigateTab($event)" [selectedIndex]="selectedTab" dynamicHeight>
+        <mat-tab [label]="'Admin basics'">
+        <ng-template mat-tab-label>
+            <span [class.invalid]="!isValidGeneralInfo">Admin basics</span>
+        </ng-template>
+          <app-edit-general-information [form]="form" [selectedExam]="selectedExam"
+                                        *ngIf="isGeneralInformationLoaded"></app-edit-general-information>
+          <div class="pull-right">
+            <button class="btn-primary" mat-raised-button (click)="onNavigateTab(1)">Next</button>
+          </div>
+        </mat-tab>
+        <mat-tab [label]="'Needs / objectives'">
+        <ng-template mat-tab-label>
+            <span [class.invalid]="!isValidIntro">Intro / needs / objectives</span>
+        </ng-template>
+          <app-introduction [form]="form" [selectedExam]="selectedExam" *ngIf="isIntroductionLoaded"></app-introduction>
+          <div class="pull-right">
+            <button class="btn-primary" mat-raised-button (click)="onGoBack()">Go back</button>
+            <button class="btn-primary" mat-raised-button (click)="onNavigateTab(2)">Next</button>
+          </div>
+        </mat-tab>
+
+        <mat-tab [label]="'Questions'">
+          <ng-template mat-tab-label>
+              <span [class.invalid]="!isValidQuestions">Questions</span>
+          </ng-template>
+          <app-course-questions [form]="form" [selectedExam]="selectedExam" (questionsChanged)="onQuestionsChanged()"
+                                *ngIf="isActivityQuestionsLoaded"></app-course-questions>
+          <div class="pull-right">
+            <button class="btn-primary" mat-raised-button (click)="onGoBack()">Go back</button>
+            <button class="btn-primary" mat-raised-button (click)="onNavigateTab(3)">Next</button>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Citations">
+          <app-citations [form]="form" [selectedExam]="selectedExam" (citationDeleted)="onCitationDeleted($event)"
+                         *ngIf="isCitationsLoaded"></app-citations>
+          <div class="pull-right">
+            <button class="btn-primary" mat-raised-button (click)="onGoBack()">Go back</button>
+            <button *ngIf="!isDeclarationsHidden" class="btn-primary" mat-raised-button (click)="onNavigateTab(4)">Next</button>
+          </div>
+        </mat-tab>
+        <mat-tab [label]="'Learning materials'" *ngIf="!isLearningMaterialsHidden">
+          <ng-template mat-tab-label>
+            <span [class.invalid]="!isValidLearningMaterial">Learning materials</span>
+          </ng-template>
+          <app-learning-material [form]="form" [selectedExam]="selectedExam"
+                                 *ngIf="isLearningMaterialsLoaded"></app-learning-material>
+          <div class="pull-right">
+            <button class="btn-primary" mat-raised-button (click)="onGoBack()">Go back</button>
+            <button class="btn-primary" mat-raised-button (click)="onNavigateTab(5)">Next</button>
+          </div>
+        </mat-tab>
+        <div *ngIf="!isDeclarationsHidden" >
+          <mat-tab [label]="'Declarations'"  *appPermissionCheck="{allowedRoles: [Role.Publisher, Role.Planner, Role.SuperAdmin, Role.Provider, Role.Editor, Role.Reviewer]}"   >
+            <ng-template mat-tab-label>
+              <span [class.invalid]="!isValidDisclosures">Declarations</span>
+            </ng-template>
+            <app-disclosures  [form]="form" [selectedExam]="selectedExam" *ngIf="isDisclosuresLoaded"></app-disclosures>
+            <div class="pull-right">
+              <button class="btn-primary" mat-raised-button (click)="onGoBack()">Go back</button>
+            </div>
+          </mat-tab>
+        </div>
+      </mat-tab-group>
+<!--    </mat-card>-->
+  </div>
+</div>
+
+<div *ngIf="!Environment.production" class="card margin-top-20 debug-container">
+  <h4>Debug</h4>
+  <pre>Valid: {{isValid}}</pre>
+  <pre>Dirty: {{form.dirty}}</pre>
+  <pre>Value: {{form.value | json}}</pre>
+</div>

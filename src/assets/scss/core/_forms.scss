@@ -1,0 +1,74 @@
+@import "variables";
+
+.form-group {
+  &.required {
+    .control-label:after {
+      content: ' * ';
+      color: $c-red;
+    }
+  }
+}
+
+.error-message {
+  display: none;
+  &.error {
+    margin-left: .5em;
+    display: inline-block;
+  }
+}
+
+.btn-group {
+  .btn-confirm-yes[disabled] {
+    &.active {
+      background-color: $c-secondaryColor;
+      color: $c-white;
+      opacity: 1;
+    }
+  }
+
+  .btn-confirm-no {
+    &.active {
+      background-color: $c-lightRedOrange;
+      color: $c-white;
+      opacity: 1;
+    }
+  }
+}
+
+input[type=checkbox], input[type=radio] {
+  margin-top: 2px;
+}
+
+quill-editor .ql-editor {
+  //background-color: $c-white;
+}
+
+.group-margin {
+  margin-right: 10px;
+}
+
+.chip-lightblue {
+  border-bottom: #b8d7e6;
+}
+
+.chip-pink {
+  border-bottom: #ffdde2;
+}
+
+.chip-lightcoral{
+  border-bottom: #cff0c3;
+}
+
+.chip-yellow {
+  border-bottom: #fff8be;
+}
+
+.chip-lightgreen {
+  border-bottom: #caeecd;
+}
+.mat-pseudo-checkbox-checked {
+  background-color: $c-primaryColor !important;
+}
+.mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate {
+  background-color: $c-primaryColor !important;
+}

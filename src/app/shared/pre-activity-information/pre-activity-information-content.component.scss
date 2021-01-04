@@ -1,0 +1,95 @@
+.accreditors-logo, .activity-image {
+  width: 180px;
+}
+
+.course-title {
+  font-size: 2em;
+  margin-top: 0;
+  color: black;
+  font-weight: 600;
+}
+
+.fd-section-title {
+  font-size: 2.4em;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  background-color: #eee;
+}
+
+.activity-image img {
+  max-height: 250px;
+  max-width: 600px;
+}
+
+.fd {
+  margin-bottom: 20px;
+}
+.fd-title {
+  font-size: 1.2em;
+  display: block;
+  word-break: break-word;
+  font-weight: 800;
+}
+.fd-body {
+  font-size: 1.2em;
+  display: block;
+  word-break: break-word;
+}
+.fd-clear {
+  clear: both;
+}
+
+.fd-date-col {
+  float: left;
+  text-align: right;
+  padding-right: 20px;
+  width: 220px;
+}
+
+.fd-citation-col {
+  float: left;
+  width: calc(100% - 240px);
+}
+
+h2 {
+  font-size: 3em;
+}
+
+.contributor-table {
+  border: none;
+}
+
+.contributor-role {
+  padding: 2px 2px 2px 0px;
+}
+
+.contributor-name {
+  padding: 4px;
+}
+
+.contributor-post-nom {
+  padding: 4px;
+}
+
+::ng-deep a[href^="/citation/"] {
+  color: #4DBED5;
+  background-color: #eeeeee;
+  margin: 1px;
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  min-width: 17px;
+  line-height: 100%;
+  text-align: center;
+  text-decoration: underline;
+  vertical-align: super;
+  font-size: smaller;
+}
+
+::ng-deep sup {
+  position: relative;
+  top: -0.2em !important;
+  font-size: 75%;
+  line-height: 1.0;
+  vertical-align: baseline;
+}

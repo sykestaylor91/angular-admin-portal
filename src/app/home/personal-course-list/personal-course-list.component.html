@@ -1,0 +1,229 @@
+<div class="catalog-box">
+  <h1 class="col-sm-6">Activities</h1>
+  <!-- TODO: Move the endless exam and user exam queries that LIVE IN THE NESTED COMPONENTS reader catalog, reader stats, etc. just pass in from home component as an input-->
+  <app-reader-catalog></app-reader-catalog>
+</div>
+<hr>
+<div class="container" id="my-activities">
+
+<div class="relative margin-top-20">
+<!--  <mat-card class="width-100 margin-bottom-20">-->
+    <h3>Activities in progress</h3>
+    <div *ngIf="filteredInProgressCourses.length > 0">
+      <app-nowce-data-list (abandonActivityClicked)="onShowAbandonConfirmModel($event)"
+                           (resumeActivityClicked)="resumeCourseClickHandler($event)"
+                           [filterLists]="filterLists"
+                           [cols]="columns" [contextMenu]="contextMenu"
+                           [dataArray]="filteredInProgressCourses">
+      </app-nowce-data-list>
+    </div>
+    <div *ngIf="filteredInProgressCourses.length === 0">
+      <p>No activities in progress.</p>
+    </div>
+<!--  </mat-card>-->
+
+<!--  <mat-card>-->
+    <h3>Activities completed</h3>
+    <div *ngIf="filteredCompletedCourses.length > 0">
+      <p-table #dt2 [globalFilterFields]="['type','title', 'dateCreated','status', 'correct']"
+               [paginator]="(filteredCompletedCourses.length > 5)"
+               [rowsPerPageOptions]="[5, 10, 20]" [rows]="10" [value]="filteredCompletedCourses">
+        <ng-template pTemplate="caption">
+          <div class="col-3" style="text-align: left;margin-top:-20px; max-width: 200px;margin-left: -33px;">
+            <mat-form-field appearance="outline" class="search-box width-100"  >
+              <button matPrefix mat-icon-button >
+                <mat-icon>search</mat-icon>
+              </button>
+              <input #search matInput  [placeholder]="'Search'" type="text"
+                     (change)="dt2.filterGlobal(search.value || '', 'contains')"
+                     (input)="dt2.filterGlobal(search.value || '', 'contains')">
+              <button mat-button  *ngIf="search.value" matSuffix mat-icon-button matTooltip="Clear"
+                      (click)="search.value='';dt2.filterGlobal('', 'contains')">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+            <col [style.width]="'5%'">
+            <col [style.width]="'35%'">
+            <col [style.width]="'30%'">
+            <col [style.width]="'10%'">
+            <col [style.width]="'10%'">
+            <col [style.width]="'10%'">
+           </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+            </th>
+             <th [pSortableColumn]="'type'">
+              <label class="tab-label">Activity type</label>
+              <p-sortIcon [field]="'type'" ariaLabel="Sort" ariaLabelAsc="Sort in ascending order"
+                          ariaLabelDesc="Sort in descending order">
+              </p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'title'">
+              <label class="tab-label" >Activity title</label>
+              <p-sortIcon [field]="'title'" ariaLabel="Sort" ariaLabelAsc="Sort in ascending order"
+                          ariaLabelDesc="Sort in descending order">
+              </p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'dateCreated'">
+              <label class="tab-label">Started</label>
+              <p-sortIcon [field]="'dateCreated'" ariaLabel="Sort" ariaLabelAsc="Sort in ascending order"
+                          ariaLabelDesc="Sort in descending order">
+              </p-sortIcon>
+            </th>
+            <th [pSortableColumn]="'score'">
+              <label class="tab-label">Correct</label>
+              <p-sortIcon [field]="'score'" ariaLabel="Sort" ariaLabelAsc="Sort in ascending order"
+                          ariaLabelDesc="Sort in descending order">
+              </p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template let-data pTemplate="body">
+          <tr style="background: none;">
+            <td>
+              <button [matMenuTriggerFor]="menu" mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="takeCourseClickHandler(data)" *ngIf="!data || data.status === 'open'"
+                        mat-menu-item>
+                  <span>Take Activity</span>
+                </button>
+                <button (click)="takeCourseClickHandler(data)" *ngIf="data && data.status !== 'open'"
+                        mat-menu-item>
+                  <span>Retake Activity</span>
+                </button>
+                <button (click)="showCertificateClickHandler(data)"
+                        *ngIf="data.certificate && data.userEvaluationId && data.isRetake === false && (data.status === 'completed' || data.status === 'closed')"
+                        mat-menu-item>
+                  <span>View Certificate</span>
+                </button>
+                <button (click)="printCertificateClickHandler(data)"
+                        *ngIf="data.certificate && data.userEvaluationId && data.userExam?.isRetake === false && (data.status === 'completed' || data.status === 'closed')"
+                        mat-menu-item>
+                  <span>Print Certificate</span>
+                </button>
+              </mat-menu>
+            </td>
+            <td>
+              <div [innerHTML]="formatType(data.type)" class="box-text"></div>
+            </td>
+            <td>
+              <div [innerHTML]="data.title" class="box-text"></div>
+            </td>
+            <td>
+              <div [innerHTML]="data.dateCreated | date" matTooltip="{{data.dateCreated | date: 'full'}}" class="box-text"></div>
+            </td>
+            <td>
+              <div class="box-text text-center">{{ data.score | number: '1.0-2' }}&#037;</div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template let-columns pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="12">
+              No records found.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div *ngIf="filteredCompletedCourses.length === 0">
+      <p>You have no completed activities.</p>
+    </div>
+<!--  </mat-card>-->
+
+
+<!--</div>-->
+<!--<div class="row margin-bottom-20" id="my-examinations"  *appPermissionCheck="{allowedRoles: [Role.ClinicalExaminer,Role.ClinicalLeadExaminer,Role.SuperAdmin]}">-->
+<!--<mat-card></mat-card>-->
+<!--<h3>Clinical Examinations</h3>-->
+<!--<div class="row">-->
+    <!--<div class="col-sm-12">-->
+        <!--<div class="row" *ngIf="filteredCompletedOrNotStartedCourses.length > 0">-->
+        <!--<div class="col-sm-1">-->
+        <!--</div>-->
+        <!--<div class="col-sm-3">-->
+            <!--<label class="template-orange">Activity type</label>-->
+        <!--</div>-->
+        <!--<div class="col-sm-3">-->
+            <!--<label class="template-orange">Activity name</label>-->
+        <!--</div>-->
+        <!--<div class="col-sm-2">-->
+            <!--<label class="template-orange">Started</label>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1 text-center">-->
+            <!--<label class="template-orange">Answered</label>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1 text-center">-->
+            <!--<label class="template-orange">Correct</label>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1">-->
+            <!--<label class="template-orange">Status</label>-->
+        <!--</div>-->
+        <!--<hr class="citation-break"/>-->
+    <!--</div>-->
+
+    <!--<p-table *ngIf="filteredCompletedOrNotStartedCourses.length > 0" [value]="filteredCompletedOrNotStartedCourses" [paginator]="true" [rows]="12" [alwaysShowPaginator]="false" >-->
+    <!--<ng-template let-clinical pTemplate="item" let-i="index">-->
+        <!--<div>-->
+            <!--<div class="box">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-1">-->
+                        <!--<button mat-icon-button [matMenuTriggerFor]="menu">-->
+                        <!--<mat-icon>more_vert</mat-icon>-->
+                        <!--</button>-->
+
+                        <!--<mat-menu #menu="matMenu">-->
+                        <!--<button mat-menu-item (click)="takeCourseClickHandler(course)"  *ngIf="!course.userExam || course.userExam?.status === 'open'">-->
+                        <!--<span>Take Activity</span>-->
+                        <!--</button>-->
+                        <!--<button mat-menu-item (click)="takeCourseClickHandler(course)"  *ngIf="course.userExam && course.userExam?.status !== 'open'">-->
+                        <!--<span>Retake Activity</span>-->
+                        <!--</button>-->
+                        <!--<button mat-menu-item (click)="showCertificateClickHandler(course)"  *ngIf="course.exam.certificate && course.userExam && course.userExam?.userEvaluationId && course.userExam?.isRetake === false && (course.userExam?.status === 'completed' || course.userExam?.status === 'closed')">-->
+                        <!--<span>View Certificate</span>-->
+                        <!--</button>-->
+                        <!--<button mat-menu-item (click)="printCertificateClickHandler(course)"  *ngIf="course.exam.certificate && course.userExam && course.userExam?.userEvaluationId && course.userExam?.isRetake === false && (course.userExam?.status === 'completed' || course.userExam?.status === 'closed')">-->
+                        <!--<span>Print Certificate</span>-->
+                        <!--</button>-->
+                        <!--</mat-menu>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-3">-->
+                        <!--<div class="box-text" [innerHTML]="formatType(course.exam)"></div>-->
+                <!--</div>-->
+                <!--<div class="col-sm-3">-->
+                    <!--<div class="box-text" [innerHTML]="course.exam.title"></div>-->
+            <!--</div>-->
+            <!--<div class="col-sm-2">-->
+                <!--<div class="box-text" [innerHTML]="course.userExam?.dateCreated | date:'mediumDate'"></div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1">-->
+            <!--<div class="box-text text-center">{{ course.answeredCount | number: '1.0-2' }}</div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1">-->
+            <!--<div class="box-text text-center">{{ course.correctPercentage | number: '1.0-2' }}&#037;</div>-->
+        <!--</div>-->
+        <!--<div class="col-sm-1">-->
+            <!--<div class="box-text" [innerHTML]="course.userExam?.status"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<hr class="citation-break"/>-->
+<!--</div>-->
+<!--</ng-template>-->
+<!--</p-table>-->
+<!--<div *ngIf="ClinicalExaminations.length === 0">-->
+<!--<p>There are no Clinical examinations in your library.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+</div>

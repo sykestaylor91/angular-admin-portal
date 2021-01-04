@@ -1,0 +1,65 @@
+<div class="row margin-bottom-10">
+  <div class="col-12">
+    You can request a refund on any activity that has not yet been started within 24 hours of purchase.
+  </div>
+</div>
+<div class="row margin-bottom-10">
+  <div class="col-12">
+    Select date range or leave blank to show all
+    <br/><input class="input-date" [(ngModel)]="filterStartDate" type="date"/> to <input class="input-date"
+                                                                                         [(ngModel)]="filterEndDate"
+                                                                                         type="date"/>
+    <button mat-raised-button (click)="applyDateFilterClickHandler()" class="btn btn-primary">Apply filter</button>
+    <button mat-raised-button (click)="resetFilterClickHandler()" class="btn btn-primary"><i class="fa fa-times"
+                                                                                             aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+<!-- // TODO: replace with new table header template -->
+<!--<div class="row">-->
+<!--  <div class="col-sm-12">-->
+<!--    <span class="template-orange">All Accounts</span>-->
+<!--    <p-table class="table table-striped table-hover table-padded" [value]="filteredAccountData" [rows]="10"-->
+<!--                  [alwaysShowPaginator]="false"-->
+<!--                 [paginator]="true">-->
+<!--      <p-column styleClass="col-button">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          Transaction Number-->
+<!--        </ng-template>-->
+<!--        <ng-template let-transaction="rowData" pTemplate="body">-->
+<!--              <span-->
+<!--                title="{{transaction.transactionId}}">{{transaction.transactionId | firstNChars: 10 | uppercase}}</span>-->
+<!--        </ng-template>-->
+<!--      </p-column>-->
+<!--      <p-column styleClass="col-button">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          Date-->
+<!--        </ng-template>-->
+<!--        <ng-template let-transaction="rowData" pTemplate="body">-->
+<!--          {{transaction.date | date}}-->
+<!--        </ng-template>-->
+<!--      </p-column>-->
+<!--      <p-column field="LedgerItemDefinId" header="LedgerItemDefinId"></p-column>-->
+<!--      <p-column field="nameReport" header="Description"></p-column>-->
+<!--      <p-column field="type" header="Type" [sortable]="false"></p-column>-->
+<!--      <p-column field="note" header="Notes" [sortable]="false"></p-column>-->
+<!--      <p-column field="value" header="Value" [sortable]="false"></p-column>-->
+<!--      <p-column field="accountBalance" header="Balance" [sortable]="false"></p-column>-->
+<!--      <p-column styleClass="col-button">-->
+<!--        <ng-template pTemplate="header">-->
+<!--        </ng-template>-->
+<!--        <ng-template let-transaction="rowData" pTemplate="body">-->
+<!--          <button mat-button class="btn btn-default" type="button" (click)="viewDetailClickHandler(transaction)">-->
+<!--            View Detail-->
+<!--          </button>-->
+<!--          <button mat-button class="btn btn-default" *ngIf="refundAvailable(transaction)" type="button"-->
+<!--                  (click)="requestRefundClickHandler(transaction)">Refund / Cancel course-->
+<!--          </button>-->
+<!--        </ng-template>-->
+<!--      </p-column>-->
+<!--    </p-table>-->
+<!--  </div>-->
+<!--</div>-->
+<div>
+  {{accountData | json}}
+</div>

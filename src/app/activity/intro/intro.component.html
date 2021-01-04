@@ -1,0 +1,68 @@
+<app-loading-spinner [hidden]="!showLoading"></app-loading-spinner>
+
+<div class="row margin-bottom-20">
+  <div class="col-sm-9">
+    <h1>{{userExam.title}}</h1>
+    <label>{{userExam.subtitle}}</label>
+    <br/><span *ngIf="userExam.numberOfCredits">Credits: {{userExam.numberOfCredits}}</span>
+  </div>
+  <div class="col-sm-3">
+    <mat-card class="align-center"
+              *ngIf="userExam.questions && userExam.passRate">
+      <table class="no-border width-100">
+        <tr>
+          <td width="50%">
+            <label>Questions</label>
+          </td>
+          <td width="50%">
+            <label>Pass Rate</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{getFullQuestionCount}}
+          </td>
+          <td>
+            {{userExam.passRate}}%
+          </td>
+        </tr>
+      </table>
+    </mat-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" [innerHTML]="userExam.welcomeMessage">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12" [innerHTML]="userExam.introduction">
+  </div>
+</div>
+<div class="row margin-bottom-20">
+  <div class="col-sm-12">
+    <button mat-raised-button class="btn btn-primary margin-right-10" (click)="startExam()"
+            *ngIf="selectedExam.normalModeAllowed || resumeMode || previewMode">
+      {{getExamRestartLabel}}
+    </button>
+
+    <button mat-raised-button class="btn btn-primary margin-right-10" (click)="startExam(STUDY_MODE)"
+            *ngIf="selectedExam.studyModeAllowed && !resumeMode && !previewMode">
+      Review activity in study mode
+    </button>
+    <button mat-raised-button class="btn btn-primary margin-right-10" (click)="startExam(EXAM_MODE)"
+            *ngIf="selectedExam.examModeAllowed && !resumeMode && !previewMode">
+      Exam mode
+    </button>
+    <button mat-raised-button class="btn btn-primary margin-right-10" (click)="goBack()">
+      {{previewMode  ? 'End preview' : 'Back'}}
+    </button>
+  </div>
+</div>
+
+<div class="row content-marin">
+  <div class="col-sm-12">
+    <button mat-raised-button class="btn btn-primary" (click)="displayReadMoreClickHandler()">
+      About this activity
+    </button>
+  </div>
+</div>

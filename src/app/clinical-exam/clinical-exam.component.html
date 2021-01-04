@@ -1,0 +1,91 @@
+<mat-card xmlns="http://www.w3.org/1999/html">
+ <div *ngIf="station && answerFormatArray" >    <!--<app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>-->
+<mat-tab-group (selectedIndexChange)="onNavigateTab($event)" [selectedIndex]="selectedTab">
+    <mat-tab *ngFor="let section of station.sections; let i = index" [label]="'Section '+(i+1)">
+            <div class="col-sm-6">
+                <h3>{{section.title}}</h3>
+            </div>
+        <hr class="citation-break"/>
+    <br>
+        <div *ngFor="let item of section.items">
+            <!--<div *ngIf="item.type == 'subsection'">-->
+                <!--<div class="col-sm-12"><h4>{{item.text}}</h4></div>-->
+                <!--<br><br><hr style="border-bottom: 1px solid #cacaca;" />-->
+            <!--</div>-->
+            <div  *ngIf="answerFormatArray[item.answerFormat].title !== 'Free text'" class="row">
+
+                    <div *ngIf="answerFormatArray[item.answerFormat].options.length > 4">
+                        <div class="col-sm-9"><label>{{item.text}}</label></div>
+                        <div class="col-sm-3">
+                            <button mat-ripple class="button-default status-selector-right" [matMenuTriggerFor]="menu">
+                                    <span *ngIf="!item.selectedFormat">Assess Candidate</span>
+                                    <span *ngIf="item.selectedFormat">{{item.selectedFormat}}</span>
+                                    <mat-icon>expand_more</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button *ngFor="let formatText of answerFormatArray[item.answerFormat].options" mat-menu-item
+                                    (click)="item.selectedFormat=formatText">
+                                        <span>{{formatText}}</span>
+                                </button>
+
+                            </mat-menu>
+                        </div>
+                    </div>
+                    <div *ngIf="answerFormatArray[item.answerFormat].options && answerFormatArray[item.answerFormat].options.length == 4">
+                        <div class="col-sm-7"><label>{{item.text}}</label></div>
+                        <div class="col-sm-5">
+                            <mat-radio-group class="clearfix">
+                                <mat-radio-button *ngFor="let formatText of answerFormatArray[item.answerFormat].options"
+                                    [value]="formatText" style="width: 98px;">
+                                    {{formatText}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                    <div *ngIf="answerFormatArray[item.answerFormat].options.length < 3">
+                        <div class="col-sm-9"><label>{{item.text}}</label></div>
+                        <div class="col-sm-3">
+                            <mat-radio-group class="clearfix">
+                                <mat-radio-button *ngFor="let formatText of answerFormatArray[item.answerFormat].options"
+                                [value]="formatText" style="width: 100px;">
+                                {{formatText}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+                <br><hr style="border-top: 1px solid #cacaca;" />
+            </div>
+            <div  *ngIf="answerFormatArray[item.answerFormat].title === 'Free text'" class="row">
+                <div class="col-sm-8">
+                    <h4>Feedback</h4>
+                    <!--<mat-form-field>-->
+                        <textarea  rows="8" cols="70" [formControl]="myControl" ></textarea>
+                    <!--</mat-form-field>-->
+
+                </div>
+                <div class="col-sm-4"><button class="btn-default mat-raised-button" (click)="myControl.setValue(myControl.value +'Very good interactions')">Very good interactions</button><br><br><button class="btn-default mat-raised-button" (click)="myControl.setValue(myControl.value +'Candidate performed very poorly verbally')">Candidate performed very poorly verbally</button><br><br><button class="btn-default mat-raised-button" (click)="myControl.setValue(myControl.value +'Several keys steps missed')">Several keys steps missed</button><br><br><button class="btn-default mat-raised-button" (click)="myControl.setValue(myControl.value +'Disregarded what patient said')" >Disregarded what patient said</button></div>
+                <br><hr style="border-top: 1px solid #cacaca;" />
+            </div>
+
+        </div>
+
+    <hr class="citation-break"/><br>
+    <button *ngIf="selectedTab !== 0" class="btn-primary pull-left" mat-raised-button (click)="onNavigateTab(selectedTab-1)">Go back</button>
+
+
+    <div class="pull-right">
+        <button *ngIf="selectedTab == (station.sections.length-1)" class="btn-primary" mat-raised-button (click)="submitForm()" >COMPLETE EXAMINATION</button>
+        <button *ngIf="selectedTab !== (station.sections.length-1)" class="btn-primary" mat-raised-button (click)="onNavigateTab(selectedTab+1)">Next</button>
+
+    </div>
+
+    </mat-tab>
+
+
+
+    <!--</mat-tab>-->
+</mat-tab-group>
+    </div>
+</mat-card>
+
+

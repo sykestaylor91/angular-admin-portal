@@ -1,0 +1,86 @@
+<h3>
+  {{ptitle}}
+</h3>
+
+<div class="row form-group">
+  <div class="col-sm-12">
+    <app-add-remove-evaluation-question [(courseQuestions)]="courseQuestions" (questionsChanged)="courseQuestions=$event"></app-add-remove-evaluation-question>
+  </div>
+</div>
+<form *ngIf="selectedEvaluation && form" [formGroup]="form">
+<div class="row container margin-bottom-10">
+   <div class="col-6">
+   <app-change-history-input-component
+      [formControlName]="'title'"
+      [formGroup]="form"
+      [resourceElement]="'title'"
+      [selectedResource]="selectedEvaluation"
+      [isHidden]="false"
+      [inputType]="'text'"
+      [label]="'Title'"
+      [tooltip]="'Enter title of the evaluation'">
+    </app-change-history-input-component>
+  </div>
+  <div class="col-6">
+    <app-change-history-input-component
+      [formControlName]="'evaluationSubtitle'"
+      [formGroup]="form"
+      [resourceElement]="'evaluationSubtitle'"
+      [inputType]="'text'"
+      [selectedResource]="selectedEvaluation"
+      [isHidden]="false"
+      [label]="'Subtitle'"
+      [tooltip]="'Enter Subtitle of the evaluation'">
+    </app-change-history-input-component>
+  </div>
+</div>
+<div class="row container">
+  <div class="col">
+     <app-change-history-texteditor
+       [formControlName]="'evaluationIntroduction'"
+       [formGroup]="form"
+        [resourceElement]="'evaluationIntroduction'"
+        [selectedResource]="selectedEvaluation"
+        [inputType]="'custom'"
+        [label]="'Introduction'"
+        [isDisabled]="false">
+      </app-change-history-texteditor>
+  </div>
+</div>
+<div class="row container">
+  <h3>Questions</h3>
+  <div class="col-sm-12">
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+    <label *ngIf="courseQuestions && courseQuestions.length > 0">Click
+      and drag your questions to change their order.</label>
+    <div class="list-group" dnd-sortable-container [sortableData]="courseQuestions">
+      <mat-card *ngFor="let item of courseQuestions; let i = index"
+                class="margin-bottom-10" dnd-sortable [sortableIndex]="i">
+        <div class="row">
+          <div class="col-sm-1">
+            <span class="notification bold ql-size-large">{{i + 1}}</span>
+          </div>
+          <div class="col-sm-7 ql-size-large" [innerHtml]="item.question | stripTags | firstNWords:30"></div>
+          <div class="col-sm-4">
+            <button mat-raised-button (click)="removeCourseClickHandler(item.id)"
+                    class="btn btn-primary pull-right">Remove
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <mat-card class="margin-bottom-10"
+              *ngIf="!courseQuestions || courseQuestions?.length === 0">
+      There are currently no questions in this activity.
+    </mat-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="pull-right">
+      <button mat-raised-button class="btn btn-default" (click)="cancelClickHandler()">Cancel</button>
+      <button [disabled]="!form.valid" mat-raised-button class="btn button-default save-button" (click)="saveClickHandler()" >Save</button>
+    </div>
+  </div>
+</div>
+</form>

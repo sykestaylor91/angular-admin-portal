@@ -1,0 +1,48 @@
+ <div>
+  <table class='calculator'>
+    <tr>
+      <td colspan='5'><input class='display' [(ngModel)]='displayValue' maxlength='25'></td>
+    </tr>
+    <tr>
+      <td> <button mat-raised-button class='btn btnTop'   (click)='reset() '>C</button></td>
+      <td> <button mat-raised-button class='btn btnTop'  (click)='deleteChar()'><--</button></td>
+      <td> <button mat-raised-button class='btn btnTop'  (click)='compute()'>=</button></td>
+      <td> <button mat-raised-button class='btn btnOpps'  (click)='addChar("3.14159265359")'>&#960;</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)=' percent()'>%</button></td>
+    </tr>
+    <tr>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'  (click)='addChar("7")'>7</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'   (click)='addChar("8")'>8</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'  (click)='addChar("9")'>9</button></td>
+      <td> <button mat-raised-button class='btn  btnOpps'  (click)='exp()'>x&#94;</button></td>
+      <td> <button mat-raised-button class='btn  btnMath'  (click)='addChar("/")'>/</button></td>
+    <tr>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'  (click)='addChar("4")'>4</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'  (click)='addChar("5")'>5</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'  (click)='addChar("6")'>6</button></td>
+      <td> <button mat-raised-button class='btn  btnOpps'  (click)='ln()'>ln</button></td>
+      <td> <button mat-raised-button class='btn  btnMath'  (click)='addChar("*")'>*</button></td>
+    </tr>
+    <tr>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'   (click)='addChar("1")'>1</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'   (click)='addChar("2")'>2</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'   (click)='addChar("3")'>3</button></td>
+      <td> <button mat-raised-button class='btn  btnOpps'  (click)='sqrt()'>&radic;</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='addChar("-")'>-</button></td>
+    </tr>
+    <tr>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='changeSign()'>&#177;</button></td>
+      <td> <button mat-raised-button class='btn btn-primary btnNum'   (click)='addChar("0")'>0</button></td>
+      <td> <button mat-raised-button class='btn  btnMath'  (click)='addChar("&#46;")'>&#46;</button></td>
+      <td> <button mat-raised-button class='btn btnOpps'   (click)='square()'>x&#50;</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='addChar("+")'>+</button></td>
+    </tr>
+    <tr>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='addChar("(")'>(</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='addChar(")")'>)</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='cos()'>cos</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='sin()'>sin</button></td>
+      <td> <button mat-raised-button class='btn btnMath'  (click)='tan()'>tan</button></td>
+    </tr>
+    </table>
+</div>

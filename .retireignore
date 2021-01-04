@@ -1,0 +1,14 @@
+node_modules\bootstrap
+node_modules/bootstrap
+dist
+
+node_modules\webpack-dev-server
+node_modules/webpack-dev-server
+node_modules\selenium-webdriver
+node_modules/selenium-webdriver
+node_modules\webdriver-js-extender\node_modules\selenium-webdriver
+node_modules/webdriver-js-extender/node_modules/selenium-webdriver
+node_modules\hammerjs\tests
+node_modules/hammerjs/tests
+node_modules\quill-image-resize-module
+node_modules/quill-image-resize-module

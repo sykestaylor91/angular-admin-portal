@@ -1,0 +1,66 @@
+<app-dialog-actions [displayContent]="false">
+  <div class="dialog-comment-container">
+    <mat-accordion multi="true" *ngIf="hasItems">
+      <mat-expansion-panel expanded="false" *ngFor="let ch of items; let i = index;" class="margin-bottom-10 width-100">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ch?.timestamp | date:'medium'}}
+          </mat-panel-title>
+          <mat-panel-description>
+            <div class="max-height-0" [innerHtml]="ch?.value  | stripTags |  firstNWords:30">
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="row">
+          <div class="col-sm-2 text-right bold">
+            By:
+          </div>
+          <div class="col-sm-4" [innerHtml]="ch?.name">
+          </div>
+          <div class="col-sm-2 text-right bold">
+            Date changed:
+          </div>
+          <div class="col-sm-4" [innerHtml]="ch?.timestamp | date:'medium'">
+          </div>
+        </div>
+        <div class="row" *ngIf="ch?.added && ch?.added.length > 0">
+          <div class="col-sm-2 text-right bold">
+            Added:
+          </div>
+          <div class="col-sm-10" [innerHtml]="ch?.added">
+          </div>
+        </div>
+        <div class="row" *ngIf="ch?.removed && ch?.removed.length > 0">
+          <div class="col-sm-2 text-right bold">
+            Removed:
+          </div>
+          <div class="col-sm-10" [innerHtml]="ch?.removed">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2 text-right bold">
+            Change made:
+          </div>
+          <div class="col-sm-10" [innerHtml]="ch?.withDiff | showHtml">
+          </div>
+        </div>
+        <div class="row clean-text">
+          <div class="col-sm-2 text-right bold">
+            Clean text:
+          </div>
+          <div class="col-sm-10" [innerHtml]="ch?.withDiff | showHtml">
+          </div>
+        </div>
+        <br>
+        <button mat-button class="btn btn-primary pull-right version-button" matTooltip="Use this version"
+                *ngIf="canSelectVersion(i)"
+                (click)="onUseThisVersionClicked(i)">Use this version
+        </button>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div *ngIf="!hasItems">
+      <mat-card class="margin-bottom-10 width-100">There are no changes to display.</mat-card>
+    </div>
+  </div>
+</app-dialog-actions>

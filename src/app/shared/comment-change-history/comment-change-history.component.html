@@ -1,0 +1,19 @@
+<button *ngIf="!hideComments"
+         mat-icon-button matSuffix
+         [class.disabled]="disabled"
+         class="input-icon"
+         matTooltip="Comments"
+         (click)="onShowCommentDialog()">
+  <mat-icon  class="lightgrey" [ngClass]="{'gray': hasCommentData, 'black': isNewComment }">comment
+  </mat-icon>
+</button>
+<button *ngIf="!hideChangeHistory"
+        mat-icon-button
+        matSuffix
+        [class.disabled]="disabled && !(hasChangeHistoryData || showChanged)"
+        matTooltip="Change history"
+        class="input-icon"
+        (click)="onShowChangeHistoryDialog()">
+  <mat-icon class="lightgrey" [ngClass]="{'gray': hasChangeHistoryData, 'black': showChanged }">history
+  </mat-icon>
+</button>

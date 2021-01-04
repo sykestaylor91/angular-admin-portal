@@ -1,0 +1,253 @@
+<div *ngIf="!activityCertificateHidden">
+  <div>
+    <h3>
+      Certification & credits
+    </h3>
+    <p>
+      Certificate or Statement of Completion Users taking activities that offer CE/CME credits etc. will automatically
+      be offered a certificate or statement of completion to validate their successful participation. Typically, this
+      includes a statement of accreditation and a credit designation statement. For non-accredited activities, or for
+      users from other territories, you may choose to offer a "providers certificate."Users may wish to claim credits only to the extent of their participation in this activity. This option is offered to users after they have successfully completed this activity.
+    </p>
+  </div>
+  <div>
+    <app-loading-spinner [hidden]="!showSpinner"></app-loading-spinner>
+    <form [formGroup]="certificationFormGroup" novalidate>
+      <div class="row margin-bottom-20">
+        <app-certificate-type-selector
+          [formControlName]="'certificate'"
+          [hasError]="!certificationFormGroup.get('certificate').valid"
+          [label]="'Activity certificate'"
+          class="col-4">
+        </app-certificate-type-selector>
+
+        <app-certificate-type-selector
+          [formControlName]="'accreditedCertificate'"
+          [hasError]="!certificationFormGroup.get('accreditedCertificate').valid"
+          [isHidden]="certificationFormGroup.get('certificate').value !== true || accreditedCertificateHidden"
+          [label]="'Accredited certificate'"
+          class="col-4">
+        </app-certificate-type-selector>
+
+        <app-certificate-type-selector
+          [formControlName]="'providerCertificate'"
+          [hasError]="!certificationFormGroup.get('providerCertificate').valid"
+          [isHidden]="certificationFormGroup.get('certificate').value !== true || providerCertificateHidden"
+          [label]="'Provider certificate'"
+          class="col-4">
+        </app-certificate-type-selector>
+      </div>
+
+      <div *ngIf="certificationFormGroup.get('accreditingBody').enabled"
+           class="row margin-bottom-20">
+        <app-change-history-input-component
+          [formGroup]="certificationFormGroup"
+          [inputType]="InputType.Custom"
+          [label]="'Accreditation body'"
+          [resourceElement]="'accreditingBody'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+          <select [formControlName]="'accreditingBody'" class="form-control" placeholder="Accreditation body">
+            <option *ngFor="let body of AccreditationBodies" [value]="body">
+              {{ body }}
+            </option>
+          </select>
+        </app-change-history-input-component>
+      </div>
+
+      <div *ngIf="certificationFormGroup.get('accreditationType').enabled"
+           class="margin-bottom-20">
+        <div [class.has-error]="!certificationFormGroup.get('accreditationType').valid"
+             class="form-group required">
+          <label class="control-label">Activity accreditation information</label>
+          <div class="row">
+            <div class="col-sm-1">
+              <label class="template-orange">Select</label>
+            </div>
+            <div class="col-sm-11">
+              <label class="template-orange">Description</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="margin-bottom-10">
+        <mat-radio-group [formControlName]="'accreditationType'">
+          <p-table [alwaysShowPaginator]="false"
+                   [paginator]="true"
+                   [rows]="10"
+
+                   [value]="accreditationTable">
+            <ng-template let-i="index" let-record pTemplate="body">
+              <div class="row small">
+                <div class="col-sm-1 box-text padding-15">
+                  <mat-radio-button
+                    [value]="record.key"
+                    name="accreditationType">
+                  </mat-radio-button>
+                </div>
+                <div [innerHtml]="record.value.label" class="col-sm-11 box-text small  padding-15">
+                </div>
+              </div>
+              <hr class="citation-break"/>
+            </ng-template>
+          </p-table>
+        </mat-radio-group>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('accreditingOrganizationName').enabled"
+          [formControlName]="'accreditingOrganizationName'"
+          [formGroup]="certificationFormGroup"
+          [label]="'Name of accrediting organization'"
+          [placeholder]="'Name of accrediting organization'"
+          [resourceElement]="'accreditingOrganizationName'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('coProvider').enabled"
+          [formControlName]="'coProvider'"
+          [formGroup]="certificationFormGroup"
+          [label]="'Name of co-provider (ignore if none)'"
+          [resourceElement]="'coProvider'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('creditType').enabled"
+          [formGroup]="certificationFormGroup"
+          [inputType]="InputType.Custom"
+          [label]="'Credit type'"
+          [resourceElement]="'creditType'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+          <select [formControlName]="'creditType'"
+                  class="form-control"
+                  id="creditType">
+            <option *ngFor="let creditType of creditTypeOptions"
+                    [value]="creditType.key">
+              {{creditType.value['label']}}
+            </option>
+          </select>
+        </app-change-history-input-component>
+
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('otherCreditType').enabled"
+          [formControlName]="'otherCreditType'"
+          [formGroup]="certificationFormGroup"
+          [label]="'Other credit type'"
+          [placeholder]="otherCreditTypePlaceholder"
+          [resourceElement]="'otherCreditType'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('numberOfCredits').enabled"
+          [formControlName]="'numberOfCredits'"
+          [formGroup]="certificationFormGroup"
+          [inputType]="InputType.Number"
+          [label]="numberOfCreditsLabel"
+          [max]="40"
+          [min]=".25"
+          [placeholder]="numberOfCreditsPlaceholder"
+          [resourceElement]="'numberOfCredits'"
+          [selectedResource]="selectedExam"
+          [step]=".25"
+          [tooltip]="'Enter number of credits in increments of .25'"
+          class="col-md-6"
+        >
+        </app-change-history-input-component>
+
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('lastCreditAwardedDate').enabled"
+          [formControlName]="'lastCreditAwardedDate'"
+          [formGroup]="certificationFormGroup"
+          [inputType]="InputType.Date"
+          [label]="'Last date when credits awarded'"
+          [resourceElement]="'lastCreditAwardedDate'"
+          [selectedResource]="selectedExam"
+          class="col-md-6">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <!--[hidden]="isOtherAccreditorOrIndependent()"-->
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('learningFormat').enabled"
+          [formGroup]="certificationFormGroup"
+          [inputType]="InputType.Custom"
+          [label]="'Activity type / Learning format'"
+          [resourceElement]="'learningFormat'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+          <select [formControlName]="'learningFormat'"
+                  class="form-control">
+            <option
+              *ngFor="let formatOption of learningFormatOptions"
+              [value]="formatOption.key">
+              {{formatOption.value}}
+            </option>
+          </select>
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('otherLearningFormat').enabled"
+          [formControlName]="'otherLearningFormat'"
+          [formGroup]="certificationFormGroup"
+          [label]="otherLearningFormatLabel"
+          [placeholder]="'Enter description of this activity\'s learning format'"
+          [resourceElement]="'otherLearningFormat'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('providerNumber').enabled"
+          [formControlName]="'providerNumber'"
+          [formGroup]="certificationFormGroup"
+          [isHidden]="providerNumberHidden"
+          [label]="'Provider number'"
+          [resourceElement]="'providerNumber'"
+          [selectedResource]="selectedExam"
+          class="col-12">
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('accreditingBodyLogo').enabled"
+          [formGroup]="certificationFormGroup"
+          [showCommentChangeHistory]="false"
+          [inputType]="InputType.Custom"
+          [label]="'Upload Accreditor Logo'"
+          [resourceElement]="'accreditingBodyLogo'"
+          [selectedResource]="selectedExam"
+          [tooltip]="'The image is displayed to readers prior to selection and/or purchase. Note: the maximum size is width 120 px height 90 px'"
+          class="col-md-6 ">
+          <br/>
+          <app-upload-insert-media (emitSelectedImage)="emitSelectedImage($event)"
+                                   [isDisabled]="isReadOnly"
+                                   [preSelectedFile]="certificationFormGroup.get('accreditingBodyLogo').value"></app-upload-insert-media>
+        </app-change-history-input-component>
+      </div>
+      <div class="row">
+        <app-change-history-input-component
+          *ngIf="certificationFormGroup.get('universalActivityNumber').enabled"
+          [formControlName]="'universalActivityNumber'"
+          [formGroup]="certificationFormGroup"
+          [label]="'Universal Activity Number'"
+          [placeholder]="'Enter a Universal Activity Number'"
+          [resourceElement]="'universalActivityNumber'"
+          [selectedResource]="selectedExam"
+          class="col-md-6">
+        </app-change-history-input-component>
+      </div>
+    </form>
+  </div>
+</div>

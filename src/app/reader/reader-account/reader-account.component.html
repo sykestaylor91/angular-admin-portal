@@ -1,0 +1,150 @@
+<div class="container row">
+  <h3 class="col-12">{{pagetitle}}</h3>
+  <mat-card  *ngIf="this.user" style="margin: 0 auto" class="margin-bottom-20">
+    <mat-card-title-group>
+      <ngx-avatar mat-card-sm-image  gravatarId="{{sessionService.loggedInUser.email}}" name="{{sessionService.loggedInUser.firstName+' '+sessionService.loggedInUser.lastName}}" size="50"></ngx-avatar>
+      <mat-card-title>{{sessionService.loggedInUser.firstName}} {{sessionService.loggedInUser.lastName}}</mat-card-title>
+      <mat-card-subtitle>{{sessionService.loggedInUser.email}}</mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+
+      <div  class="container">
+        <label class="row">Roles:</label>
+        <mat-chip-list class="row">
+          <mat-chip *ngFor="let role of this.user.roles">
+            {{role}}
+          </mat-chip>
+        </mat-chip-list>
+        <div *ngIf="(sessionService.loggedInUser?.id !== this.user.id)">
+        <p>{{this.user.address1 || 'No address first line added'}}</p>
+        <p>{{this.user.address2 || '-'}}</p>
+        <p>{{this.user.city || '-'}}</p>
+        <p>{{this.user.state || '-'}}</p>
+        <p>{{this.user.country || '-'}}</p>
+        <p>{{this.user.email || '-'}}</p>
+        <p>{{this.user.organization || '- No organisation added'}}</p>
+        <p>{{this.user.postalCode || '- No post code added'}}</p>
+        <p>{{this.user.phone || '- No phone number added'}}</p>
+        </div>
+        <div *ngIf="(sessionService.loggedInUser?.id === this.user.id)">
+          <form [formGroup]="form">
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'text'"
+              [label]="'First name'"
+              [formControlName]="'firstName'"
+              [resourceElement]="'firstName'"
+              [selectedResource]="user"
+              [tooltip]="'First name'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'text'"
+              [label]="'Last name'"
+              [formControlName]="'lastName'"
+              [resourceElement]="'lastName'"
+              [selectedResource]="user"
+              [tooltip]="'Last name'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'address'"
+              [label]="'Address'"
+              [formControlName]="'address1'"
+              [resourceElement]="'address1'"
+              [selectedResource]="user"
+              [showCommentChangeHistory]="false"
+              [tooltip]="'First line of address'"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'address'"
+              [formControlName]="'address2'"
+              [label]="'Address line 2'"
+              [resourceElement]="'address2'"
+              [selectedResource]="user"
+              [tooltip]="'Second line of address'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'address'"
+              [formControlName]="'city'"
+              [label]="'City'"
+              [resourceElement]="'city'"
+              [selectedResource]="user"
+              [tooltip]="'Address city'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'address'"
+              [label]="'County/State'"
+              [formControlName]="'state'"
+              [resourceElement]="'state'"
+              [selectedResource]="user"
+              [tooltip]="'Address county/state'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+                [formGroup]="form"
+                [inputType]="'address'"
+                [label]="'Postal code'"
+                [formControlName]="'postalCode'"
+                [resourceElement]="'postalCode'"
+                [selectedResource]="user"
+                [tooltip]="'Postal code'"
+                [showCommentChangeHistory]="false"
+                class="col-md-6">
+            </app-change-history-input-component>
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'text'"
+              [label]="'Organisation'"
+              [formControlName]="'organization'"
+              [resourceElement]="'organization'"
+              [selectedResource]="user"
+              [tooltip]="'Organisation'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+<!--            <app-change-history-input-component-->
+<!--              [formGroup]="form"-->
+<!--              [inputType]="'email'"-->
+<!--              [label]="'Email address'"-->
+<!--              [formControlName]="'email'"-->
+<!--              [resourceElement]="'email'"-->
+<!--              [selectedResource]="user"-->
+<!--              [tooltip]="'Email'"-->
+<!--              [showCommentChangeHistory]="false"-->
+<!--              class="col-md-6">-->
+<!--            </app-change-history-input-component>-->
+            <app-change-history-input-component
+              [formGroup]="form"
+              [inputType]="'phone'"
+              [label]="'Phone number'"
+              [formControlName]="'phone'"
+              [resourceElement]="'phone'"
+              [selectedResource]="user"
+              [tooltip]="'Phone number'"
+              [showCommentChangeHistory]="false"
+              class="col-md-6">
+            </app-change-history-input-component>
+          </form>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions [align]="'end'">
+      <button mat-raised-button class="btn btn-primary" *ngIf="(sessionService.loggedInUser?.id === this.user.id)" [disabled]="!this.form.valid" (click)="saveChanges()">Update</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

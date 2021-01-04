@@ -1,0 +1,184 @@
+<h2 class="template-orange">{{formType}} station</h2>
+
+<button *ngIf="subComponent" mat-icon-button class="pull-right dialog-close-button" (click)="closeDialog()">
+  <mat-icon>clear</mat-icon>
+</button>
+  <form *ngIf="formLoaded" [formGroup]="form" novalidate>
+
+    <div class="row margin-bottom-10">
+      <div class="col-sm-12">
+        <button mat-raised-button class="btn button-default save-button pull-right" (click)="saveChanges()">Save</button>
+      </div>
+    </div>
+          <div class="row margin-bottom-10">
+            <div class="col-md-6 col-lg-6">
+              <div>
+                <app-change-history-input-component
+                  [formControlName]="'title'"
+                  [label]="'Title'"
+                  [resourceElement]="'title'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [tooltip]="'Enter a title for this station'"
+                  [inputType]="InputType.Text">
+                </app-change-history-input-component>
+              </div>
+            </div>
+          </div>
+
+          <div class="row margin-bottom-10">
+            <div class="col-md-6 col-lg-6">
+              <div>
+
+                <app-change-history-input-component
+                  [formControlName]="'keywords'"
+                  [label]="'Keywords'"
+                  [resourceElement]="'keywords'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [tooltip]="'Users may search for stations using the keywords entered here'"
+                  [inputType]="InputType.Text">
+                </app-change-history-input-component>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-bottom-10">
+
+            <div class="col-md-6 col-lg-6">
+              <div class="form-group">
+
+                <app-change-history-input-component
+                  [formControlName]="'subject'"
+                  [label]="'Subject'"
+                  [resourceElement]="'subject'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [tooltip]="'Enter subject for examination at this station'"
+                  [inputType]="InputType.Text">
+                </app-change-history-input-component>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-bottom-10">
+            <div class="col-md-12 col-lg-12">
+              <div class="form-group ">
+                <app-change-history-texteditor
+                  [formControlName]="'intro'"
+                  [label]="'Introduction'"
+                  [resourceElement]="'intro'"
+                  [selectedResource]="station"
+                  [tooltip]="'Enter a general introduction about this station'"
+                  [formGroup]="form"
+                  [showCitation]="false"
+                ></app-change-history-texteditor>
+              </div>
+            </div>
+          </div>
+<!--          <div class="row margin-bottom-10">-->
+<!--            <div class="col-md-12 col-lg-12">-->
+<!--              <div class="form-group ">-->
+<!--                <app-change-history-texteditor-->
+<!--                  [formControlName]="'specialty'"-->
+<!--                  [label]="'Specialty'"-->
+<!--                  [resourceElement]="'specialty'"-->
+<!--                  [class]="''"-->
+<!--                  [selectedResource]="station"-->
+<!--                  [formGroup]="form"-->
+<!--                  [tooltip]="'Enter a specialty for this station'"-->
+<!--                  [showCitation]="false"-->
+<!--                ></app-change-history-texteditor>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="row margin-bottom-10">
+            <div class="col-md-12 col-lg-12">
+              <div class="form-group">
+                <app-change-history-texteditor
+                  [formControlName]="'examinerNotes'"
+                  [label]="'Notes for examiners'"
+                  [resourceElement]="'examinerNotes'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [tooltip]="'Notes for examiners'"
+                  [showCitation]="false"
+                ></app-change-history-texteditor>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-bottom-10">
+            <div class="col-md-12 col-lg-12">
+              <div class="form-group">
+                <app-change-history-texteditor
+                  [formControlName]="'candidateNotes'"
+                  [label]="'Notes for candidates'"
+                  [resourceElement]="'candidateNotes'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [tooltip]="'Notes for candidates'"
+                  [showCitation]="false"
+                ></app-change-history-texteditor>
+              </div>
+            </div>
+          </div>
+          <div class="row margin-bottom-10">
+            <div class="col-md-12 col-lg-12">
+              <div class="form-group">
+                <app-change-history-texteditor
+                  [formControlName]="'actorScripts'"
+                  [label]="'Script and notes for actors/patients (as applicable)'"
+                  [resourceElement]="'actorScripts'"
+                  [selectedResource]="station"
+                  [formGroup]="form"
+                  [showCitation]="false"
+                ></app-change-history-texteditor>
+              </div>
+            </div>
+          </div>
+    <div class="form-group">
+      <h4 class="template-orange">Sections</h4>
+      <mat-card class="margin-bottom-10" *ngIf="sections.length === 0">There are no sections to display</mat-card>
+      <mat-card *ngFor="let section of sections; let i = index" class="margin-bottom-10"
+      >
+        <div class="row margin-top-10">
+          <div class="col-sm-1 pull-right">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="removeSectionClickHandler(i)">
+                <span>Remove section</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div class="col-sm-10">
+            <h4 class="template-orange">Section {{i + 1}}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" col-sm-6">
+            <label>Section title</label>
+            <input class="form-control" [(ngModel)]="sections[i].title" value="sections[i].title"
+                   [ngModelOptions]="{standalone: true}"/>
+          </div>
+        </div>
+        <h5 class="template-orange">Items (drag and drop to reorder)</h5>
+        <div class="row margin-bottom-10">
+          <mat-card *ngIf="!section.items || section.items.length === 0"><p>There are no items in this section</p>
+          </mat-card>
+          <div class="list-group col-12 margin-bottom-10" dnd-sortable-container [sortableData]="sections[i].items">
+            <mat-card *ngFor="let item of sections[i].items; let x = index"
+                      dnd-sortable [sortableIndex]="x" (onDragEnd)="onDropSuccess(item, sections[i].items)">{{x + 1}}
+              . {{item.text}}</mat-card>
+          </div>
+          <button mat-raised-button class="btn button-default pull-right save-button" (click)="addItemsClickHandler(i)">Add/remove
+            items from section
+          </button>
+        </div>
+
+      </mat-card>
+      <button mat-raised-button class="btn button-default pull-left" (click)="addSectionClickHandler()">Add section to station
+      </button>
+      <button mat-raised-button class="btn button-default save-button pull-right" (click)="saveChanges()">Save</button>
+    </div>
+  </form>

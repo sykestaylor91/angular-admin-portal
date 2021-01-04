@@ -1,0 +1,24 @@
+.chatroom-card {
+  // z-index:1000;
+}
+.chat-window {
+  min-height: 50px;
+  max-height: 150px;
+  overflow-y: scroll;
+  border-radius: 5px;
+  border: lightgrey 1px solid;
+}
+.user-list {
+  display: inline-flex;
+  margin-bottom: 5px;
+}
+.typing-icon {
+  font-size: 100%;
+  margin-top:20px;
+  margin-left: 20px;
+  position: absolute;
+}
+.active-chat-icon {
+  margin-left: -2px;
+  color: lightgreen !important;
+}

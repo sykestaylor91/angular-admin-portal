@@ -1,0 +1,113 @@
+@import "../core/variables";
+
+.header {
+  background: $c-primaryColor;
+  color: $c-black;
+
+  .logo {
+    background: url("assets/images/nowce-wo.png") no-repeat;
+    background-size: cover;
+    width: 50px;
+    height: 10px;
+  }
+
+  .navbar-nav a,
+  .navbar-nav i {
+    color: $c-white;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .nav {
+    li {
+      float: left;
+      a,
+      i {
+        color: $c-white;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      i {
+        font-size: 1.5em;
+        margin-right: .5em;
+      }
+
+      a:hover,
+      a:focus {
+        background: $c-primaryHighlightColor;
+      }
+      a {
+        &.active {
+          background: $c-primaryHighlightColor;
+        }
+      }
+    }
+    li.tools {
+      a:only-child {
+        &:hover {
+          background: $c-primaryHighlightColor;
+        }
+      }
+      .open > a,
+      .open > a:hover {
+        background-color: $c-primaryHighlightColor;
+      }
+      .dropdown {
+        .dropdown-toggle {
+          -webkit-box-shadow: none;
+          box-shadow: none;
+
+        }
+      }
+      a:hover,
+      a:focus {
+        color: $c-white;
+      }
+      a {
+        &.active {
+          color: $c-white;
+        }
+      }
+      ul {
+        margin-top: 1em;
+        li {
+          a {
+            color: $c-black;
+
+            i {
+              color: $c-black;
+            }
+          }
+          a:hover,
+          a:focus {
+            color: $c-white;
+            background: $c-primaryHighlightColor;
+
+          }
+          a {
+            &.active {
+              color: $c-white;
+              background: $c-primaryHighlightColor;
+
+            }
+          }
+        }
+        li:hover,
+        li:focus {
+          background: $c-primaryHighlightColor;
+          i {
+            color: $c-white;
+          }
+        }
+        li {
+          &.active {
+            background: $c-primaryHighlightColor;
+          }
+          i {
+            color: $c-white;
+          }
+        }
+      }
+    }
+  }
+}

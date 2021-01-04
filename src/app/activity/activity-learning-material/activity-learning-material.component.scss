@@ -1,0 +1,61 @@
+@import "../../../assets/scss/core/variables";
+
+mat-card {
+  h2, h3 {
+    margin: 0;
+  }
+}
+
+a {
+  color: #555;
+  text-decoration: none;
+}
+
+.lm-section-link {
+  margin-bottom: 6px;
+  padding: 5px;
+  cursor: pointer;
+
+  &:hover {
+    a {
+      color: black;
+    }
+  }
+}
+
+.lm-active-section {
+  background-color: rgba(197, 202, 233, .3);
+  a {
+    color: black;
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.continue-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+::ng-deep citation {
+  color: $c-white;
+  background-color: $c-grayLight;
+  padding: 2px;
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  min-width: 20px;
+  text-align: center;
+  &:before {
+    content: ' ';
+  }
+  &:after {
+    content: ' ';
+  }
+}

@@ -1,0 +1,306 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h3>{{stitle}}</h3>
+  </div>
+</div>
+<form [formGroup]="form" novalidate>
+  <div class="row margin-bottom-20">
+    <div class="col">
+      <button (click)="previewQuestionClickHandler()" *ngIf="selectedQuestion && !subComponent" [disabled]="!isValid"  mat-raised-button class="button-default">Save and preview</button>
+      <button (click)="saveChanges()" [disabled]="!isValid" class="btn button-default save-button pull-right" mat-raised-button>Save</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <app-change-history-input-component [formControlName]="'userRef'" [formGroup]="form"
+                                            [inputType]="InputType.Text" [label]="'Provider reference'"
+                                            [resourceElement]="'userRef'"
+                                            [selectedResource]="selectedQuestion">
+        </app-change-history-input-component>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <app-change-history-input-component [formControlName]="'title'" [formGroup]="form" [inputType]="InputType.Text"
+                                            [label]="'Question title'" [resourceElement]="'title'"
+                                            [selectedResource]="selectedQuestion">
+        </app-change-history-input-component>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <app-change-history-input-component [formControlName]="'availableMarks'" [formGroup]="form"
+                                            [inputType]="InputType.Number" [label]="'Available Marks'"
+                                            [min]="'1'"
+                                            [resourceElement]="'availableMarks'" [selectedResource]="selectedQuestion"
+                                            [tooltip]="'Enter the number of marks this question is worth, minimum 1'">
+        </app-change-history-input-component>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col">
+        <app-change-history-texteditor [formControlName]="'intro'" [formControlName]="intro" [formGroup]="form"
+                                       [inputType]="InputType.Custom" [label]="'Question evidence/introduction'"
+                                       [resourceElement]="'intro'"
+                                       [selectedResource]="selectedQuestion" [showCitation]="false" name="intro">
+        </app-change-history-texteditor>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row ">
+    <div class="col-md-6">
+        <app-change-history-input-component [formControlName]="'levelOfDifficulty'" [formGroup]="form"
+                                            [inputType]="InputType.Select" [label]="'Level of difficulty'"
+                                            [resourceElement]="'levelOfDifficulty'"
+                                            [selectedResource]="selectedQuestion">
+          <select class="form-control" formControlName="levelOfDifficulty" id="levelOfDifficulty">
+            <option value="pleaseSelect">Please select</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="difficult">Difficult</option>
+          </select>
+        </app-change-history-input-component>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col">
+        <app-change-history-input-component [formControlName]="'keywords'" [formGroup]="form"
+                                            [inputType]="InputType.Text" [label]="'Keywords'"
+                                            [resourceElement]="'keywords'"
+                                            [selectedResource]="selectedQuestion"
+                                            tooltip="Insert text here or leave as is to hide section">
+          <p>Enter keywords or keyword phrases separated by a comma (,) here. e.g. key, key phrase,
+            keyword </p>
+        </app-change-history-input-component>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div [class.has-error]="question.hasError('required') && formSubmitted" class="form-group required">
+        <app-change-history-texteditor [formControlName]="'question'" [formGroup]="form" [inputType]="InputType.Custom"
+                                       [label]="'Question text'" [resourceElement]="'question'"
+                                       [selectedResource]="selectedQuestion"
+                                       [showCitation]="false" name="question"></app-change-history-texteditor>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+      <label>Answer format<mat-icon>required</mat-icon>
+      </label>
+      <mat-radio-group MatFormFieldControl matInput formControlName="dataType" class="radio-group">
+        <div [hidden]="type === 'evaluation'">
+            <mat-radio-button  matInput name="dataType" class="radio-button" value="freeText"> Free text</mat-radio-button><br>
+           <mat-radio-button   matInput name="dataType" class="radio-button" value="singleChoice"> Single choice (Single
+            best answer)</mat-radio-button><br>
+            <mat-radio-button  matInput name="dataType" class="radio-button" value="multipleChoice"> Multiple choice</mat-radio-button><br>
+            <mat-radio-button matInput name="dataType" class="radio-button"  value="veryShortAnswer"> Very short answer</mat-radio-button><br>
+            <mat-radio-button matInput name="dataType" class="radio-button"  value="singleSentence"> Single sentence</mat-radio-button><br>
+        </div>
+        <div [hidden]="type !== 'evaluation'">
+            <mat-radio-button matInput name="dataType" class="radio-button"  value="evaluationFreeText"> Free text</mat-radio-button><br>
+            <mat-radio-button  matInputname="dataType"  class="radio-button" value="evaluationSingleChoice"> Single choice</mat-radio-button><br>
+            <mat-radio-button matInput name="dataType" class="radio-button" value="evaluationMultipleChoice"> Multiple
+              choice</mat-radio-button><br>
+        </div>
+        <mat-radio-button matInput name="dataType" class="radio-button" value="evaluationRating"> 1 to 5 Rating</mat-radio-button><br>
+      </mat-radio-group>
+  </div>
+  <div *ngIf="dataType.value === 'singleChoice' ||
+dataType.value === 'multipleChoice' ||
+dataType.value === 'evaluationSingleChoice' ||
+ dataType.value === 'evaluationMultipleChoice' ||
+  dataType.value === 'veryShortAnswer'||
+  dataType.value === 'singleSentence'" class="margin-bottom-20">
+    <label class="template-orange">Answers</label>
+    <div formArrayName="answers">
+      <mat-list>
+        <div *ngFor="let answer of answers.controls; let i = index" class="container-fluid">
+          <div [formGroupName]="i">
+            <div [formGroup]="answer" class="row">
+              <div class="col-6 col-sm-6 col-md-8">
+                <div class="form-group" *ngIf="dataType.value !== 'veryShortAnswer' && dataType.value !== 'singleSentence'">
+                  <app-text-editor [label]="'Answer '+(i + 1)" name="text" formControlName="text" [showCitation]="false"></app-text-editor>
+                </div>
+                <div class="form-group" *ngIf="dataType.value === 'veryShortAnswer' || dataType.value === 'singleSentence'">
+                  <mat-form-field class="input-label width-100" appearance="outline" [floatLabel]="'always'" >
+                    <mat-label>Acceptable answer {{i + 1}}:</mat-label>
+                    <input matInput type="text" name="text" formControlName="text" maxlength="55" />
+                  </mat-form-field>
+                </div>
+              </div>
+            <div class="col-2" style="padding-top: 10px;">
+              <mat-radio-group    class="radio-group" formControlName="correct" *ngIf="dataType.value === 'singleChoice'">
+                <mat-radio-button class="radio-button"  type="radio"
+                                  [checked]="answer.value.correct"
+                                  name="correct"
+                                  value={{answerIndex}}> Correct
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-checkbox type="checkbox " *ngIf="dataType.value === 'multipleChoice'"
+                            formControlName="correct"><label class="checkbox-inline" >Correct</label>
+              </mat-checkbox>
+
+            </div>
+            <div class="col-1">
+              <button  mat-icon-button class="btn btn-danger delete-comment" (click)="removeAnswer(i)" title="Delete answer {{i + 1}}">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </mat-list>
+    </div>
+    <button (click)="addAnswerOption()" class="btn btn-primary" mat-raised-button type="button">
+      <i aria-hidden="true" class="fa fa-plus"></i>
+      Add an answer
+    </button>
+  </div>
+  <br>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col">
+      <div class="form-group">
+        <app-change-history-texteditor [formControlName]="'discussion'" [formGroup]="form"
+                                       [inputType]="InputType.Custom" [label]="'Answer discussion'"
+                                       [resourceElement]="'discussion'"
+                                       [selectedResource]="selectedQuestion" [showCitation]="false" id="discussion"
+                                       name="discussion"
+                                       tooltip="Insert text here or leave as is to hide section">
+        </app-change-history-texteditor>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col">
+      <div class="form-group">
+        <app-change-history-texteditor [formControlName]="'citation'" [formGroup]="form" [inputType]="InputType.Custom"
+                                       [label]="'References'" [resourceElement]="'citation'"
+                                       [selectedResource]="selectedQuestion"
+                                       [showCitation]="false" id="citation" name="citation"
+                                       tooltip="'Add discussion/explanation or simply skip to hide this section for examinations or other activities where this is not required. To share an 'answer discussion' within your editorial team only, add and save the discussion to 'Author notes' below'">
+        </app-change-history-texteditor>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col">
+      <div class="form-group">
+        <app-change-history-texteditor [formControlName]="'notes'" [formGroup]="form" [inputType]="InputType.Custom"
+                                       [label]="'Author notes (visible only to editing team. Not visible to question takers)'"
+                                       [resourceElement]="'notes'" [selectedResource]="selectedQuestion"
+                                       [showCitation]="false" id="notes"
+                                       name="notes">
+        </app-change-history-texteditor>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="type === 'evaluation'" class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <app-change-history-input-component [formControlName]="'reviewDate'" [formGroup]="form"
+                                            [inputType]="InputType.Date" [label]="'Date of review'"
+                                            [resourceElement]="'reviewDate'"
+                                            [selectedResource]="selectedQuestion" id="reviewDate">
+        </app-change-history-input-component>
+      </div>
+    </div>
+  </div>
+
+  <div [hidden]="type === 'evaluation'" class="col-md-12" class="row">
+    <div class="container width-100">
+      <h3>
+        Tags
+      </h3>
+      <br>
+      <p *ngIf="tags.length === 0">No tags added.</p>
+      <mat-chip-list #chipList aria-label="Tags">
+        <div *ngFor="let tag of tags">
+          <mat-chip (removed)="removeTag(tag)" [removable]="true" [selectable]="true">
+            <mat-icon class="template-blue" matChipAvatar>local_offer</mat-icon>
+            {{tag}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </div>
+      </mat-chip-list>
+      <label>
+        Add tags
+      </label>
+      <div style="text-align: left;">
+        <mat-form-field appearance="outline" class="search-box ">
+          <button matPrefix mat-icon-button >
+            <mat-icon>search</mat-icon>
+          </button>
+          <input #search matInput  [placeholder]="'Search all tags'" type="text" matTooltip="Search all tags"
+                 (change)="updateTagSearchResults($event)"
+                 (input)="updateTagSearchResults($event)"
+                 type="text">
+          <button mat-button  *ngIf="search.value" matSuffix mat-icon-button title="Clear"
+                  (click)="search.value='';dt.filterGlobal('', 'contains')">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button (click)="toggleExpandCollapseAll()" class="btn pull-right" mat-raised-button
+                type="button">{{(allExpanded) ? 'Collapse all sub categories' : 'Expand all sub categories'}}</button>
+      </div>
+      <div class="width-100">
+        <mat-card *ngIf="tagSearchResults.length > 0" >
+          <label>{{tagSearchResults.length}} search results:</label>
+          <hr>
+          <mat-selection-list dense style="max-height: 400px; overflow-y: scroll">
+            <mat-list-option *ngFor="let tag of tagSearchResults"
+                             [checkboxPosition]="'before'"
+                             [selected]="tags.indexOf(tag) > -1"
+                             (click)="listOptionChange(tag)" (keyup.enter)="listOptionChange(tag)">
+              {{tag}}
+            </mat-list-option>
+          </mat-selection-list>
+          <hr>
+        </mat-card>
+        <mat-expansion-panel *ngFor="let group of myQuestionTags; let i = index">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{group.Group}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div matLine>
+            <mat-selection-list #groupTags dense>
+              <mat-list-option (click)="listOptionChange(tag)" (keyup.enter)="listOptionChange(tag)"
+                               *ngFor="let tag of myQuestionTags[i]?.Tags"
+                               [checkboxPosition]="'before'"
+                               [selected]="tags.indexOf(tag) > -1">
+                {{tag}}
+              </mat-list-option>
+            </mat-selection-list>
+            <div *ngIf="group.SubGroups">
+              <div *ngFor="let subGroup of group.SubGroups; ">
+                <label (click)="subGroup.open = !subGroup.open"
+                       [class.toggled]="subGroup.open"
+                       class="tags-button-toggle toggled width-100 padding-left-10">
+                  {{subGroup.Group}}
+                  <mat-icon [class.toggled]="subGroup.open"
+                            class="tags-toggle-icon pull-right">
+                    expand_more
+                  </mat-icon>
+                </label>
+                <hr>
+                <div *ngIf="subGroup.open">
+
+                  <mat-selection-list #subGroupTags dense>
+                    <mat-list-option (click)="listOptionChange(tag)" (keyup.enter)="listOptionChange(tag)" *ngFor="let tag of subGroup.Tags"
+                                     [checkboxPosition]="'before'"
+                                     [selected]="tags.indexOf(tag) > -1">
+                      {{tag}}
+                    </mat-list-option>
+                  </mat-selection-list>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <br>
+      </div>
+    </div>
+  </div>
+  <button (click)="saveChanges()" class="btn button-default save-button pull-right" mat-raised-button>Save Question</button>
+</form>

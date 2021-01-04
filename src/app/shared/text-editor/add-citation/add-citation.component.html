@@ -1,0 +1,39 @@
+<div class="row form-group" *ngIf="!matchingCitationsFound">
+  <div class="row col-sm-12 margin-bottom-10">
+    <app-text-editor [(ngModel)]="citationText" type="text" name="text"
+                     [showImage]="false" [showFullScreen]="false"
+                     [showSource]="false" [showCitation]="false"
+                     [showVideo]="false" [setFocus]="true"></app-text-editor>
+  </div>
+  <div class="row col-sm-12">
+    <div class="pull-right">
+      <button mat-raised-button class="btn btn-primary" (click)="onSaveAndInsertCitation()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Save & insert
+      </button>
+    </div>
+  </div>
+</div>
+<div class="row form-group" *ngIf="matchingCitationsFound">
+  <div class="row col-sm-12 margin-bottom-10">
+    <h3>Possible duplicate citation found</h3>
+    <p>It appears there is one or more citation(s) that match what you have entered. Would you like to use one of the
+      following instead?</p>
+    <div>
+      <mat-radio-group [(ngModel)]="selectedCitation"
+                       (ngModelChange)="onCitationSelected($event)">
+        <mat-radio-button *ngFor="let citation of matchingCitations" class="citation-radio" [value]="citation">
+          <span [innerHtml]="citation.text | safeHtml"></span>
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="row col-sm-12">
+    <div class="pull-right">
+      <button mat-raised-button class="btn btn-primary" (click)="onSaveAndInsertCitation(true)">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Continue with my citation
+      </button>
+    </div>
+  </div>
+</div>
